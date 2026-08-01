@@ -5,25 +5,23 @@ namespace VoxelEditorForGodotDotNet.Core
 {
     public class SurfaceNetsMesher : IVoxelMesher
     {
-        // 8 local corner offsets of a unit cell
         private static readonly Vector3I[] CornerOffsets = new Vector3I[]
         {
-            new Vector3I(0, 0, 0), // 0
-            new Vector3I(1, 0, 0), // 1
-            new Vector3I(1, 1, 0), // 2
-            new Vector3I(0, 1, 0), // 3
-            new Vector3I(0, 0, 1), // 4
-            new Vector3I(1, 0, 1), // 5
-            new Vector3I(1, 1, 1), // 6
-            new Vector3I(0, 1, 1)  // 7
+            new Vector3I(0, 0, 0),
+            new Vector3I(1, 0, 0),
+            new Vector3I(1, 1, 0),
+            new Vector3I(0, 1, 0),
+            new Vector3I(0, 0, 1),
+            new Vector3I(1, 0, 1),
+            new Vector3I(1, 1, 1),
+            new Vector3I(0, 1, 1)
         };
 
-        // 12 edges of a cube represented as pairs of corner indices (0..7)
         private static readonly (int CornerA, int CornerB)[] CubeEdges = new (int, int)[]
         {
-            (0, 1), (1, 2), (2, 3), (3, 0), // Bottom face edges
-            (4, 5), (5, 6), (6, 7), (7, 4), // Top face edges
-            (0, 4), (1, 5), (2, 6), (3, 7)  // Vertical connecting edges
+            (0, 1), (1, 2), (2, 3), (3, 0),
+            (4, 5), (5, 6), (6, 7), (7, 4),
+            (0, 4), (1, 5), (2, 6), (3, 7)
         };
 
         public VoxelMeshData GenerateMesh(VoxelModel model, Vector3I boundsMin, Vector3I boundsMax, bool invertedNormals)
@@ -37,13 +35,16 @@ namespace VoxelEditorForGodotDotNet.Core
             if (sizeX <= 0 || sizeY <= 0 || sizeZ <= 0)
                 return meshData;
 
-            // Look-up grid for cell vertex indices (-1 means cell contains no surface vertex)
-            int[,,] vertexIndexGrid = new int[sizeX, sizeY, sizeZ];
-            for (int x = 0; x < sizeX; x++)
+            int paddedX = sizeX + 1;
+            int paddedY = sizeY + 1;
+            int paddedZ = sizeZ + 1;
+
+            int[,,] vertexIndexGrid = new int[paddedX, paddedY, paddedZ];
+            for (int x = 0; x < paddedX; x++)
             {
-                for (int y = 0; y < sizeY; y++)
+                for (int y = 0; y < paddedY; y++)
                 {
-                    for (int z = 0; z < sizeZ; z++)
+                    for (int z = 0; z < paddedZ; z++)
                     {
                         vertexIndexGrid[x, y, z] = -1;
                     }
@@ -53,19 +54,30 @@ namespace VoxelEditorForGodotDotNet.Core
             VoxelData[] tempCorners = new VoxelData[8];
 
             // ------------------------------------------------------------------
-            // PASS 1: Calculate single vertex per surface-crossing cell
+            // PASS 1: Calculate surface vertices & volume-gradient normals
             // ------------------------------------------------------------------
-            for (int x = 0; x < sizeX; x++)
+            for (int x = 0; x < paddedX; x++)
             {
-                for (int y = 0; y < sizeY; y++)
+                for (int y = 0; y < paddedY; y++)
                 {
-                    for (int z = 0; z < sizeZ; z++)
+                    for (int z = 0; z < paddedZ; z++)
                     {
                         int worldX = x + boundsMin.X;
                         int worldY = y + boundsMin.Y;
                         int worldZ = z + boundsMin.Z;
 
-                        model.GetCubeWeights(worldX, worldY, worldZ, tempCorners);
+                        if (worldX >= model.ResolutionX - 1 || 
+                            worldY >= model.ResolutionY - 1 || 
+                            worldZ >= model.ResolutionZ - 1)
+                        {
+                            continue;
+                        }
+
+                        for (int i = 0; i < 8; i++)
+                        {
+                            Vector3I cornerPos = new Vector3I(worldX, worldY, worldZ) + CornerOffsets[i];
+                            tempCorners[i] = model.GetVoxelWithClamp(cornerPos.X, cornerPos.Y, cornerPos.Z);
+                        }
 
                         int mask = 0;
                         for (int i = 0; i < 8; i++)
@@ -111,24 +123,30 @@ namespace VoxelEditorForGodotDotNet.Core
                             Vector3 localCellVertex = edgeSum / edgeCount;
                             Vector3 chunkVertexPos = new Vector3(x, y, z) + localCellVertex;
 
-                            int newVertexIndex = meshData.Vertices.Count;
-                            vertexIndexGrid[x, y, z] = newVertexIndex;
+                            vertexIndexGrid[x, y, z] = meshData.Vertices.Count;
 
                             meshData.Vertices.Add(chunkVertexPos);
                             meshData.Colors.Add(colorSum / edgeCount);
+
+                            // Calculate outward normal via central difference around the world position
+                            Vector3 worldPos = new Vector3(worldX, worldY, worldZ) + localCellVertex;
+                            Vector3 normal = CalculateSdfGradient(model, worldPos.X, worldPos.Y, worldPos.Z);
+
+                            if (invertedNormals) normal = -normal;
+                            meshData.Normals.Add(normal);
                         }
                     }
                 }
             }
 
             // ------------------------------------------------------------------
-            // PASS 2: Generate quads across active cell edges
+            // PASS 2: Generate quads across internal chunk bounds
             // ------------------------------------------------------------------
-            for (int x = 0; x < sizeX; x++)
+            for (int x = 0; x <= sizeX; x++)
             {
-                for (int y = 0; y < sizeY; y++)
+                for (int y = 0; y <= sizeY; y++)
                 {
-                    for (int z = 0; z < sizeZ; z++)
+                    for (int z = 0; z <= sizeZ; z++)
                     {
                         int worldX = x + boundsMin.X;
                         int worldY = y + boundsMin.Y;
@@ -138,7 +156,7 @@ namespace VoxelEditorForGodotDotNet.Core
                         bool currentInside = currentVoxel.WeightInsideIsPositive >= 0.0f;
 
                         // Check X-axis edge crossing
-                        if (x + 1 < sizeX && y > 0 && z > 0)
+                        if (x < sizeX && y > 0 && z > 0)
                         {
                             VoxelData neighborX = model.GetVoxelWithClamp(worldX + 1, worldY, worldZ);
                             bool neighborInside = neighborX.WeightInsideIsPositive >= 0.0f;
@@ -159,7 +177,7 @@ namespace VoxelEditorForGodotDotNet.Core
                         }
 
                         // Check Y-axis edge crossing
-                        if (y + 1 < sizeY && x > 0 && z > 0)
+                        if (y < sizeY && x > 0 && z > 0)
                         {
                             VoxelData neighborY = model.GetVoxelWithClamp(worldX, worldY + 1, worldZ);
                             bool neighborInside = neighborY.WeightInsideIsPositive >= 0.0f;
@@ -180,7 +198,7 @@ namespace VoxelEditorForGodotDotNet.Core
                         }
 
                         // Check Z-axis edge crossing
-                        if (z + 1 < sizeZ && x > 0 && y > 0)
+                        if (z < sizeZ && x > 0 && y > 0)
                         {
                             VoxelData neighborZ = model.GetVoxelWithClamp(worldX, worldY, worldZ + 1);
                             bool neighborInside = neighborZ.WeightInsideIsPositive >= 0.0f;
@@ -202,8 +220,6 @@ namespace VoxelEditorForGodotDotNet.Core
                     }
                 }
             }
-
-            CalculateSmoothNormals(meshData);
 
             return meshData;
         }
@@ -232,32 +248,19 @@ namespace VoxelEditorForGodotDotNet.Core
             }
         }
 
-        private static void CalculateSmoothNormals(VoxelMeshData meshData)
+        private static Vector3 CalculateSdfGradient(VoxelModel model, float x, float y, float z)
         {
-            meshData.Normals.Clear();
-            Vector3[] normals = new Vector3[meshData.Vertices.Count];
+            // Delta step of 1.0f samples across adjacent voxel centers in the grid
+            const float delta = 1.0f;
 
-            for (int i = 0; i < meshData.Triangles.Count; i += 3)
-            {
-                int i0 = meshData.Triangles[i];
-                int i1 = meshData.Triangles[i + 1];
-                int i2 = meshData.Triangles[i + 2];
+            float dx = model.GetVoxelWithClamp(x + delta, y, z).WeightInsideIsPositive - model.GetVoxelWithClamp(x - delta, y, z).WeightInsideIsPositive;
+            float dy = model.GetVoxelWithClamp(x, y + delta, z).WeightInsideIsPositive - model.GetVoxelWithClamp(x, y - delta, z).WeightInsideIsPositive;
+            float dz = model.GetVoxelWithClamp(x, y, z + delta).WeightInsideIsPositive - model.GetVoxelWithClamp(x, y, z - delta).WeightInsideIsPositive;
 
-                Vector3 v0 = meshData.Vertices[i0];
-                Vector3 v1 = meshData.Vertices[i1];
-                Vector3 v2 = meshData.Vertices[i2];
+            // Invert the gradient because WeightInsideIsPositive increases INWARD
+            Vector3 grad = new Vector3(-dx, -dy, -dz);
 
-                Vector3 faceNormal = (v1 - v0).Cross(v2 - v0);
-
-                normals[i0] += faceNormal;
-                normals[i1] += faceNormal;
-                normals[i2] += faceNormal;
-            }
-
-            for (int i = 0; i < normals.Length; i++)
-            {
-                meshData.Normals.Add(normals[i].Normalized());
-            }
+            return grad.LengthSquared() > 0.00001f ? grad.Normalized() : Vector3.Up;
         }
     }
 }
