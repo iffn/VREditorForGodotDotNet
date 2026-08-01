@@ -7,6 +7,7 @@
 ## Controls
 - Left stick: Walk
 - Right stick horizontal: Turn
+- Right stick vertical: Scale tool size
 - Right trigger: Add while held
 - Right trigger + Right grip: Remove while held
 

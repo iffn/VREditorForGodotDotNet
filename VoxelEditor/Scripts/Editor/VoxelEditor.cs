@@ -14,6 +14,8 @@ namespace VoxelEditorForGodotDotNet.Core
         [Export] private Vector3I gridSize = new Vector3I(32, 32, 32);
         [Export] private float sphereScale = 12.0f;
 
+        [Export] private float scaleSpeed = 1f;
+
 
         public override void _Ready()
         {
@@ -47,6 +49,8 @@ namespace VoxelEditorForGodotDotNet.Core
             bool shouldPaint = RightController.IsButtonPressed("trigger_click");
 
             float scaleInput = RightController.GetVector2("primary").Y;
+
+            sphereShape.Scale *= 1f + scaleInput * scaleSpeed * (float)delta;
 
             if (shouldPaint)
             {
