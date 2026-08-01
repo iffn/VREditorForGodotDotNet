@@ -21,23 +21,23 @@ albedo_color = Color(1, 0, 0, 0.6509804)
 [node name="VoxelController" type="Node3D" unique_id=264195901 node_paths=PackedStringArray("previewView", "chunkHolder")]
 script = ExtResource("1_j4104")
 chunkPrefab = ExtResource("2_m5gr4")
-previewView = NodePath("VoxelChunk")
+previewView = NodePath("Preview")
 chunkHolder = NodePath("Node3D")
 currentMainMaterial = SubResource("StandardMaterial3D_bld8a")
 
-[node name="VoxelChunk" type="Node3D" parent="." unique_id=337782743 node_paths=PackedStringArray("linkedMeshInstance", "linkedCollisionShape")]
+[node name="Preview" type="Node3D" parent="." unique_id=337782743 node_paths=PackedStringArray("linkedMeshInstance", "linkedCollisionShape")]
 script = ExtResource("3_ljqh6")
 additionPreviewMaterial = SubResource("StandardMaterial3D_tgb12")
 subtractionPreviewMaterial = SubResource("StandardMaterial3D_ols1y")
 linkedMeshInstance = NodePath("MeshInstance3D")
 linkedCollisionShape = NodePath("StaticBody3D/CollisionShape3D")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="VoxelChunk" unique_id=655598110]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Preview" unique_id=655598110]
 mesh = SubResource("ArrayMesh_o6kkl")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="VoxelChunk" unique_id=1945336498]
+[node name="StaticBody3D" type="StaticBody3D" parent="Preview" unique_id=1945336498]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="VoxelChunk/StaticBody3D" unique_id=1737048398]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Preview/StaticBody3D" unique_id=1737048398]
 shape = SubResource("ConcavePolygonShape3D_bld8a")
 
 [node name="Node3D" type="Node3D" parent="." unique_id=1783021795]

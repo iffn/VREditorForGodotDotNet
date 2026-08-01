@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://75xt687g4r3j" path="res://VoxelEditorForGodotDotNet/VRSetup/ground.tscn" id="3_ley5p"]
 [ext_resource type="PackedScene" uid="uid://d0kisqcq43ebm" path="res://VoxelEditorForGodotDotNet/VoxelEditor/VoxelController.tscn" id="4_5a50w"]
 [ext_resource type="Script" uid="uid://bjeiev8dmyfdj" path="res://VoxelEditorForGodotDotNet/VoxelEditor/Scripts/EditTools/SphereEditShape.cs" id="5_a1cwr"]
+[ext_resource type="Material" uid="uid://cr2gj02o7km1c" path="res://VoxelEditorForGodotDotNet/MaterialsAndShaders/TriplanarTerrain.tres" id="7_rweoq"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_4myu2"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -75,6 +76,7 @@ gridSize = Vector3i(128, 128, 128)
 
 [node name="VoxelController" parent="." unique_id=264195901 instance=ExtResource("4_5a50w")]
 transform = Transform3D(0.05, 0, 0, 0, 0.05, 0, 0, 0, 0.05, 0, 0, 0)
+currentMainMaterial = ExtResource("7_rweoq")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="VoxelController" unique_id=709556083]
 transform = Transform3D(1, 0, 0, 0, 1.1924881e-08, 1, 0, -1, 1.1924881e-08, 0, 0.01, 0)
