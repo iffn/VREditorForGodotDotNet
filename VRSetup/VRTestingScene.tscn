@@ -3,9 +3,13 @@
 [ext_resource type="Script" uid="uid://dqq3sob3v2ch4" path="res://VoxelEditorForGodotDotNet/VRSetup/XRSetup.cs" id="1_kueym"]
 [ext_resource type="PackedScene" uid="uid://bpdj5njb8nhot" path="res://addons/godot-xr-tools/hands/scenes/highpoly/left_fullglove_hand.tscn" id="1_mojmy"]
 [ext_resource type="PackedScene" uid="uid://d1tl07geqm5xq" path="res://addons/godot-xr-tools/hands/scenes/highpoly/right_fullglove_hand.tscn" id="2_kueym"]
+[ext_resource type="PackedScene" uid="uid://bl2nuu3qhlb5k" path="res://addons/godot-xr-tools/functions/movement_direct.tscn" id="3_ols1y"]
 [ext_resource type="Script" uid="uid://5gxxof5umue8" path="res://VoxelEditorForGodotDotNet/VoxelEditor/Scripts/Editor/VoxelEditor.cs" id="4_c7jy3"]
 [ext_resource type="PackedScene" uid="uid://d0kisqcq43ebm" path="res://VoxelEditorForGodotDotNet/VoxelEditor/VoxelController.tscn" id="5_o6kkl"]
+[ext_resource type="PackedScene" uid="uid://b6bk2pj8vbj28" path="res://addons/godot-xr-tools/functions/movement_turn.tscn" id="5_x3dv8"]
+[ext_resource type="PackedScene" uid="uid://diyu06cw06syv" path="res://addons/godot-xr-tools/player/player_body.tscn" id="6_hcvkq"]
 [ext_resource type="Script" uid="uid://bjeiev8dmyfdj" path="res://VoxelEditorForGodotDotNet/VoxelEditor/Scripts/EditTools/SphereEditShape.cs" id="6_ols1y"]
+[ext_resource type="Script" uid="uid://ck4yn3hxuobj7" path="res://addons/godot-xr-tools/player/player_body.gd" id="7_rg27q"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_4myu2"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -44,10 +48,23 @@ tracker = &"left_hand"
 
 [node name="LeftHand" parent="VR player/LeftHand" unique_id=1158422542 instance=ExtResource("1_mojmy")]
 
+[node name="MovementDirect" parent="VR player/LeftHand" unique_id=1471091658 instance=ExtResource("3_ols1y")]
+strafe = true
+
 [node name="RightHand" type="XRController3D" parent="VR player" unique_id=2069421584]
 tracker = &"right_hand"
 
 [node name="RightHand" parent="VR player/RightHand" unique_id=153366247 instance=ExtResource("2_kueym")]
+
+[node name="MovementTurn" parent="VR player/RightHand" unique_id=1034306922 instance=ExtResource("5_x3dv8")]
+turn_mode = 2
+
+[node name="PlayerBody" type="CharacterBody3D" parent="VR player" unique_id=876053490 groups=["player_body"] instance=ExtResource("6_hcvkq")]
+process_priority = -100
+process_physics_priority = -100
+collision_layer = 524288
+collision_mask = 1023
+script = ExtResource("7_rg27q")
 
 [node name="Ground" type="StaticBody3D" parent="." unique_id=1737742230]
 transform = Transform3D(100, 0, 0, 0, 1.1924881e-06, 100, 0, -100, 1.1924881e-06, 0, 0, 0)
