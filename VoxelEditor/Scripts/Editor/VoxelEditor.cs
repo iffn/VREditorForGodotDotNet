@@ -1,6 +1,7 @@
 using Godot;
 using VoxelEditorForGodotDotNet.Core;
 using VoxelEditorForGodotDotNet.EditTools;
+using static VoxelEditorForGodotDotNet.EditTools.BaseModificationTools;
 
 namespace VoxelEditorForGodotDotNet.Core
 {
@@ -42,12 +43,16 @@ namespace VoxelEditorForGodotDotNet.Core
             float triggerValue = RightController.GetFloat("trigger");
 
             // Check if digital trigger click is currently held down
-            bool isTriggerPressed = RightController.IsButtonPressed("trigger_click");
+            bool rightModifier = RightController.IsButtonPressed("grip_click");
+            bool shouldPaint = RightController.IsButtonPressed("trigger_click");
 
-            if (triggerValue > 0.5f)
+            float scaleInput = RightController.GetVector2("primary").Y;
+
+            if (shouldPaint)
             {
-                var addModifier = new BaseModificationTools.AddShapeModifier();
-                controller.ModificationManager.ModifyData(sphereShape, addModifier);
+                IVoxelModifier modifier = rightModifier ? new SubtractShapeModifier() : new AddShapeModifier(); // Add or subtract based on modifier
+
+                controller.ModificationManager.ModifyData(sphereShape, modifier);
             }
         }
     }

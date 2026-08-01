@@ -8,6 +8,7 @@
 - Left stick: Walk
 - Right stick horizontal: Turn
 - Right trigger: Add while held
+- Right trigger + Right grip: Remove while held
 
 ## Setup
 - Get Godot DotNet version (Tested with Godot 4.7.1.stable.mono)
