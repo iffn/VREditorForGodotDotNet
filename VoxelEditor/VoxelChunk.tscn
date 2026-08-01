@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://bjr1wm36j88u2"]
+
+[ext_resource type="Script" uid="uid://dqamo6a65dw3v" path="res://VoxelEditorForGodotDotNet/VoxelEditor/Scripts/Core/VoxelChunkView.cs" id="1_o4aai"]
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_o6kkl"]
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_bld8a"]
+
+[node name="VoxelChunk" type="Node3D" unique_id=1763822635 node_paths=PackedStringArray("linkedMeshInstance", "linkedCollisionShape")]
+script = ExtResource("1_o4aai")
+linkedMeshInstance = NodePath("MeshInstance3D")
+linkedCollisionShape = NodePath("StaticBody3D/CollisionShape3D")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1870340282]
+mesh = SubResource("ArrayMesh_o6kkl")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=1601719077]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=933115258]
+shape = SubResource("ConcavePolygonShape3D_bld8a")

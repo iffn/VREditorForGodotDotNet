@@ -1,0 +1,43 @@
+[gd_scene format=3 uid="uid://d0kisqcq43ebm"]
+
+[ext_resource type="Script" uid="uid://ca6ncb6u7ats2" path="res://VoxelEditorForGodotDotNet/VoxelEditor/Scripts/Core/VoxelController.cs" id="1_j4104"]
+[ext_resource type="PackedScene" uid="uid://bjr1wm36j88u2" path="res://VoxelEditorForGodotDotNet/VoxelEditor/VoxelChunk.tscn" id="2_m5gr4"]
+[ext_resource type="Script" uid="uid://mst2ycgpq0h2" path="res://VoxelEditorForGodotDotNet/VoxelEditor/Scripts/Core/VoxelChunkPreview.cs" id="3_ljqh6"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bld8a"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tgb12"]
+transparency = 1
+albedo_color = Color(1, 0.31764707, 0, 0.6509804)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ols1y"]
+transparency = 1
+albedo_color = Color(1, 0, 0, 0.6509804)
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_o6kkl"]
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_bld8a"]
+
+[node name="VoxelController" type="Node3D" unique_id=264195901 node_paths=PackedStringArray("previewView", "chunkHolder")]
+script = ExtResource("1_j4104")
+chunkPrefab = ExtResource("2_m5gr4")
+previewView = NodePath("VoxelChunk")
+chunkHolder = NodePath("Node3D")
+currentMainMaterial = SubResource("StandardMaterial3D_bld8a")
+
+[node name="VoxelChunk" type="Node3D" parent="." unique_id=337782743 node_paths=PackedStringArray("linkedMeshInstance", "linkedCollisionShape")]
+script = ExtResource("3_ljqh6")
+additionPreviewMaterial = SubResource("StandardMaterial3D_tgb12")
+subtractionPreviewMaterial = SubResource("StandardMaterial3D_ols1y")
+linkedMeshInstance = NodePath("MeshInstance3D")
+linkedCollisionShape = NodePath("StaticBody3D/CollisionShape3D")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="VoxelChunk" unique_id=655598110]
+mesh = SubResource("ArrayMesh_o6kkl")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="VoxelChunk" unique_id=1945336498]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="VoxelChunk/StaticBody3D" unique_id=1737048398]
+shape = SubResource("ConcavePolygonShape3D_bld8a")
+
+[node name="Node3D" type="Node3D" parent="." unique_id=1783021795]

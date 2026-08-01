@@ -1,5 +1,9 @@
 # VR Voxel editor for Godot DotNet
 
+## Based on
+- https://github.com/iffn/VRMarchingCubeEditorForUnity
+- https://github.com/iffn/MarchingCubeEditorForUnity
+
 ## Setup
 - Get Godot DotNet version (Tested with Godot 4.7.1.stable.mono)
 - Create a new Godot project (Designed with Forward+ render pipeline)

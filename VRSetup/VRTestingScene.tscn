@@ -3,6 +3,9 @@
 [ext_resource type="Script" uid="uid://dqq3sob3v2ch4" path="res://VoxelEditorForGodotDotNet/VRSetup/XRSetup.cs" id="1_kueym"]
 [ext_resource type="PackedScene" uid="uid://bpdj5njb8nhot" path="res://addons/godot-xr-tools/hands/scenes/highpoly/left_fullglove_hand.tscn" id="1_mojmy"]
 [ext_resource type="PackedScene" uid="uid://d1tl07geqm5xq" path="res://addons/godot-xr-tools/hands/scenes/highpoly/right_fullglove_hand.tscn" id="2_kueym"]
+[ext_resource type="Script" uid="uid://5gxxof5umue8" path="res://VoxelEditorForGodotDotNet/VoxelEditor/Scripts/Editor/VoxelEditor.cs" id="4_c7jy3"]
+[ext_resource type="PackedScene" uid="uid://d0kisqcq43ebm" path="res://VoxelEditorForGodotDotNet/VoxelEditor/VoxelController.tscn" id="5_o6kkl"]
+[ext_resource type="Script" uid="uid://bjeiev8dmyfdj" path="res://VoxelEditorForGodotDotNet/VoxelEditor/Scripts/EditTools/SphereEditShape.cs" id="6_ols1y"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_4myu2"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -32,6 +35,7 @@ transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545
 shadow_enabled = true
 
 [node name="VR player" type="XROrigin3D" parent="." unique_id=1128472499]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
 
 [node name="XRCamera3D" type="XRCamera3D" parent="VR player" unique_id=822960626]
 
@@ -59,3 +63,20 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.260804, 0.5000005, -8.0020
 
 [node name="RandomBox 2" type="CSGBox3D" parent="." unique_id=1541083718]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.316182, 0.5, -9.1755905)
+
+[node name="VoxelEditor" type="Node3D" parent="." unique_id=1260496153 node_paths=PackedStringArray("controller", "sphereShape")]
+script = ExtResource("4_c7jy3")
+controller = NodePath("../VoxelController")
+sphereShape = NodePath("../VoxelController/Sphere edit shape")
+
+[node name="VoxelController" parent="." unique_id=264195901 instance=ExtResource("5_o6kkl")]
+transform = Transform3D(0.05, 0, 0, 0, 0.05, 0, 0, 0, 0.05, 0, 0, 0)
+
+[node name="Sphere edit shape" type="Node3D" parent="VoxelController" unique_id=984267362]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0, 0)
+visible = false
+script = ExtResource("6_ols1y")
+
+[node name="CSGSphere3D" type="CSGSphere3D" parent="VoxelController/Sphere edit shape" unique_id=1897643649]
+radial_segments = 24
+rings = 12

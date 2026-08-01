@@ -1,0 +1,43 @@
+[gd_scene format=3 uid="uid://ceymbg4kk8413"]
+
+[ext_resource type="PackedScene" uid="uid://d0kisqcq43ebm" path="res://VoxelEditorForGodotDotNet/VoxelEditor/VoxelController.tscn" id="1_vcwx3"]
+[ext_resource type="Script" uid="uid://bjeiev8dmyfdj" path="res://VoxelEditorForGodotDotNet/VoxelEditor/Scripts/EditTools/SphereEditShape.cs" id="2_tdobi"]
+[ext_resource type="Script" uid="uid://5gxxof5umue8" path="res://VoxelEditorForGodotDotNet/VoxelEditor/Scripts/Editor/VoxelEditor.cs" id="3_wdsmm"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_vcwx3"]
+sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+
+[sub_resource type="Sky" id="Sky_6lalc"]
+sky_material = SubResource("ProceduralSkyMaterial_vcwx3")
+
+[sub_resource type="Environment" id="Environment_tdobi"]
+background_mode = 2
+sky = SubResource("Sky_6lalc")
+glow_enabled = true
+
+[node name="VoxelTest" type="Node3D" unique_id=1126579423]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=419542136]
+environment = SubResource("Environment_tdobi")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1512361252]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+shadow_enabled = true
+
+[node name="VoxelController" parent="." unique_id=264195901 instance=ExtResource("1_vcwx3")]
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=1215009234]
+transform = Transform3D(0.86791766, -0.12375242, 0.481045, 7.450581e-09, 0.96846616, 0.24914517, -0.4967081, -0.21623749, 0.84054893, 38.081844, 19.934467, 65.95997)
+
+[node name="Sphere edit shape" type="Node3D" parent="." unique_id=206557305]
+script = ExtResource("2_tdobi")
+
+[node name="CSGSphere3D" type="CSGSphere3D" parent="Sphere edit shape" unique_id=1174053033]
+radial_segments = 24
+rings = 12
+
+[node name="VoxelEditor" type="Node3D" parent="." unique_id=2080535414 node_paths=PackedStringArray("controller", "sphereShape")]
+script = ExtResource("3_wdsmm")
+controller = NodePath("../VoxelController")
+sphereShape = NodePath("../Sphere edit shape")
