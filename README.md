@@ -4,6 +4,11 @@
 - https://github.com/iffn/VRMarchingCubeEditorForUnity
 - https://github.com/iffn/MarchingCubeEditorForUnity
 
+## Controls
+- Left stick: Walk
+- Right stick horizontal: Turn
+- Right trigger: Add while held
+
 ## Setup
 - Get Godot DotNet version (Tested with Godot 4.7.1.stable.mono)
 - Create a new Godot project (Designed with Forward+ render pipeline)
