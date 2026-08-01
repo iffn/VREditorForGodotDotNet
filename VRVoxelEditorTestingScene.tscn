@@ -1,0 +1,84 @@
+[gd_scene format=3 uid="uid://c2quds8pipmdd"]
+
+[ext_resource type="Script" uid="uid://dqq3sob3v2ch4" path="res://VoxelEditorForGodotDotNet/VRSetup/XRSetup.cs" id="1_7wtub"]
+[ext_resource type="PackedScene" uid="uid://c22wq6cschyl4" path="res://VoxelEditorForGodotDotNet/VRSetup/VR Player.tscn" id="2_b5hl1"]
+[ext_resource type="Script" uid="uid://5gxxof5umue8" path="res://VoxelEditorForGodotDotNet/VoxelEditor/Scripts/Editor/VoxelEditor.cs" id="3_0ke6k"]
+[ext_resource type="PackedScene" uid="uid://75xt687g4r3j" path="res://VoxelEditorForGodotDotNet/VRSetup/ground.tscn" id="3_ley5p"]
+[ext_resource type="PackedScene" uid="uid://d0kisqcq43ebm" path="res://VoxelEditorForGodotDotNet/VoxelEditor/VoxelController.tscn" id="4_5a50w"]
+[ext_resource type="Script" uid="uid://bjeiev8dmyfdj" path="res://VoxelEditorForGodotDotNet/VoxelEditor/Scripts/EditTools/SphereEditShape.cs" id="5_a1cwr"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_4myu2"]
+sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+
+[sub_resource type="Sky" id="Sky_o3bkj"]
+sky_material = SubResource("ProceduralSkyMaterial_4myu2")
+
+[sub_resource type="Environment" id="Environment_p8rij"]
+background_mode = 2
+sky = SubResource("Sky_o3bkj")
+glow_enabled = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ley5p"]
+transparency = 1
+albedo_color = Color(0, 0.69803923, 1, 0.5686275)
+
+[sub_resource type="QuadMesh" id="QuadMesh_lpj5r"]
+size = Vector2(128, 128)
+center_offset = Vector3(64, -64, 0)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_erkc8"]
+albedo_color = Color(1, 0, 0, 1)
+
+[node name="Node3D" type="Node3D" unique_id=763560496]
+script = ExtResource("1_7wtub")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=902826047]
+environment = SubResource("Environment_p8rij")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1858147971]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+shadow_enabled = true
+
+[node name="VR player" parent="." unique_id=1445165384 instance=ExtResource("2_b5hl1")]
+transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, 0, 0, 0)
+
+[node name="Sphere edit shape" type="Node3D" parent="VR player/RightHand/RightHand" parent_id_path=PackedInt32Array(1445165384, 392314345) index="2" unique_id=984267362]
+transform = Transform3D(-0.2, 0, 3.019916e-08, 0, 0.2, 0, -3.019916e-08, 0, -0.2, -0.07419953, 0, -0.019258518)
+script = ExtResource("5_a1cwr")
+
+[node name="CSGSphere3D" type="CSGSphere3D" parent="VR player/RightHand/RightHand/Sphere edit shape" unique_id=1897643649]
+radial_segments = 24
+rings = 12
+material = SubResource("StandardMaterial3D_ley5p")
+
+[node name="Ground" parent="." unique_id=993000832 instance=ExtResource("3_ley5p")]
+
+[node name="RandomBox 1" type="CSGBox3D" parent="." unique_id=1963019855]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.664727, 0.5000005, -8.559774)
+
+[node name="RandomBox 2" type="CSGBox3D" parent="." unique_id=1541083718]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.316182, 0.5, -9.1755905)
+
+[node name="RandomBox 3" type="CSGBox3D" parent="." unique_id=110837555]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.6631265, 0.5000005, 7.823978)
+
+[node name="RandomBox 4" type="CSGBox3D" parent="." unique_id=1450972371]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.1967235, 0.5, 8.693771)
+
+[node name="VoxelEditor" type="Node3D" parent="." unique_id=1260496153 node_paths=PackedStringArray("controller", "sphereShape", "RightController")]
+script = ExtResource("3_0ke6k")
+controller = NodePath("../VoxelController")
+sphereShape = NodePath("../VR player/RightHand/RightHand/Sphere edit shape")
+RightController = NodePath("../VR player/RightHand")
+gridSize = Vector3i(128, 128, 128)
+
+[node name="VoxelController" parent="." unique_id=264195901 instance=ExtResource("4_5a50w")]
+transform = Transform3D(0.05, 0, 0, 0, 0.05, 0, 0, 0, 0.05, 0, 0, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="VoxelController" unique_id=709556083]
+transform = Transform3D(1, 0, 0, 0, 1.1924881e-08, 1, 0, -1, 1.1924881e-08, 0, 0.01, 0)
+mesh = SubResource("QuadMesh_lpj5r")
+surface_material_override/0 = SubResource("StandardMaterial3D_erkc8")
+
+[editable path="VR player"]

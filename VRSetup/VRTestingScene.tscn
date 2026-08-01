@@ -1,15 +1,8 @@
 [gd_scene format=3 uid="uid://bxv5wwhqy40cm"]
 
 [ext_resource type="Script" uid="uid://dqq3sob3v2ch4" path="res://VoxelEditorForGodotDotNet/VRSetup/XRSetup.cs" id="1_kueym"]
-[ext_resource type="PackedScene" uid="uid://bpdj5njb8nhot" path="res://addons/godot-xr-tools/hands/scenes/highpoly/left_fullglove_hand.tscn" id="1_mojmy"]
-[ext_resource type="PackedScene" uid="uid://d1tl07geqm5xq" path="res://addons/godot-xr-tools/hands/scenes/highpoly/right_fullglove_hand.tscn" id="2_kueym"]
-[ext_resource type="PackedScene" uid="uid://bl2nuu3qhlb5k" path="res://addons/godot-xr-tools/functions/movement_direct.tscn" id="3_ols1y"]
-[ext_resource type="Script" uid="uid://5gxxof5umue8" path="res://VoxelEditorForGodotDotNet/VoxelEditor/Scripts/Editor/VoxelEditor.cs" id="4_c7jy3"]
-[ext_resource type="PackedScene" uid="uid://d0kisqcq43ebm" path="res://VoxelEditorForGodotDotNet/VoxelEditor/VoxelController.tscn" id="5_o6kkl"]
-[ext_resource type="PackedScene" uid="uid://b6bk2pj8vbj28" path="res://addons/godot-xr-tools/functions/movement_turn.tscn" id="5_x3dv8"]
-[ext_resource type="PackedScene" uid="uid://diyu06cw06syv" path="res://addons/godot-xr-tools/player/player_body.tscn" id="6_hcvkq"]
-[ext_resource type="Script" uid="uid://bjeiev8dmyfdj" path="res://VoxelEditorForGodotDotNet/VoxelEditor/Scripts/EditTools/SphereEditShape.cs" id="6_ols1y"]
-[ext_resource type="Script" uid="uid://ck4yn3hxuobj7" path="res://addons/godot-xr-tools/player/player_body.gd" id="7_rg27q"]
+[ext_resource type="PackedScene" uid="uid://c22wq6cschyl4" path="res://VoxelEditorForGodotDotNet/VRSetup/VR Player.tscn" id="2_6qkrb"]
+[ext_resource type="PackedScene" uid="uid://75xt687g4r3j" path="res://VoxelEditorForGodotDotNet/VRSetup/ground.tscn" id="3_kueym"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_4myu2"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -23,11 +16,6 @@ background_mode = 2
 sky = SubResource("Sky_o3bkj")
 glow_enabled = true
 
-[sub_resource type="QuadMesh" id="QuadMesh_bld8a"]
-
-[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_w0tr0"]
-data = PackedVector3Array(0.5, -0.5, 0, -0.5, -0.5, 0, 0.5, 0.5, 0, -0.5, -0.5, 0, -0.5, 0.5, 0, 0.5, 0.5, 0)
-
 [node name="Node3D" type="Node3D" unique_id=763560496]
 script = ExtResource("1_kueym")
 
@@ -38,42 +26,10 @@ environment = SubResource("Environment_p8rij")
 transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
 shadow_enabled = true
 
-[node name="VR player" type="XROrigin3D" parent="." unique_id=1128472499]
-transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
+[node name="VR player" parent="." unique_id=1445165384 instance=ExtResource("2_6qkrb")]
+transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, 0, 0, 0)
 
-[node name="XRCamera3D" type="XRCamera3D" parent="VR player" unique_id=822960626]
-
-[node name="LeftHand" type="XRController3D" parent="VR player" unique_id=544451627]
-tracker = &"left_hand"
-
-[node name="LeftHand" parent="VR player/LeftHand" unique_id=1158422542 instance=ExtResource("1_mojmy")]
-
-[node name="MovementDirect" parent="VR player/LeftHand" unique_id=1471091658 instance=ExtResource("3_ols1y")]
-strafe = true
-
-[node name="RightHand" type="XRController3D" parent="VR player" unique_id=2069421584]
-tracker = &"right_hand"
-
-[node name="RightHand" parent="VR player/RightHand" unique_id=153366247 instance=ExtResource("2_kueym")]
-
-[node name="MovementTurn" parent="VR player/RightHand" unique_id=1034306922 instance=ExtResource("5_x3dv8")]
-turn_mode = 2
-
-[node name="PlayerBody" type="CharacterBody3D" parent="VR player" unique_id=876053490 groups=["player_body"] instance=ExtResource("6_hcvkq")]
-process_priority = -100
-process_physics_priority = -100
-collision_layer = 524288
-collision_mask = 1023
-script = ExtResource("7_rg27q")
-
-[node name="Ground" type="StaticBody3D" parent="." unique_id=1737742230]
-transform = Transform3D(100, 0, 0, 0, 1.1924881e-06, 100, 0, -100, 1.1924881e-06, 0, 0, 0)
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground" unique_id=871780907]
-mesh = SubResource("QuadMesh_bld8a")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground" unique_id=148169495]
-shape = SubResource("ConcavePolygonShape3D_w0tr0")
+[node name="Ground" parent="." unique_id=993000832 instance=ExtResource("3_kueym")]
 
 [node name="RandomBox 1" type="CSGBox3D" parent="." unique_id=1963019855]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.260804, 0.5000005, -8.002041)
@@ -81,19 +37,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.260804, 0.5000005, -8.0020
 [node name="RandomBox 2" type="CSGBox3D" parent="." unique_id=1541083718]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.316182, 0.5, -9.1755905)
 
-[node name="VoxelEditor" type="Node3D" parent="." unique_id=1260496153 node_paths=PackedStringArray("controller", "sphereShape")]
-script = ExtResource("4_c7jy3")
-controller = NodePath("../VoxelController")
-sphereShape = NodePath("../VoxelController/Sphere edit shape")
+[node name="RandomBox 3" type="CSGBox3D" parent="." unique_id=963722898]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.6631265, 0.5000005, 7.823978)
 
-[node name="VoxelController" parent="." unique_id=264195901 instance=ExtResource("5_o6kkl")]
-transform = Transform3D(0.05, 0, 0, 0, 0.05, 0, 0, 0, 0.05, 0, 0, 0)
-
-[node name="Sphere edit shape" type="Node3D" parent="VoxelController" unique_id=984267362]
-transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0, 0)
-visible = false
-script = ExtResource("6_ols1y")
-
-[node name="CSGSphere3D" type="CSGSphere3D" parent="VoxelController/Sphere edit shape" unique_id=1897643649]
-radial_segments = 24
-rings = 12
+[node name="RandomBox 4" type="CSGBox3D" parent="." unique_id=1534299622]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.1967235, 0.5, 8.693771)

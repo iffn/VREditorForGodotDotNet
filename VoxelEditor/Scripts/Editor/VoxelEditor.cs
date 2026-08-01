@@ -8,9 +8,11 @@ namespace VoxelEditorForGodotDotNet.Core
     {
         [Export] private VoxelController controller;
         [Export] private SphereEditShape sphereShape;
+        [Export] public XRController3D RightController { get; set; }
 
         [Export] private Vector3I gridSize = new Vector3I(32, 32, 32);
         [Export] private float sphereScale = 12.0f;
+
 
         public override void _Ready()
         {
@@ -29,17 +31,24 @@ namespace VoxelEditorForGodotDotNet.Core
             // 1. Initialize the voxel grid (resolution, setEmpty = true, skipViewSetup = false)
             controller.Initialize(gridSize.X, gridSize.Y, gridSize.Z, setEmpty: true, skipViewSetup: false);
 
-            // 2. Position and scale the sphere edit shape in the center of the grid
-            Vector3 center = new Vector3(gridSize.X / 2f, gridSize.Y / 2f, gridSize.Z / 2f);
-            
-            sphereShape.Position = center;
-            sphereShape.Scale = new Vector3(sphereScale, sphereScale, sphereScale);
+			GD.Print("Setup complete");
+        }
 
-            // 3. Create the modifier and apply it via the ModificationManager
-            var addModifier = new BaseModificationTools.AddShapeModifier();
-            controller.ModificationManager.ModifyData(sphereShape, addModifier);
+        public override void _Process(double delta)
+        {
+            if (RightController == null) return;
 
-			GD.Print("Done");
+            // Check continuous analog value (0.0 to 1.0)
+            float triggerValue = RightController.GetFloat("trigger");
+
+            // Check if digital trigger click is currently held down
+            bool isTriggerPressed = RightController.IsButtonPressed("trigger_click");
+
+            if (triggerValue > 0.5f)
+            {
+                var addModifier = new BaseModificationTools.AddShapeModifier();
+                controller.ModificationManager.ModifyData(sphereShape, addModifier);
+            }
         }
     }
 }

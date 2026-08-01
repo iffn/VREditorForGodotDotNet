@@ -1,0 +1,30 @@
+[gd_scene format=3 uid="uid://c22wq6cschyl4"]
+
+[ext_resource type="PackedScene" uid="uid://bpdj5njb8nhot" path="res://addons/godot-xr-tools/hands/scenes/highpoly/left_fullglove_hand.tscn" id="1_6np7h"]
+[ext_resource type="PackedScene" uid="uid://bl2nuu3qhlb5k" path="res://addons/godot-xr-tools/functions/movement_direct.tscn" id="2_qsjsf"]
+[ext_resource type="PackedScene" uid="uid://d1tl07geqm5xq" path="res://addons/godot-xr-tools/hands/scenes/highpoly/right_fullglove_hand.tscn" id="3_he3x1"]
+[ext_resource type="PackedScene" uid="uid://b6bk2pj8vbj28" path="res://addons/godot-xr-tools/functions/movement_turn.tscn" id="4_wdqtq"]
+[ext_resource type="PackedScene" uid="uid://diyu06cw06syv" path="res://addons/godot-xr-tools/player/player_body.tscn" id="5_2me0v"]
+
+[node name="VR player" type="XROrigin3D" unique_id=1445165384]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
+
+[node name="XRCamera3D" type="XRCamera3D" parent="." unique_id=1958860685]
+
+[node name="LeftHand" type="XRController3D" parent="." unique_id=1533857695]
+tracker = &"left_hand"
+
+[node name="LeftHand" parent="LeftHand" unique_id=711689768 instance=ExtResource("1_6np7h")]
+
+[node name="MovementDirect" parent="LeftHand" unique_id=2073954715 instance=ExtResource("2_qsjsf")]
+strafe = true
+
+[node name="RightHand" type="XRController3D" parent="." unique_id=1988565191]
+tracker = &"right_hand"
+
+[node name="RightHand" parent="RightHand" unique_id=392314345 instance=ExtResource("3_he3x1")]
+
+[node name="MovementTurn" parent="RightHand" unique_id=553005132 instance=ExtResource("4_wdqtq")]
+turn_mode = 2
+
+[node name="PlayerBody" parent="." unique_id=1684975387 instance=ExtResource("5_2me0v")]
