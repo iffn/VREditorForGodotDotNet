@@ -3,9 +3,10 @@
 [ext_resource type="Script" uid="uid://dqq3sob3v2ch4" path="res://VoxelEditorForGodotDotNet/VRSetup/XRSetup.cs" id="1_7wtub"]
 [ext_resource type="PackedScene" uid="uid://c22wq6cschyl4" path="res://VoxelEditorForGodotDotNet/VRSetup/VR Player.tscn" id="2_b5hl1"]
 [ext_resource type="Script" uid="uid://5gxxof5umue8" path="res://VoxelEditorForGodotDotNet/VoxelEditor/Scripts/Editor/VoxelEditor.cs" id="3_0ke6k"]
-[ext_resource type="PackedScene" uid="uid://75xt687g4r3j" path="res://VoxelEditorForGodotDotNet/VRSetup/ground.tscn" id="3_ley5p"]
+[ext_resource type="PackedScene" uid="uid://75xt687g4r3j" path="res://VoxelEditorForGodotDotNet/VRSetup/Ground.tscn" id="3_ley5p"]
 [ext_resource type="PackedScene" uid="uid://d0kisqcq43ebm" path="res://VoxelEditorForGodotDotNet/VoxelEditor/VoxelController.tscn" id="4_5a50w"]
 [ext_resource type="Script" uid="uid://bjeiev8dmyfdj" path="res://VoxelEditorForGodotDotNet/VoxelEditor/Scripts/EditTools/SphereEditShape.cs" id="5_a1cwr"]
+[ext_resource type="JSON" path="res://VoxelEditorForGodotDotNet/SampleSave.json" id="6_kybn2"]
 [ext_resource type="Material" uid="uid://cr2gj02o7km1c" path="res://VoxelEditorForGodotDotNet/MaterialsAndShaders/TriplanarTerrain.tres" id="7_rweoq"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_4myu2"]
@@ -73,6 +74,7 @@ controller = NodePath("../VoxelController")
 sphereShape = NodePath("../VR player/RightHand/RightHand/Sphere edit shape")
 RightController = NodePath("../VR player/RightHand")
 gridSize = Vector3i(128, 128, 128)
+voxelWorldFile = ExtResource("6_kybn2")
 
 [node name="VoxelController" parent="." unique_id=264195901 instance=ExtResource("4_5a50w")]
 transform = Transform3D(0.05, 0, 0, 0, 0.05, 0, 0, 0, 0.05, 0, 0, 0)

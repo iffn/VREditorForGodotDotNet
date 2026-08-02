@@ -23,6 +23,15 @@ namespace VoxelEditorForGodotDotNet.Core
 
         public bool ViewsSetUp { get; private set; } = false;
 
+        // Public access to the underlying VoxelModel
+        public VoxelModel VoxelModel => mainModel;
+
+        // Helper to force-refresh all chunks (for instance, after bulk loads)
+        public void UpdateAllViews()
+        {
+            UpdateAllChunks();
+        }
+
         public List<string> MainMaterialNames
         {
             get
