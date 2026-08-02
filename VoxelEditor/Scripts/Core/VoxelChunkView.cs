@@ -161,7 +161,7 @@ namespace VoxelEditorForGodotDotNet.Core
 
             mesh.ClearSurfaces();
 
-            if (cachedMeshData.Vertices.Count >= 3)
+            if (cachedMeshData.Vertices.Count >= 3 && cachedMeshData.Triangles.Count >= 3)
             {
                 var surfaceArray = new Godot.Collections.Array();
                 surfaceArray.Resize((int)Mesh.ArrayType.Max);
