@@ -19,6 +19,7 @@
   - Plugins -> Enable `Godot XR Tools`
   - General -> XR - OpenXR -> Enabled to On
   - General -> XR - Shaders -> Enabled to On (Restart Godot as prompted)
+- Project -> Tools -> XR Tools -> Set Physics layeres
 - Add this repository to the main folder.
 - Create a C# script in the asset folder and delete it for Godot to compile .net (...)
 - Select a test scene
