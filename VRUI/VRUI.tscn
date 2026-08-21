@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://b0a7dxaps0gik" path="res://VoxelEditorForGodotDotNet/VRUI/LayoutControllers/TabController.gd" id="1_pwdga"]
 [ext_resource type="Script" uid="uid://ss7nveo1bxow" path="res://VoxelEditorForGodotDotNet/VRUI/LayoutControllers/MovementModeController.gd" id="2_pfr3i"]
 [ext_resource type="PackedScene" uid="uid://ycmpv6k3hxhn" path="res://VoxelEditorForGodotDotNet/VRUI/Elements/VR Editor controls.tscn" id="2_pwdga"]
+[ext_resource type="Script" uid="uid://7fkpar0ek3wi" path="res://VoxelEditorForGodotDotNet/VRUI/LayoutControllers/TerrainEditModeController.gd" id="5_f1uaf"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_kyb4g"]
 font_size = 20
@@ -72,6 +73,7 @@ toggle_mode = true
 text = "Settings"
 
 [node name="Movement" type="HBoxContainer" parent="VBoxContainer" unique_id=78061369 node_paths=PackedStringArray("edit_mode_elements", "rpg_mode_elements", "start_select_toggle")]
+visible = false
 layout_mode = 2
 script = ExtResource("2_pfr3i")
 edit_mode_elements = [NodePath("Actions/Enter RPG here"), NodePath("Actions/Select RPG start"), NodePath("Controls/VR Editor controls"), NodePath("Actions/Edit active")]
@@ -139,9 +141,13 @@ layout_mode = 2
 text = "RPG mode:
 - A Button: Jump"
 
-[node name="Terrain editing" type="HBoxContainer" parent="VBoxContainer" unique_id=1457802167]
-visible = false
+[node name="Terrain editing" type="HBoxContainer" parent="VBoxContainer" unique_id=1457802167 node_paths=PackedStringArray("sphere_tool", "box_tool", "cylinder_tool", "default_tool")]
 layout_mode = 2
+script = ExtResource("5_f1uaf")
+sphere_tool = NodePath("Actions/Sphere tool")
+box_tool = NodePath("Actions/Box tool")
+cylinder_tool = NodePath("Actions/Clyinder tool")
+default_tool = NodePath("Actions/Sphere tool")
 
 [node name="Actions" type="VBoxContainer" parent="VBoxContainer/Terrain editing" unique_id=623552259]
 custom_minimum_size = Vector2(200, 0)
@@ -159,12 +165,21 @@ text = "Show wireframe"
 [node name="Sphere tool" type="Button" parent="VBoxContainer/Terrain editing/Actions" unique_id=1599664905]
 custom_minimum_size = Vector2(0, 80)
 layout_mode = 2
+toggle_mode = true
+button_pressed = true
 text = "Sphere tool"
 
 [node name="Box tool" type="Button" parent="VBoxContainer/Terrain editing/Actions" unique_id=906803918]
 custom_minimum_size = Vector2(0, 80)
 layout_mode = 2
+toggle_mode = true
 text = "Box tool"
+
+[node name="Clyinder tool" type="Button" parent="VBoxContainer/Terrain editing/Actions" unique_id=2096405754]
+custom_minimum_size = Vector2(0, 80)
+layout_mode = 2
+toggle_mode = true
+text = "Cylinder tool"
 
 [node name="VSeparator" type="VSeparator" parent="VBoxContainer/Terrain editing" unique_id=211674809]
 custom_minimum_size = Vector2(10, 0)
