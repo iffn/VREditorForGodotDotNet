@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://ycmpv6k3hxhn"]
+
+[node name="VR Editor controls" type="Label" unique_id=1759891102]
+text = "VR Editor controls:
+- Hold both Grab at the same time: Zoom
+ "

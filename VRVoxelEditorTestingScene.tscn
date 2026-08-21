@@ -3,9 +3,12 @@
 [ext_resource type="Script" uid="uid://dqq3sob3v2ch4" path="res://VoxelEditorForGodotDotNet/VRSetup/XRSetup.cs" id="1_7wtub"]
 [ext_resource type="PackedScene" uid="uid://c22wq6cschyl4" path="res://VoxelEditorForGodotDotNet/VRSetup/VR Player.tscn" id="2_b5hl1"]
 [ext_resource type="Script" uid="uid://5gxxof5umue8" path="res://VoxelEditorForGodotDotNet/VoxelEditor/Scripts/Editor/VoxelEditor.cs" id="3_0ke6k"]
+[ext_resource type="PackedScene" uid="uid://cqhw276realc" path="res://addons/godot-xr-tools/functions/function_pointer.tscn" id="3_6jxom"]
 [ext_resource type="PackedScene" uid="uid://75xt687g4r3j" path="res://VoxelEditorForGodotDotNet/VRSetup/Ground.tscn" id="3_ley5p"]
 [ext_resource type="PackedScene" uid="uid://d0kisqcq43ebm" path="res://VoxelEditorForGodotDotNet/VoxelEditor/VoxelController.tscn" id="4_5a50w"]
+[ext_resource type="PackedScene" uid="uid://clujaf3u776a3" path="res://addons/godot-xr-tools/objects/viewport_2d_in_3d.tscn" id="4_pkb7p"]
 [ext_resource type="Script" uid="uid://bjeiev8dmyfdj" path="res://VoxelEditorForGodotDotNet/VoxelEditor/Scripts/EditTools/SphereEditShape.cs" id="5_a1cwr"]
+[ext_resource type="PackedScene" uid="uid://drnw7l2nvb6rk" path="res://VoxelEditorForGodotDotNet/VRUI/VRUI.tscn" id="5_pkb7p"]
 [ext_resource type="JSON" path="res://VoxelEditorForGodotDotNet/SampleSave.json" id="6_kybn2"]
 [ext_resource type="Material" uid="uid://cr2gj02o7km1c" path="res://VoxelEditorForGodotDotNet/MaterialsAndShaders/TriplanarTerrain.tres" id="7_rweoq"]
 
@@ -20,6 +23,8 @@ sky_material = SubResource("ProceduralSkyMaterial_4myu2")
 background_mode = 2
 sky = SubResource("Sky_o3bkj")
 glow_enabled = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pkb7p"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ley5p"]
 transparency = 1
@@ -42,8 +47,21 @@ environment = SubResource("Environment_p8rij")
 transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
 shadow_enabled = true
 
+[node name="Viewport2Din3D" parent="." unique_id=67990177 instance=ExtResource("4_pkb7p")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.093678, 0.9999995, 1.7368479)
+scene = ExtResource("5_pkb7p")
+viewport_size = Vector2(1280, 720)
+material = SubResource("StandardMaterial3D_pkb7p")
+transparent = 1
+scene_properties_keys = PackedStringArray()
+
 [node name="VR player" parent="." unique_id=1445165384 instance=ExtResource("2_b5hl1")]
 transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, 0, 0, 0)
+
+[node name="FunctionPointer" parent="VR player/LeftHand" parent_id_path=PackedInt32Array(1445165384, 1533857695) index="2" unique_id=1443856219 instance=ExtResource("3_6jxom")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.02, 0.05, -0.1)
+show_laser = 2
+laser_length = 1
 
 [node name="Sphere edit shape" type="Node3D" parent="VR player/RightHand/RightHand" parent_id_path=PackedInt32Array(1445165384, 392314345) index="2" unique_id=984267362]
 transform = Transform3D(-0.2, 0, 3.019916e-08, 0, 0.2, 0, -3.019916e-08, 0, -0.2, -0.07419953, 0, -0.019258518)

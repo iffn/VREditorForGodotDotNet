@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://bcvlgcw5kl2bl"]
+
+[node name="Basic controls" type="Label" unique_id=2104643096]
+text = "Basic conrols:
+- Left Stick: Move
+- Right Strick Horizontal: Turn
+- Left Trigger: UI interactions
+ "
