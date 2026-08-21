@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://drnw7l2nvb6rk"]
 
 [ext_resource type="PackedScene" uid="uid://bcvlgcw5kl2bl" path="res://VoxelEditorForGodotDotNet/VRUI/Elements/Basic controls.tscn" id="1_isimi"]
+[ext_resource type="Script" uid="uid://b0a7dxaps0gik" path="res://VoxelEditorForGodotDotNet/VRUI/LayoutControllers/TabController.gd" id="1_pwdga"]
 [ext_resource type="PackedScene" uid="uid://ycmpv6k3hxhn" path="res://VoxelEditorForGodotDotNet/VRUI/Elements/VR Editor controls.tscn" id="2_pwdga"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_kyb4g"]
@@ -31,8 +32,12 @@ layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="Tabs" type="HBoxContainer" parent="VBoxContainer" unique_id=1052045089]
+[node name="Tabs" type="HBoxContainer" parent="VBoxContainer" unique_id=1052045089 node_paths=PackedStringArray("buttons", "elements", "default")]
 layout_mode = 2
+script = ExtResource("1_pwdga")
+buttons = [NodePath("Movement"), NodePath("Edit terrain"), NodePath("Edit objects"), NodePath("SaveLoad"), NodePath("Settings")]
+elements = [NodePath("../Movement"), NodePath("../Terrain editing"), NodePath("../Edit objects"), NodePath("../Save and load"), NodePath("../Settings")]
+default = NodePath("Edit terrain")
 
 [node name="Movement" type="Button" parent="VBoxContainer/Tabs" unique_id=1514369491]
 custom_minimum_size = Vector2(200, 40)
