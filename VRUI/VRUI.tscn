@@ -2,6 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://bcvlgcw5kl2bl" path="res://VoxelEditorForGodotDotNet/VRUI/Elements/Basic controls.tscn" id="1_isimi"]
 [ext_resource type="Script" uid="uid://b0a7dxaps0gik" path="res://VoxelEditorForGodotDotNet/VRUI/LayoutControllers/TabController.gd" id="1_pwdga"]
+[ext_resource type="Script" uid="uid://ss7nveo1bxow" path="res://VoxelEditorForGodotDotNet/VRUI/LayoutControllers/MovementModeController.gd" id="2_pfr3i"]
 [ext_resource type="PackedScene" uid="uid://ycmpv6k3hxhn" path="res://VoxelEditorForGodotDotNet/VRUI/Elements/VR Editor controls.tscn" id="2_pwdga"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_kyb4g"]
@@ -70,8 +71,12 @@ layout_mode = 2
 toggle_mode = true
 text = "Settings"
 
-[node name="Movement" type="HBoxContainer" parent="VBoxContainer" unique_id=78061369]
+[node name="Movement" type="HBoxContainer" parent="VBoxContainer" unique_id=78061369 node_paths=PackedStringArray("edit_mode_elements", "rpg_mode_elements", "start_select_toggle")]
 layout_mode = 2
+script = ExtResource("2_pfr3i")
+edit_mode_elements = [NodePath("Actions/Enter RPG here"), NodePath("Actions/Select RPG start"), NodePath("Controls/VR Editor controls"), NodePath("Actions/Edit active")]
+rpg_mode_elements = [NodePath("Actions/Enter Edit mode"), NodePath("Controls/RPG mode controls"), NodePath("Actions/RPG active")]
+start_select_toggle = NodePath("Actions/Select RPG start")
 
 [node name="Actions" type="VBoxContainer" parent="VBoxContainer/Movement" unique_id=774918630]
 custom_minimum_size = Vector2(200, 0)
@@ -79,8 +84,16 @@ layout_mode = 2
 
 [node name="Title" type="Label" parent="VBoxContainer/Movement/Actions" unique_id=2096475405]
 layout_mode = 2
-text = "Spawnable objects"
+text = "Mode selection"
 label_settings = SubResource("LabelSettings_kyb4g")
+
+[node name="RPG active" type="Label" parent="VBoxContainer/Movement/Actions" unique_id=905034158]
+layout_mode = 2
+text = "Currently in RPG mode"
+
+[node name="Edit active" type="Label" parent="VBoxContainer/Movement/Actions" unique_id=1259162355]
+layout_mode = 2
+text = "Currently in Edit mode"
 
 [node name="Enter RPG here" type="Button" parent="VBoxContainer/Movement/Actions" unique_id=66510776]
 custom_minimum_size = Vector2(0, 80)
@@ -92,6 +105,7 @@ here"
 [node name="Select RPG start" type="Button" parent="VBoxContainer/Movement/Actions" unique_id=1589546095]
 custom_minimum_size = Vector2(0, 80)
 layout_mode = 2
+toggle_mode = true
 text = "Select
 RPG mode
 start"
@@ -120,7 +134,7 @@ layout_mode = 2
 [node name="VR Editor controls" parent="VBoxContainer/Movement/Controls" unique_id=1759891102 instance=ExtResource("2_pwdga")]
 layout_mode = 2
 
-[node name="RPG mode" type="Label" parent="VBoxContainer/Movement/Controls" unique_id=1080310963]
+[node name="RPG mode controls" type="Label" parent="VBoxContainer/Movement/Controls" unique_id=1080310963]
 layout_mode = 2
 text = "RPG mode:
 - A Button: Jump"
@@ -313,3 +327,6 @@ layout_mode = 2
 
 [node name="VR Editor controls" parent="VBoxContainer/Settings/Controls" unique_id=961237820 instance=ExtResource("2_pwdga")]
 layout_mode = 2
+
+[connection signal="button_down" from="VBoxContainer/Movement/Actions/Enter RPG here" to="VBoxContainer/Movement" method="enter_rpg_here"]
+[connection signal="button_down" from="VBoxContainer/Movement/Actions/Enter Edit mode" to="VBoxContainer/Movement" method="enter_edit_mode"]
