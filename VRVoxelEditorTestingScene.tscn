@@ -6,10 +6,12 @@
 [ext_resource type="PackedScene" uid="uid://cqhw276realc" path="res://addons/godot-xr-tools/functions/function_pointer.tscn" id="3_6jxom"]
 [ext_resource type="PackedScene" uid="uid://75xt687g4r3j" path="res://VoxelEditorForGodotDotNet/VRSetup/Ground.tscn" id="3_ley5p"]
 [ext_resource type="PackedScene" uid="uid://d0kisqcq43ebm" path="res://VoxelEditorForGodotDotNet/VoxelEditor/VoxelController.tscn" id="4_5a50w"]
+[ext_resource type="Script" uid="uid://bt6va6t8psdoo" path="res://VoxelEditorForGodotDotNet/Movement/GhostMovement.gd" id="4_kyy50"]
 [ext_resource type="PackedScene" uid="uid://clujaf3u776a3" path="res://addons/godot-xr-tools/objects/viewport_2d_in_3d.tscn" id="4_pkb7p"]
 [ext_resource type="Script" uid="uid://bjeiev8dmyfdj" path="res://VoxelEditorForGodotDotNet/VoxelEditor/Scripts/EditTools/SphereEditShape.cs" id="5_a1cwr"]
 [ext_resource type="PackedScene" uid="uid://drnw7l2nvb6rk" path="res://VoxelEditorForGodotDotNet/VRUI/VRUI.tscn" id="5_pkb7p"]
 [ext_resource type="JSON" path="res://VoxelEditorForGodotDotNet/SampleSave.json" id="6_kybn2"]
+[ext_resource type="Script" uid="uid://c5tqoains5ikr" path="res://VoxelEditorForGodotDotNet/Movement/PlayerScaler.gd" id="7_4andk"]
 [ext_resource type="Material" uid="uid://cr2gj02o7km1c" path="res://VoxelEditorForGodotDotNet/MaterialsAndShaders/TriplanarTerrain.tres" id="7_rweoq"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_4myu2"]
@@ -24,12 +26,16 @@ background_mode = 2
 sky = SubResource("Sky_o3bkj")
 glow_enabled = true
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pkb7p"]
-shading_mode = 0
-
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ley5p"]
 transparency = 1
 albedo_color = Color(0, 0.69803923, 1, 0.5686275)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pkb7p"]
+shading_mode = 0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lpj5r"]
+transparency = 1
+albedo_color = Color(0, 1, 1, 0.49803922)
 
 [sub_resource type="QuadMesh" id="QuadMesh_lpj5r"]
 size = Vector2(128, 128)
@@ -48,23 +54,23 @@ environment = SubResource("Environment_p8rij")
 transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
 shadow_enabled = true
 
-[node name="Viewport2Din3D2" parent="." unique_id=1080869904 instance=ExtResource("4_pkb7p")]
-transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -0.083332464, 0.77390033, -0.28295282)
-scene = ExtResource("5_pkb7p")
-viewport_size = Vector2(1280, 720)
-material = SubResource("StandardMaterial3D_pkb7p")
-transparent = 1
-scene_properties_keys = PackedStringArray()
-
 [node name="VR player" parent="." unique_id=1445165384 instance=ExtResource("2_b5hl1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 
+[node name="MovementDirect" parent="VR player/LeftHand" parent_id_path=PackedInt32Array(1445165384, 1533857695) index="1" unique_id=2073954715]
+enabled = false
+
 [node name="FunctionPointer" parent="VR player/LeftHand" parent_id_path=PackedInt32Array(1445165384, 1533857695) index="2" unique_id=1443856219 instance=ExtResource("3_6jxom")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.02, 0.05, 0.4854397)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.02, 0.05, -0.1)
 distance = 1.0
 show_laser = 2
 laser_length = 1
 suppress_radius = 0.0
+
+[node name="Ghost movement" type="Node3D" parent="VR player/LeftHand" parent_id_path=PackedInt32Array(1445165384, 1533857695) index="3" unique_id=246850508 node_paths=PackedStringArray("xr_origin") groups=["movement_providers"]]
+script = ExtResource("4_kyy50")
+xr_origin = NodePath("../..")
+fly_in_head_direction = true
 
 [node name="Sphere edit shape" type="Node3D" parent="VR player/RightHand/RightHand" parent_id_path=PackedInt32Array(1445165384, 392314345) index="2" unique_id=984267362]
 transform = Transform3D(-0.2, 0, 3.019916e-08, 0, 0.2, 0, -3.019916e-08, 0, -0.2, -0.07419953, 0, -0.019258518)
@@ -75,13 +81,34 @@ radial_segments = 24
 rings = 12
 material = SubResource("StandardMaterial3D_ley5p")
 
-[node name="Viewport2Din3D" parent="VR player/RightHand" parent_id_path=PackedInt32Array(1445165384, 1988565191) index="2" unique_id=67990177 instance=ExtResource("4_pkb7p")]
+[node name="Hand menu" parent="VR player/RightHand" parent_id_path=PackedInt32Array(1445165384, 1988565191) index="2" unique_id=67990177 instance=ExtResource("4_pkb7p")]
 transform = Transform3D(0.07071067, 0, -0.07071069, 0, 0.1, 0, 0.07071069, 0, 0.07071067, 0.13402732, 0.117425606, 0.1682572)
 scene = ExtResource("5_pkb7p")
 viewport_size = Vector2(1280, 720)
 material = SubResource("StandardMaterial3D_pkb7p")
 transparent = 1
 scene_properties_keys = PackedStringArray()
+
+[node name="PlayerBody" parent="VR player" index="3" unique_id=1684975387]
+collision_mask = 0
+
+[node name="Scaler" type="Node3D" parent="VR player" unique_id=1210497391 node_paths=PackedStringArray("xr_origin", "left_controller", "right_controller", "scale_indicator", "scale_text") groups=["movement_providers"]]
+script = ExtResource("7_4andk")
+order = null
+xr_origin = NodePath("..")
+left_controller = NodePath("../LeftHand")
+right_controller = NodePath("../RightHand")
+scale_indicator = NodePath("CSGBox3D")
+scale_text = NodePath("CSGBox3D/Label3D")
+enabled = null
+
+[node name="CSGBox3D" type="CSGBox3D" parent="VR player/Scaler" unique_id=1002310420]
+material = SubResource("StandardMaterial3D_lpj5r")
+
+[node name="Label3D" type="Label3D" parent="VR player/Scaler/CSGBox3D" unique_id=769598924]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
+no_depth_test = true
+text = "1.0"
 
 [node name="Ground" parent="." unique_id=993000832 instance=ExtResource("3_ley5p")]
 
