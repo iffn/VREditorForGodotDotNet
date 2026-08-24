@@ -13,6 +13,7 @@
 [ext_resource type="JSON" path="res://VoxelEditorForGodotDotNet/SampleSave.json" id="6_kybn2"]
 [ext_resource type="Script" uid="uid://c5tqoains5ikr" path="res://VoxelEditorForGodotDotNet/Movement/PlayerScaler.gd" id="7_4andk"]
 [ext_resource type="Material" uid="uid://cr2gj02o7km1c" path="res://VoxelEditorForGodotDotNet/MaterialsAndShaders/TriplanarTerrain.tres" id="7_rweoq"]
+[ext_resource type="Script" uid="uid://cvjda7yiv4yti" path="res://VoxelEditorForGodotDotNet/Movement/PlayerSideCoordinator.gd" id="9_cje6n"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_4myu2"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -25,6 +26,8 @@ sky_material = SubResource("ProceduralSkyMaterial_4myu2")
 background_mode = 2
 sky = SubResource("Sky_o3bkj")
 glow_enabled = true
+
+[sub_resource type="SphereMesh" id="SphereMesh_bld8a"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ley5p"]
 transparency = 1
@@ -72,43 +75,67 @@ script = ExtResource("4_kyy50")
 xr_origin = NodePath("../..")
 fly_in_head_direction = true
 
-[node name="Sphere edit shape" type="Node3D" parent="VR player/RightHand/RightHand" parent_id_path=PackedInt32Array(1445165384, 392314345) index="2" unique_id=984267362]
+[node name="InteractionPoint" type="Node3D" parent="VR player/RightHand/RightHand" parent_id_path=PackedInt32Array(1445165384, 392314345) index="2" unique_id=820863047]
 transform = Transform3D(-0.2, 0, 3.019916e-08, 0, 0.2, 0, -3.019916e-08, 0, -0.2, -0.07419953, 0, -0.019258518)
+
+[node name="Sphere edit shape" type="Node3D" parent="VR player/RightHand/RightHand/InteractionPoint" unique_id=984267362]
 script = ExtResource("5_a1cwr")
 
-[node name="CSGSphere3D" type="CSGSphere3D" parent="VR player/RightHand/RightHand/Sphere edit shape" unique_id=1897643649]
-radial_segments = 24
-rings = 12
-material = SubResource("StandardMaterial3D_ley5p")
+[node name="Sphere shape" type="MeshInstance3D" parent="VR player/RightHand/RightHand/InteractionPoint/Sphere edit shape" unique_id=1244715999]
+mesh = SubResource("SphereMesh_bld8a")
+surface_material_override/0 = SubResource("StandardMaterial3D_ley5p")
 
-[node name="Hand menu" parent="VR player/RightHand" parent_id_path=PackedInt32Array(1445165384, 1988565191) index="2" unique_id=67990177 instance=ExtResource("4_pkb7p")]
+[node name="InteractionVisualizer" type="MeshInstance3D" parent="VR player/RightHand/RightHand/InteractionPoint" unique_id=1365543189]
+transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, 0, 0)
+visible = false
+mesh = SubResource("SphereMesh_bld8a")
+surface_material_override/0 = SubResource("StandardMaterial3D_ley5p")
+
+[node name="Hand menu" parent="VR player/RightHand" parent_id_path=PackedInt32Array(1445165384, 1988565191) index="2" unique_id=67990177 node_paths=PackedStringArray("movement_mode_controller", "terrain_edit_controller", "edit_object_controller", "save_and_load_controller", "settings_controller", "tab_controller") instance=ExtResource("4_pkb7p")]
 transform = Transform3D(0.07071067, 0, -0.07071069, 0, 0.1, 0, 0.07071069, 0, 0.07071067, 0.13402732, 0.117425606, 0.1682572)
 scene = ExtResource("5_pkb7p")
 viewport_size = Vector2(1280, 720)
 material = SubResource("StandardMaterial3D_pkb7p")
 transparent = 1
-scene_properties_keys = PackedStringArray()
-
-[node name="PlayerBody" parent="VR player" index="3" unique_id=1684975387]
-collision_mask = 0
+scene_properties_keys = PackedStringArray("ElementLinker.gd", "movement_mode_controller", "terrain_edit_controller", "edit_object_controller", "save_and_load_controller", "settings_controller", "tab_controller")
+movement_mode_controller = NodePath("Viewport/VRUI/Vertical arrangement/Movement")
+terrain_edit_controller = NodePath("Viewport/VRUI/Vertical arrangement/Terrain editing")
+edit_object_controller = NodePath("Viewport/VRUI/Vertical arrangement/Edit objects")
+save_and_load_controller = NodePath("Viewport/VRUI/Vertical arrangement/Save and load")
+settings_controller = NodePath("Viewport/VRUI/Vertical arrangement/Settings")
+tab_controller = NodePath("Viewport/VRUI/Vertical arrangement/Tabs")
 
 [node name="Scaler" type="Node3D" parent="VR player" unique_id=1210497391 node_paths=PackedStringArray("xr_origin", "left_controller", "right_controller", "scale_indicator", "scale_text") groups=["movement_providers"]]
 script = ExtResource("7_4andk")
-order = null
 xr_origin = NodePath("..")
 left_controller = NodePath("../LeftHand")
 right_controller = NodePath("../RightHand")
 scale_indicator = NodePath("CSGBox3D")
 scale_text = NodePath("CSGBox3D/Label3D")
-enabled = null
 
 [node name="CSGBox3D" type="CSGBox3D" parent="VR player/Scaler" unique_id=1002310420]
+top_level = true
+visible = false
 material = SubResource("StandardMaterial3D_lpj5r")
 
 [node name="Label3D" type="Label3D" parent="VR player/Scaler/CSGBox3D" unique_id=769598924]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
 no_depth_test = true
 text = "1.0"
+
+[node name="PlayerSideCoordinator" type="Node3D" parent="VR player" unique_id=876242536 node_paths=PackedStringArray("player", "body", "scaler", "hand_menu", "rpg_movement_provider", "ghost_movement_provider", "voxel_editor", "interaction_point", "sphere_edit_shape", "interaction_visualizer")]
+script = ExtResource("9_cje6n")
+player = NodePath("..")
+body = NodePath("../PlayerBody")
+scaler = NodePath("../Scaler")
+hand_menu = NodePath("../RightHand/Hand menu")
+rpg_movement_provider = NodePath("../LeftHand/MovementDirect")
+ghost_movement_provider = NodePath("../LeftHand/Ghost movement")
+voxel_editor = NodePath("../../VoxelEditor")
+interaction_point = NodePath("../RightHand/RightHand/InteractionPoint")
+sphere_edit_shape = NodePath("../RightHand/RightHand/InteractionPoint/Sphere edit shape")
+interaction_visualizer = NodePath("../RightHand/RightHand/InteractionPoint/InteractionVisualizer")
+rgp_collisions = 1023
 
 [node name="Ground" parent="." unique_id=993000832 instance=ExtResource("3_ley5p")]
 
@@ -127,7 +154,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.1967235, 0.5, 8.693771)
 [node name="VoxelEditor" type="Node3D" parent="." unique_id=1260496153 node_paths=PackedStringArray("controller", "sphereShape", "RightController")]
 script = ExtResource("3_0ke6k")
 controller = NodePath("../VoxelController")
-sphereShape = NodePath("../VR player/RightHand/RightHand/Sphere edit shape")
+sphereShape = NodePath("../VR player/RightHand/RightHand/InteractionPoint/Sphere edit shape")
 RightController = NodePath("../VR player/RightHand")
 gridSize = Vector3i(128, 128, 128)
 voxelWorldFile = ExtResource("6_kybn2")

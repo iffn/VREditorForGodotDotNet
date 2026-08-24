@@ -1,15 +1,19 @@
 [gd_scene format=3 uid="uid://drnw7l2nvb6rk"]
 
+[ext_resource type="Script" uid="uid://cghh283a44yaw" path="res://VoxelEditorForGodotDotNet/VRUI/LayoutControllers/ElementLinker.gd" id="1_37c2b"]
 [ext_resource type="PackedScene" uid="uid://bcvlgcw5kl2bl" path="res://VoxelEditorForGodotDotNet/VRUI/Elements/Basic controls.tscn" id="1_isimi"]
 [ext_resource type="Script" uid="uid://b0a7dxaps0gik" path="res://VoxelEditorForGodotDotNet/VRUI/LayoutControllers/TabController.gd" id="1_pwdga"]
 [ext_resource type="Script" uid="uid://ss7nveo1bxow" path="res://VoxelEditorForGodotDotNet/VRUI/LayoutControllers/MovementModeController.gd" id="2_pfr3i"]
 [ext_resource type="PackedScene" uid="uid://ycmpv6k3hxhn" path="res://VoxelEditorForGodotDotNet/VRUI/Elements/VR Editor controls.tscn" id="2_pwdga"]
 [ext_resource type="Script" uid="uid://7fkpar0ek3wi" path="res://VoxelEditorForGodotDotNet/VRUI/LayoutControllers/TerrainEditModeController.gd" id="5_f1uaf"]
+[ext_resource type="Script" uid="uid://b8x7b3jjfgx70" path="res://VoxelEditorForGodotDotNet/VRUI/LayoutControllers/EditObjectController.gd" id="7_rwoe2"]
+[ext_resource type="Script" uid="uid://bpqw20u5t4kio" path="res://VoxelEditorForGodotDotNet/VRUI/LayoutControllers/SaveAndLoadController.gd" id="8_v73p8"]
+[ext_resource type="Script" uid="uid://dyqjn4cgkky3m" path="res://VoxelEditorForGodotDotNet/VRUI/LayoutControllers/SettingsController.gd" id="9_2rud3"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_kyb4g"]
 font_size = 20
 
-[node name="VRUI" type="Control" unique_id=251705351]
+[node name="VRUI" type="Control" unique_id=251705351 node_paths=PackedStringArray("movement_mode_controller", "terrain_edit_controller", "edit_object_controller", "save_and_load_controller", "settings_controller", "tab_controller")]
 custom_minimum_size = Vector2(1280, 720)
 layout_mode = 3
 anchors_preset = 15
@@ -19,6 +23,13 @@ offset_right = 128.0
 offset_bottom = 72.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_37c2b")
+movement_mode_controller = NodePath("Vertical arrangement/Movement")
+terrain_edit_controller = NodePath("Vertical arrangement/Terrain editing")
+edit_object_controller = NodePath("Vertical arrangement/Edit objects")
+save_and_load_controller = NodePath("Vertical arrangement/Save and load")
+settings_controller = NodePath("Vertical arrangement/Settings")
+tab_controller = NodePath("Vertical arrangement/Tabs")
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=1201577117]
 layout_mode = 1
@@ -29,82 +40,81 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.2, 0.2, 0.2, 1)
 
-[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=80520695]
+[node name="Vertical arrangement" type="VBoxContainer" parent="." unique_id=80520695]
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="Tabs" type="HBoxContainer" parent="VBoxContainer" unique_id=1052045089 node_paths=PackedStringArray("buttons", "elements", "default")]
+[node name="Tabs" type="HBoxContainer" parent="Vertical arrangement" unique_id=1052045089 node_paths=PackedStringArray("buttons", "elements", "default")]
 layout_mode = 2
 script = ExtResource("1_pwdga")
 buttons = [NodePath("Movement"), NodePath("Edit terrain"), NodePath("Edit objects"), NodePath("SaveLoad"), NodePath("Settings")]
 elements = [NodePath("../Movement"), NodePath("../Terrain editing"), NodePath("../Edit objects"), NodePath("../Save and load"), NodePath("../Settings")]
 default = NodePath("Edit terrain")
 
-[node name="Movement" type="Button" parent="VBoxContainer/Tabs" unique_id=1514369491]
+[node name="Movement" type="Button" parent="Vertical arrangement/Tabs" unique_id=1514369491]
 custom_minimum_size = Vector2(200, 40)
 layout_mode = 2
 toggle_mode = true
 text = "Movement"
 
-[node name="Edit terrain" type="Button" parent="VBoxContainer/Tabs" unique_id=1724622915]
+[node name="Edit terrain" type="Button" parent="Vertical arrangement/Tabs" unique_id=1724622915]
 custom_minimum_size = Vector2(200, 40)
 layout_mode = 2
 toggle_mode = true
 button_pressed = true
 text = "Edit terrain"
 
-[node name="Edit objects" type="Button" parent="VBoxContainer/Tabs" unique_id=1207864528]
+[node name="Edit objects" type="Button" parent="Vertical arrangement/Tabs" unique_id=1207864528]
 custom_minimum_size = Vector2(200, 40)
 layout_mode = 2
 toggle_mode = true
 text = "Edit objects"
 
-[node name="SaveLoad" type="Button" parent="VBoxContainer/Tabs" unique_id=1674763837]
+[node name="SaveLoad" type="Button" parent="Vertical arrangement/Tabs" unique_id=1674763837]
 custom_minimum_size = Vector2(200, 40)
 layout_mode = 2
 toggle_mode = true
 text = "Save/Load"
 
-[node name="Settings" type="Button" parent="VBoxContainer/Tabs" unique_id=1416511471]
+[node name="Settings" type="Button" parent="Vertical arrangement/Tabs" unique_id=1416511471]
 custom_minimum_size = Vector2(200, 40)
 layout_mode = 2
 toggle_mode = true
 text = "Settings"
 
-[node name="Movement" type="HBoxContainer" parent="VBoxContainer" unique_id=78061369 node_paths=PackedStringArray("edit_mode_elements", "rpg_mode_elements", "start_select_toggle")]
-visible = false
+[node name="Movement" type="HBoxContainer" parent="Vertical arrangement" unique_id=78061369 node_paths=PackedStringArray("edit_mode_elements", "rpg_mode_elements", "start_select_toggle")]
 layout_mode = 2
 script = ExtResource("2_pfr3i")
 edit_mode_elements = [NodePath("Actions/Enter RPG here"), NodePath("Actions/Select RPG start"), NodePath("Controls/VR Editor controls"), NodePath("Actions/Edit active")]
 rpg_mode_elements = [NodePath("Actions/Enter Edit mode"), NodePath("Controls/RPG mode controls"), NodePath("Actions/RPG active")]
 start_select_toggle = NodePath("Actions/Select RPG start")
 
-[node name="Actions" type="VBoxContainer" parent="VBoxContainer/Movement" unique_id=774918630]
+[node name="Actions" type="VBoxContainer" parent="Vertical arrangement/Movement" unique_id=774918630]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 
-[node name="Title" type="Label" parent="VBoxContainer/Movement/Actions" unique_id=2096475405]
+[node name="Title" type="Label" parent="Vertical arrangement/Movement/Actions" unique_id=2096475405]
 layout_mode = 2
 text = "Mode selection"
 label_settings = SubResource("LabelSettings_kyb4g")
 
-[node name="RPG active" type="Label" parent="VBoxContainer/Movement/Actions" unique_id=905034158]
+[node name="RPG active" type="Label" parent="Vertical arrangement/Movement/Actions" unique_id=905034158]
 layout_mode = 2
 text = "Currently in RPG mode"
 
-[node name="Edit active" type="Label" parent="VBoxContainer/Movement/Actions" unique_id=1259162355]
+[node name="Edit active" type="Label" parent="Vertical arrangement/Movement/Actions" unique_id=1259162355]
 layout_mode = 2
 text = "Currently in Edit mode"
 
-[node name="Enter RPG here" type="Button" parent="VBoxContainer/Movement/Actions" unique_id=66510776]
+[node name="Enter RPG here" type="Button" parent="Vertical arrangement/Movement/Actions" unique_id=66510776]
 custom_minimum_size = Vector2(0, 80)
 layout_mode = 2
 text = "Enter
 RPG mode
 here"
 
-[node name="Select RPG start" type="Button" parent="VBoxContainer/Movement/Actions" unique_id=1589546095]
+[node name="Select RPG start" type="Button" parent="Vertical arrangement/Movement/Actions" unique_id=1589546095]
 custom_minimum_size = Vector2(0, 80)
 layout_mode = 2
 toggle_mode = true
@@ -112,36 +122,36 @@ text = "Select
 RPG mode
 start"
 
-[node name="Enter Edit mode" type="Button" parent="VBoxContainer/Movement/Actions" unique_id=175475089]
+[node name="Enter Edit mode" type="Button" parent="Vertical arrangement/Movement/Actions" unique_id=175475089]
 custom_minimum_size = Vector2(0, 80)
 layout_mode = 2
 text = "Enter
 Edit mode"
 
-[node name="VSeparator" type="VSeparator" parent="VBoxContainer/Movement" unique_id=1381998193]
+[node name="VSeparator" type="VSeparator" parent="Vertical arrangement/Movement" unique_id=1381998193]
 custom_minimum_size = Vector2(10, 0)
 layout_mode = 2
 
-[node name="Controls" type="VBoxContainer" parent="VBoxContainer/Movement" unique_id=932060627]
+[node name="Controls" type="VBoxContainer" parent="Vertical arrangement/Movement" unique_id=932060627]
 layout_mode = 2
 
-[node name="Title" type="Label" parent="VBoxContainer/Movement/Controls" unique_id=1846594595]
+[node name="Title" type="Label" parent="Vertical arrangement/Movement/Controls" unique_id=1846594595]
 layout_mode = 2
 text = "Controls:"
 label_settings = SubResource("LabelSettings_kyb4g")
 
-[node name="Basic controls" parent="VBoxContainer/Movement/Controls" unique_id=2104643096 instance=ExtResource("1_isimi")]
+[node name="Basic controls" parent="Vertical arrangement/Movement/Controls" unique_id=2104643096 instance=ExtResource("1_isimi")]
 layout_mode = 2
 
-[node name="VR Editor controls" parent="VBoxContainer/Movement/Controls" unique_id=1759891102 instance=ExtResource("2_pwdga")]
+[node name="VR Editor controls" parent="Vertical arrangement/Movement/Controls" unique_id=1759891102 instance=ExtResource("2_pwdga")]
 layout_mode = 2
 
-[node name="RPG mode controls" type="Label" parent="VBoxContainer/Movement/Controls" unique_id=1080310963]
+[node name="RPG mode controls" type="Label" parent="Vertical arrangement/Movement/Controls" unique_id=1080310963]
 layout_mode = 2
 text = "RPG mode:
 - A Button: Jump"
 
-[node name="Terrain editing" type="HBoxContainer" parent="VBoxContainer" unique_id=1457802167 node_paths=PackedStringArray("sphere_tool", "box_tool", "cylinder_tool", "default_tool")]
+[node name="Terrain editing" type="HBoxContainer" parent="Vertical arrangement" unique_id=1457802167 node_paths=PackedStringArray("sphere_tool", "box_tool", "cylinder_tool", "default_tool")]
 layout_mode = 2
 script = ExtResource("5_f1uaf")
 sphere_tool = NodePath("Actions/Sphere tool")
@@ -149,111 +159,111 @@ box_tool = NodePath("Actions/Box tool")
 cylinder_tool = NodePath("Actions/Clyinder tool")
 default_tool = NodePath("Actions/Sphere tool")
 
-[node name="Actions" type="VBoxContainer" parent="VBoxContainer/Terrain editing" unique_id=623552259]
+[node name="Actions" type="VBoxContainer" parent="Vertical arrangement/Terrain editing" unique_id=623552259]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 
-[node name="Title" type="Label" parent="VBoxContainer/Terrain editing/Actions" unique_id=751435385]
+[node name="Title" type="Label" parent="Vertical arrangement/Terrain editing/Actions" unique_id=751435385]
 layout_mode = 2
 text = "Settings"
 label_settings = SubResource("LabelSettings_kyb4g")
 
-[node name="CheckButton" type="CheckButton" parent="VBoxContainer/Terrain editing/Actions" unique_id=1415505309]
+[node name="CheckButton" type="CheckButton" parent="Vertical arrangement/Terrain editing/Actions" unique_id=1415505309]
 layout_mode = 2
 text = "Show wireframe"
 
-[node name="Sphere tool" type="Button" parent="VBoxContainer/Terrain editing/Actions" unique_id=1599664905]
+[node name="Sphere tool" type="Button" parent="Vertical arrangement/Terrain editing/Actions" unique_id=1599664905]
 custom_minimum_size = Vector2(0, 80)
 layout_mode = 2
 toggle_mode = true
 button_pressed = true
 text = "Sphere tool"
 
-[node name="Box tool" type="Button" parent="VBoxContainer/Terrain editing/Actions" unique_id=906803918]
+[node name="Box tool" type="Button" parent="Vertical arrangement/Terrain editing/Actions" unique_id=906803918]
 custom_minimum_size = Vector2(0, 80)
 layout_mode = 2
 toggle_mode = true
 text = "Box tool"
 
-[node name="Clyinder tool" type="Button" parent="VBoxContainer/Terrain editing/Actions" unique_id=2096405754]
+[node name="Clyinder tool" type="Button" parent="Vertical arrangement/Terrain editing/Actions" unique_id=2096405754]
 custom_minimum_size = Vector2(0, 80)
 layout_mode = 2
 toggle_mode = true
 text = "Cylinder tool"
 
-[node name="VSeparator" type="VSeparator" parent="VBoxContainer/Terrain editing" unique_id=211674809]
+[node name="VSeparator" type="VSeparator" parent="Vertical arrangement/Terrain editing" unique_id=211674809]
 custom_minimum_size = Vector2(10, 0)
 layout_mode = 2
 
-[node name="Controls" type="VBoxContainer" parent="VBoxContainer/Terrain editing" unique_id=1039888451]
+[node name="Controls" type="VBoxContainer" parent="Vertical arrangement/Terrain editing" unique_id=1039888451]
 layout_mode = 2
 
-[node name="Title" type="Label" parent="VBoxContainer/Terrain editing/Controls" unique_id=1273625224]
+[node name="Title" type="Label" parent="Vertical arrangement/Terrain editing/Controls" unique_id=1273625224]
 layout_mode = 2
 text = "Controls:"
 label_settings = SubResource("LabelSettings_kyb4g")
 
-[node name="Basic controls" parent="VBoxContainer/Terrain editing/Controls" unique_id=1484853136 instance=ExtResource("1_isimi")]
+[node name="Basic controls" parent="Vertical arrangement/Terrain editing/Controls" unique_id=1484853136 instance=ExtResource("1_isimi")]
 layout_mode = 2
 
-[node name="VR Editor controls" parent="VBoxContainer/Terrain editing/Controls" unique_id=145780898 instance=ExtResource("2_pwdga")]
+[node name="VR Editor controls" parent="Vertical arrangement/Terrain editing/Controls" unique_id=145780898 instance=ExtResource("2_pwdga")]
 layout_mode = 2
 
-[node name="Terrain editing controls" type="Label" parent="VBoxContainer/Terrain editing/Controls" unique_id=309666388]
+[node name="Terrain editing controls" type="Label" parent="Vertical arrangement/Terrain editing/Controls" unique_id=309666388]
 layout_mode = 2
 text = "Terrain editing controls:
 - Hold Right Trigger: Add
 - Hold Right Grab and Trigger together: Remove
 - Right Stick Up Down: Scale tool"
 
-[node name="Edit objects" type="HBoxContainer" parent="VBoxContainer" unique_id=1774076046]
-visible = false
+[node name="Edit objects" type="HBoxContainer" parent="Vertical arrangement" unique_id=1774076046]
 layout_mode = 2
+script = ExtResource("7_rwoe2")
 
-[node name="Actions" type="VBoxContainer" parent="VBoxContainer/Edit objects" unique_id=1080682851]
+[node name="Actions" type="VBoxContainer" parent="Vertical arrangement/Edit objects" unique_id=1080682851]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 
-[node name="Title" type="Label" parent="VBoxContainer/Edit objects/Actions" unique_id=1930140062]
+[node name="Title" type="Label" parent="Vertical arrangement/Edit objects/Actions" unique_id=1930140062]
 layout_mode = 2
 text = "Spawnable objects"
 label_settings = SubResource("LabelSettings_kyb4g")
 
-[node name="Spawn player capsule" type="Button" parent="VBoxContainer/Edit objects/Actions" unique_id=760576910]
+[node name="Spawn player capsule" type="Button" parent="Vertical arrangement/Edit objects/Actions" unique_id=760576910]
 custom_minimum_size = Vector2(0, 80)
 layout_mode = 2
 text = "Spawn player 
 sized capsule"
 
-[node name="Spawn tree" type="Button" parent="VBoxContainer/Edit objects/Actions" unique_id=225016596]
+[node name="Spawn tree" type="Button" parent="Vertical arrangement/Edit objects/Actions" unique_id=225016596]
 custom_minimum_size = Vector2(0, 80)
 layout_mode = 2
 text = "Spawn tree"
 
-[node name="Spawn river" type="Button" parent="VBoxContainer/Edit objects/Actions" unique_id=1164412310]
+[node name="Spawn river" type="Button" parent="Vertical arrangement/Edit objects/Actions" unique_id=1164412310]
 custom_minimum_size = Vector2(0, 80)
 layout_mode = 2
 text = "Spawn river"
 
-[node name="VSeparator" type="VSeparator" parent="VBoxContainer/Edit objects" unique_id=2031492858]
+[node name="VSeparator" type="VSeparator" parent="Vertical arrangement/Edit objects" unique_id=2031492858]
 custom_minimum_size = Vector2(10, 0)
 layout_mode = 2
 
-[node name="Controls" type="VBoxContainer" parent="VBoxContainer/Edit objects" unique_id=698263275]
+[node name="Controls" type="VBoxContainer" parent="Vertical arrangement/Edit objects" unique_id=698263275]
 layout_mode = 2
 
-[node name="Title" type="Label" parent="VBoxContainer/Edit objects/Controls" unique_id=1345722053]
+[node name="Title" type="Label" parent="Vertical arrangement/Edit objects/Controls" unique_id=1345722053]
 layout_mode = 2
 text = "Controls:"
 label_settings = SubResource("LabelSettings_kyb4g")
 
-[node name="Basic controls" parent="VBoxContainer/Edit objects/Controls" unique_id=263528666 instance=ExtResource("1_isimi")]
+[node name="Basic controls" parent="Vertical arrangement/Edit objects/Controls" unique_id=263528666 instance=ExtResource("1_isimi")]
 layout_mode = 2
 
-[node name="VR Editor controls" parent="VBoxContainer/Edit objects/Controls" unique_id=1507914316 instance=ExtResource("2_pwdga")]
+[node name="VR Editor controls" parent="Vertical arrangement/Edit objects/Controls" unique_id=1507914316 instance=ExtResource("2_pwdga")]
 layout_mode = 2
 
-[node name="Terrain editing controls" type="Label" parent="VBoxContainer/Edit objects/Controls" unique_id=1586843586]
+[node name="Terrain editing controls" type="Label" parent="Vertical arrangement/Edit objects/Controls" unique_id=1586843586]
 layout_mode = 2
 text = "Object edit controls:
 - Hold Grab: Pick up and move item
@@ -261,87 +271,88 @@ text = "Object edit controls:
 - A Button: Duplicate
 - B Button: Remove"
 
-[node name="Save and load" type="HBoxContainer" parent="VBoxContainer" unique_id=559272270]
-visible = false
+[node name="Save and load" type="HBoxContainer" parent="Vertical arrangement" unique_id=559272270]
 layout_mode = 2
+script = ExtResource("8_v73p8")
 
-[node name="Actions" type="VBoxContainer" parent="VBoxContainer/Save and load" unique_id=151627995]
+[node name="Actions" type="VBoxContainer" parent="Vertical arrangement/Save and load" unique_id=151627995]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 
-[node name="Title" type="Label" parent="VBoxContainer/Save and load/Actions" unique_id=1701314412]
+[node name="Title" type="Label" parent="Vertical arrangement/Save and load/Actions" unique_id=1701314412]
 layout_mode = 2
 text = "Spawnable objects"
 label_settings = SubResource("LabelSettings_kyb4g")
 
-[node name="Save" type="Button" parent="VBoxContainer/Save and load/Actions" unique_id=1395450275]
+[node name="Save" type="Button" parent="Vertical arrangement/Save and load/Actions" unique_id=1395450275]
 custom_minimum_size = Vector2(0, 80)
 layout_mode = 2
 text = "Save"
 
-[node name="Load last" type="Button" parent="VBoxContainer/Save and load/Actions" unique_id=1658547154]
+[node name="Load last" type="Button" parent="Vertical arrangement/Save and load/Actions" unique_id=1658547154]
 custom_minimum_size = Vector2(0, 80)
 layout_mode = 2
 text = "Load last"
 
-[node name="VSeparator" type="VSeparator" parent="VBoxContainer/Save and load" unique_id=1699606206]
+[node name="VSeparator" type="VSeparator" parent="Vertical arrangement/Save and load" unique_id=1699606206]
 custom_minimum_size = Vector2(10, 0)
 layout_mode = 2
 
-[node name="Controls" type="VBoxContainer" parent="VBoxContainer/Save and load" unique_id=1757925941]
+[node name="Controls" type="VBoxContainer" parent="Vertical arrangement/Save and load" unique_id=1757925941]
 layout_mode = 2
 
-[node name="Title" type="Label" parent="VBoxContainer/Save and load/Controls" unique_id=1427494859]
+[node name="Title" type="Label" parent="Vertical arrangement/Save and load/Controls" unique_id=1427494859]
 layout_mode = 2
 text = "Controls:"
 label_settings = SubResource("LabelSettings_kyb4g")
 
-[node name="Basic controls" parent="VBoxContainer/Save and load/Controls" unique_id=483972889 instance=ExtResource("1_isimi")]
+[node name="Basic controls" parent="Vertical arrangement/Save and load/Controls" unique_id=483972889 instance=ExtResource("1_isimi")]
 layout_mode = 2
 
-[node name="VR Editor controls" parent="VBoxContainer/Save and load/Controls" unique_id=43171138 instance=ExtResource("2_pwdga")]
+[node name="VR Editor controls" parent="Vertical arrangement/Save and load/Controls" unique_id=43171138 instance=ExtResource("2_pwdga")]
 layout_mode = 2
 
-[node name="Settings" type="HBoxContainer" parent="VBoxContainer" unique_id=1880190788]
-visible = false
+[node name="Settings" type="HBoxContainer" parent="Vertical arrangement" unique_id=1880190788]
 layout_mode = 2
+script = ExtResource("9_2rud3")
 
-[node name="Spawnable objects" type="VBoxContainer" parent="VBoxContainer/Settings" unique_id=2007750743]
+[node name="Spawnable objects" type="VBoxContainer" parent="Vertical arrangement/Settings" unique_id=2007750743]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 
-[node name="Title" type="Label" parent="VBoxContainer/Settings/Spawnable objects" unique_id=164646305]
+[node name="Title" type="Label" parent="Vertical arrangement/Settings/Spawnable objects" unique_id=164646305]
 layout_mode = 2
 text = "Settings"
 label_settings = SubResource("LabelSettings_kyb4g")
 
-[node name="Smooth turning" type="CheckButton" parent="VBoxContainer/Settings/Spawnable objects" unique_id=777774893]
+[node name="Smooth turning" type="CheckButton" parent="Vertical arrangement/Settings/Spawnable objects" unique_id=777774893]
 layout_mode = 2
 button_pressed = true
 text = "Smooth turning"
 
-[node name="Right handed" type="CheckButton" parent="VBoxContainer/Settings/Spawnable objects" unique_id=1595224727]
+[node name="Right handed" type="CheckButton" parent="Vertical arrangement/Settings/Spawnable objects" unique_id=1595224727]
 layout_mode = 2
 button_pressed = true
 text = "Right handed"
 
-[node name="VSeparator" type="VSeparator" parent="VBoxContainer/Settings" unique_id=413857276]
+[node name="VSeparator" type="VSeparator" parent="Vertical arrangement/Settings" unique_id=413857276]
 custom_minimum_size = Vector2(10, 0)
 layout_mode = 2
 
-[node name="Controls" type="VBoxContainer" parent="VBoxContainer/Settings" unique_id=1007779796]
+[node name="Controls" type="VBoxContainer" parent="Vertical arrangement/Settings" unique_id=1007779796]
 layout_mode = 2
 
-[node name="Title" type="Label" parent="VBoxContainer/Settings/Controls" unique_id=1507069537]
+[node name="Title" type="Label" parent="Vertical arrangement/Settings/Controls" unique_id=1507069537]
 layout_mode = 2
 text = "Controls:"
 label_settings = SubResource("LabelSettings_kyb4g")
 
-[node name="Basic controls" parent="VBoxContainer/Settings/Controls" unique_id=1456056334 instance=ExtResource("1_isimi")]
+[node name="Basic controls" parent="Vertical arrangement/Settings/Controls" unique_id=1456056334 instance=ExtResource("1_isimi")]
 layout_mode = 2
 
-[node name="VR Editor controls" parent="VBoxContainer/Settings/Controls" unique_id=961237820 instance=ExtResource("2_pwdga")]
+[node name="VR Editor controls" parent="Vertical arrangement/Settings/Controls" unique_id=961237820 instance=ExtResource("2_pwdga")]
 layout_mode = 2
 
-[connection signal="button_down" from="VBoxContainer/Movement/Actions/Enter RPG here" to="VBoxContainer/Movement" method="enter_rpg_here"]
-[connection signal="button_down" from="VBoxContainer/Movement/Actions/Enter Edit mode" to="VBoxContainer/Movement" method="enter_edit_mode"]
+[connection signal="button_down" from="Vertical arrangement/Movement/Actions/Enter RPG here" to="Vertical arrangement/Movement" method="enter_rpg_here"]
+[connection signal="toggled" from="Vertical arrangement/Movement/Actions/Select RPG start" to="Vertical arrangement/Movement" method="toggle_select_start_mode"]
+[connection signal="button_down" from="Vertical arrangement/Movement/Actions/Enter Edit mode" to="Vertical arrangement/Movement" method="enter_edit_mode"]

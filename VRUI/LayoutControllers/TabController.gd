@@ -1,17 +1,43 @@
 extends Node
 
+class_name TabController
+
 @export var buttons : Array[Button]
-@export var elements : Array[Control]
+@export var elements : Array[UIModeController]
 
 @export var default : Button
 
-func _ready() -> void:
-	for button in buttons:
-		button.pressed.connect(select.bind(button))
-	select(default)
+var current_index : int
 
-func select(button: Button):
+var current_button : Button :
+	get:
+		return buttons[current_index]
+
+var current_element : UIModeController :
+	get:
+		return elements[current_index]
+
+func set_visibility():
 	for i in buttons.size():
-		var is_selected := buttons[i] == button
-		buttons[i].button_pressed = is_selected
-		elements[i].visible = is_selected
+		elements[i].visible = false
+	current_element.visible = true
+
+func _ready() -> void:
+	for i in buttons.size():
+		buttons[i].pressed.connect(select.bind(i))
+		if buttons[i] == default:
+			current_index = i
+	
+	current_button.button_pressed = true
+	current_element.visible = true
+
+func select(new_index: int):
+	current_button.button_pressed = false
+	current_element.visible = false
+	current_element.enabled(false)
+	
+	current_index = new_index
+	
+	current_button.button_pressed = true
+	current_element.visible = true
+	current_element.enabled(true)

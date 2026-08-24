@@ -6,6 +6,7 @@ using static VoxelEditorForGodotDotNet.EditTools.BaseModificationTools;
 
 namespace VoxelEditorForGodotDotNet.Core
 {
+	[GlobalClass]
 	public partial class VoxelEditor : Node
 	{
 		[Export] private VoxelController controller;
@@ -23,6 +24,9 @@ namespace VoxelEditorForGodotDotNet.Core
 		[Export] private bool enableAutoSave = true;
 		[Export] private float autoSaveDelaySeconds = 2.0f; // Save 2 seconds after finishing paint stroke
 
+		public bool paintingActive = true;
+		public bool autosaveEnabled = true;
+		
 		private bool isDirty = false;
 		private bool wasPaintingLastFrame = false;
 		private float autoSaveTimer = 0f;
@@ -78,8 +82,11 @@ namespace VoxelEditorForGodotDotNet.Core
 
 		public override void _Process(double delta)
 		{
-			HandlePainting((float)delta);
-			HandleAutoSaveTimer((float)delta);
+			if(paintingActive)
+				HandlePainting((float)delta);
+			
+			if(autosaveEnabled)
+				HandleAutoSaveTimer((float)delta);
 		}
 
 		private void HandlePainting(float delta)

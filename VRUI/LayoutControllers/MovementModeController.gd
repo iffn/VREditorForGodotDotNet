@@ -1,10 +1,12 @@
-extends Node
+extends UIModeController
 
 class_name MovementModeController
 
 @export var edit_mode_elements : Array[Control]
 @export var rpg_mode_elements : Array[Control]
 @export var start_select_toggle : Button
+
+var player_side_coordinator: PlayerSideCoordinator
 
 var _rpg_mode:
 	set(active):
@@ -16,11 +18,16 @@ var _rpg_mode:
 func disable_start_toggle():
 	start_select_toggle.set_pressed_no_signal(false)
 
-func _ready() -> void:
-	_rpg_mode = false
+func assign(_player_side_coordinator: PlayerSideCoordinator):
+	player_side_coordinator = _player_side_coordinator
+	print("assign on movement was called")
 
-func _process(delta: float) -> void:
-	if(start_select_toggle.pressed):
+func enabled(state : bool):
+	if state:
+		player_side_coordinator.interaction_state = PlayerSideCoordinator.interaction_states.none
+
+func toggle_select_start_mode(active: bool):
+	if start_select_toggle.pressed:
 		pass
 
 func enter_rpg_here():
