@@ -91,19 +91,12 @@ visible = false
 mesh = SubResource("SphereMesh_bld8a")
 surface_material_override/0 = SubResource("StandardMaterial3D_ley5p")
 
-[node name="Hand menu" parent="VR player/RightHand" parent_id_path=PackedInt32Array(1445165384, 1988565191) index="2" unique_id=67990177 node_paths=PackedStringArray("movement_mode_controller", "terrain_edit_controller", "edit_object_controller", "save_and_load_controller", "settings_controller", "tab_controller") instance=ExtResource("4_pkb7p")]
+[node name="Hand menu" parent="VR player/RightHand" parent_id_path=PackedInt32Array(1445165384, 1988565191) index="2" unique_id=67990177 instance=ExtResource("4_pkb7p")]
 transform = Transform3D(0.07071067, 0, -0.07071069, 0, 0.1, 0, 0.07071069, 0, 0.07071067, 0.13402732, 0.117425606, 0.1682572)
 scene = ExtResource("5_pkb7p")
 viewport_size = Vector2(1280, 720)
 material = SubResource("StandardMaterial3D_pkb7p")
-transparent = 1
 scene_properties_keys = PackedStringArray("ElementLinker.gd", "movement_mode_controller", "terrain_edit_controller", "edit_object_controller", "save_and_load_controller", "settings_controller", "tab_controller")
-movement_mode_controller = NodePath("Viewport/VRUI/Vertical arrangement/Movement")
-terrain_edit_controller = NodePath("Viewport/VRUI/Vertical arrangement/Terrain editing")
-edit_object_controller = NodePath("Viewport/VRUI/Vertical arrangement/Edit objects")
-save_and_load_controller = NodePath("Viewport/VRUI/Vertical arrangement/Save and load")
-settings_controller = NodePath("Viewport/VRUI/Vertical arrangement/Settings")
-tab_controller = NodePath("Viewport/VRUI/Vertical arrangement/Tabs")
 
 [node name="Scaler" type="Node3D" parent="VR player" unique_id=1210497391 node_paths=PackedStringArray("xr_origin", "left_controller", "right_controller", "scale_indicator", "scale_text") groups=["movement_providers"]]
 script = ExtResource("7_4andk")
