@@ -9,6 +9,14 @@ class_name ElementLinker
 @export var settings_controller : SettingsController
 @export var tab_controller : TabController
 
+func _ready() -> void:
+	print(movement_mode_controller != null)
+	print(terrain_edit_controller != null)
+	print(edit_object_controller != null)
+	print(save_and_load_controller != null)
+	print(settings_controller != null)
+	print(tab_controller != null)
+
 func assign(player_side_coordinator: PlayerSideCoordinator):
 	print("Assignment trying")
 	
