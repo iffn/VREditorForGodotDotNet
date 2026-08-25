@@ -1,6 +1,6 @@
 extends UIModeController
 
-class_name TerrainEditModeController
+class_name VoxelUI
 
 @export var sphere_tool : Button
 @export var box_tool : Button

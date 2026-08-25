@@ -2,13 +2,13 @@
 
 [ext_resource type="Script" uid="uid://cghh283a44yaw" path="res://VoxelEditorForGodotDotNet/VRUI/LayoutControllers/ElementLinker.gd" id="1_37c2b"]
 [ext_resource type="PackedScene" uid="uid://bcvlgcw5kl2bl" path="res://VoxelEditorForGodotDotNet/VRUI/Elements/Basic controls.tscn" id="1_isimi"]
-[ext_resource type="Script" uid="uid://b0a7dxaps0gik" path="res://VoxelEditorForGodotDotNet/VRUI/LayoutControllers/TabController.gd" id="1_pwdga"]
-[ext_resource type="Script" uid="uid://ss7nveo1bxow" path="res://VoxelEditorForGodotDotNet/VRUI/LayoutControllers/MovementModeController.gd" id="2_pfr3i"]
+[ext_resource type="Script" uid="uid://b0a7dxaps0gik" path="res://VoxelEditorForGodotDotNet/VRUI/LayoutControllers/TabUI.gd" id="1_pwdga"]
+[ext_resource type="Script" uid="uid://ss7nveo1bxow" path="res://VoxelEditorForGodotDotNet/VRUI/LayoutControllers/MovementUI.gd" id="2_pfr3i"]
 [ext_resource type="PackedScene" uid="uid://ycmpv6k3hxhn" path="res://VoxelEditorForGodotDotNet/VRUI/Elements/VR Editor controls.tscn" id="2_pwdga"]
-[ext_resource type="Script" uid="uid://7fkpar0ek3wi" path="res://VoxelEditorForGodotDotNet/VRUI/LayoutControllers/TerrainEditModeController.gd" id="5_f1uaf"]
+[ext_resource type="Script" uid="uid://7fkpar0ek3wi" path="res://VoxelEditorForGodotDotNet/VRUI/LayoutControllers/VoxelUI.gd" id="5_f1uaf"]
 [ext_resource type="Script" uid="uid://b8x7b3jjfgx70" path="res://VoxelEditorForGodotDotNet/VRUI/LayoutControllers/EditObjectController.gd" id="7_rwoe2"]
-[ext_resource type="Script" uid="uid://bpqw20u5t4kio" path="res://VoxelEditorForGodotDotNet/VRUI/LayoutControllers/SaveAndLoadController.gd" id="8_v73p8"]
-[ext_resource type="Script" uid="uid://dyqjn4cgkky3m" path="res://VoxelEditorForGodotDotNet/VRUI/LayoutControllers/SettingsController.gd" id="9_2rud3"]
+[ext_resource type="Script" uid="uid://bpqw20u5t4kio" path="res://VoxelEditorForGodotDotNet/VRUI/LayoutControllers/SaveAndLoadUI.gd" id="8_v73p8"]
+[ext_resource type="Script" uid="uid://dyqjn4cgkky3m" path="res://VoxelEditorForGodotDotNet/VRUI/LayoutControllers/SettingsUI.gd" id="9_2rud3"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_kyb4g"]
 font_size = 20
@@ -34,7 +34,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.2, 0.2, 0.2, 1)
 
-[node name="Using Onready, do not rename stuff" type="Node" parent="." unique_id=1408808996]
+[node name="Do not rename stuff due to onready use" type="Node" parent="." unique_id=1408808996]
 
 [node name="Vertical arrangement" type="VBoxContainer" parent="." unique_id=80520695]
 layout_mode = 0

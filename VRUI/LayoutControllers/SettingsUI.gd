@@ -1,6 +1,6 @@
 extends UIModeController
 
-class_name SaveAndLoadController
+class_name SettingsUI
 
 var player_side_coordinator: PlayerSideCoordinator
 

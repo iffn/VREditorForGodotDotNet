@@ -1,6 +1,6 @@
 extends Node
 
-class_name TabController
+class_name TabUI
 
 @export var buttons : Array[Button]
 @export var elements : Array[UIModeController]

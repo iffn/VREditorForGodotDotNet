@@ -1,6 +1,6 @@
 extends UIModeController
 
-class_name MovementModeController
+class_name MovementUI
 
 @export var edit_mode_elements : Array[Control]
 @export var rpg_mode_elements : Array[Control]
