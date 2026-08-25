@@ -2,14 +2,17 @@ extends Node
 
 class_name ElementLinker
 
-@export var movement_mode_controller : MovementModeController # Weird caching bug: Breaks if called without 2
-@export var terrain_edit_controller : TerrainEditModeController
-@export var edit_object_controller : EditObjectController
-@export var save_and_load_controller : SaveAndLoadController
-@export var settings_controller : SettingsController
-@export var tab_controller : TabController
+# Usin Onready, since XRToolsViewport2DIn3D breaks @export assigned in prefab scene
+# https://github.com/GodotVR/godot-xr-tools/issues/889
+@onready var movement_mode_controller : MovementModeController = $"Vertical arrangement/Movement"
+@onready var terrain_edit_controller : TerrainEditModeController = $"Vertical arrangement/Terrain editing"
+@onready var edit_object_controller : EditObjectController = $"Vertical arrangement/Edit objects"
+@onready var save_and_load_controller : SaveAndLoadController = $"Vertical arrangement/Save and load"
+@onready var settings_controller : SettingsController = $"Vertical arrangement/Settings"
+@onready var tab_controller : TabController = $"Vertical arrangement/Tabs"
 
 func _ready() -> void:
+	return
 	print(movement_mode_controller != null)
 	print(terrain_edit_controller != null)
 	print(edit_object_controller != null)

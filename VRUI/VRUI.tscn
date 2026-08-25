@@ -13,7 +13,7 @@
 [sub_resource type="LabelSettings" id="LabelSettings_kyb4g"]
 font_size = 20
 
-[node name="VRUI" type="Control" unique_id=251705351 node_paths=PackedStringArray("movement_mode_controller", "terrain_edit_controller", "edit_object_controller", "save_and_load_controller", "settings_controller", "tab_controller")]
+[node name="VRUI" type="Control" unique_id=251705351]
 custom_minimum_size = Vector2(1280, 720)
 layout_mode = 3
 anchors_preset = 15
@@ -24,12 +24,6 @@ offset_bottom = 72.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_37c2b")
-movement_mode_controller = NodePath("Vertical arrangement/Movement")
-terrain_edit_controller = NodePath("Vertical arrangement/Terrain editing")
-edit_object_controller = NodePath("Vertical arrangement/Edit objects")
-save_and_load_controller = NodePath("Vertical arrangement/Save and load")
-settings_controller = NodePath("Vertical arrangement/Settings")
-tab_controller = NodePath("Vertical arrangement/Tabs")
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=1201577117]
 layout_mode = 1
@@ -39,6 +33,8 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.2, 0.2, 0.2, 1)
+
+[node name="Using Onready, do not rename stuff" type="Node" parent="." unique_id=1408808996]
 
 [node name="Vertical arrangement" type="VBoxContainer" parent="." unique_id=80520695]
 layout_mode = 0

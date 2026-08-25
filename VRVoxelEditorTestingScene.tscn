@@ -96,7 +96,7 @@ transform = Transform3D(0.07071067, 0, -0.07071069, 0, 0.1, 0, 0.07071069, 0, 0.
 scene = ExtResource("5_pkb7p")
 viewport_size = Vector2(1280, 720)
 material = SubResource("StandardMaterial3D_pkb7p")
-scene_properties_keys = PackedStringArray("ElementLinker.gd", "movement_mode_controller", "terrain_edit_controller", "edit_object_controller", "save_and_load_controller", "settings_controller", "tab_controller")
+scene_properties_keys = PackedStringArray("ElementLinker.gd")
 
 [node name="Scaler" type="Node3D" parent="VR player" unique_id=1210497391 node_paths=PackedStringArray("xr_origin", "left_controller", "right_controller", "scale_indicator", "scale_text") groups=["movement_providers"]]
 script = ExtResource("7_4andk")
