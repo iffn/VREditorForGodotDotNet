@@ -27,12 +27,14 @@ func _ready() -> void:
 		buttons[i].pressed.connect(select.bind(i))
 		if buttons[i] == default:
 			current_index = i
+		elements[i].visible = false
+	
 	
 	current_button.button_pressed = true
 	current_element.visible = true
 
 func activate_current():
-	current_element.enabled(true)
+	select(current_index)
 
 func select(new_index: int):
 	current_button.button_pressed = false
