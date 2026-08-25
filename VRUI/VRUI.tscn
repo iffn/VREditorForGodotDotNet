@@ -79,13 +79,13 @@ layout_mode = 2
 toggle_mode = true
 text = "Settings"
 
-[node name="Movement" type="HBoxContainer" parent="Vertical arrangement" unique_id=78061369 node_paths=PackedStringArray("edit_mode_elements", "rpg_mode_elements", "start_select_toggle")]
-visible = false
+[node name="Movement" type="HBoxContainer" parent="Vertical arrangement" unique_id=78061369 node_paths=PackedStringArray("edit_mode_elements", "rpg_mode_elements", "start_select_toggle", "toggle_button")]
 layout_mode = 2
 script = ExtResource("2_pfr3i")
-edit_mode_elements = [NodePath("Actions/Enter RPG here"), NodePath("Actions/Select RPG start"), NodePath("Controls/VR Editor controls"), NodePath("Actions/Edit active")]
-rpg_mode_elements = [NodePath("Actions/Enter Edit mode"), NodePath("Controls/RPG mode controls"), NodePath("Actions/RPG active")]
+edit_mode_elements = [NodePath("Actions/Select RPG start"), NodePath("Controls/VR Editor controls"), NodePath("Actions/Edit active")]
+rpg_mode_elements = [NodePath("Controls/RPG mode controls"), NodePath("Actions/RPG active")]
 start_select_toggle = NodePath("Actions/Select RPG start")
+toggle_button = NodePath("Actions/Toggle RPG mode")
 
 [node name="Actions" type="VBoxContainer" parent="Vertical arrangement/Movement" unique_id=774918630]
 custom_minimum_size = Vector2(200, 0)
@@ -104,9 +104,10 @@ text = "Currently in RPG mode"
 layout_mode = 2
 text = "Currently in Edit mode"
 
-[node name="Enter RPG here" type="Button" parent="Vertical arrangement/Movement/Actions" unique_id=66510776]
+[node name="Toggle RPG mode" type="Button" parent="Vertical arrangement/Movement/Actions" unique_id=66510776]
 custom_minimum_size = Vector2(0, 80)
 layout_mode = 2
+action_mode = 0
 text = "Enter
 RPG mode
 here"
@@ -115,15 +116,10 @@ here"
 custom_minimum_size = Vector2(0, 80)
 layout_mode = 2
 toggle_mode = true
+action_mode = 0
 text = "Select
 RPG mode
 start"
-
-[node name="Enter Edit mode" type="Button" parent="Vertical arrangement/Movement/Actions" unique_id=175475089]
-custom_minimum_size = Vector2(0, 80)
-layout_mode = 2
-text = "Enter
-Edit mode"
 
 [node name="VSeparator" type="VSeparator" parent="Vertical arrangement/Movement" unique_id=1381998193]
 custom_minimum_size = Vector2(10, 0)
@@ -354,6 +350,5 @@ layout_mode = 2
 [node name="VR Editor controls" parent="Vertical arrangement/Settings/Controls" unique_id=961237820 instance=ExtResource("2_pwdga")]
 layout_mode = 2
 
-[connection signal="button_down" from="Vertical arrangement/Movement/Actions/Enter RPG here" to="Vertical arrangement/Movement" method="enter_rpg_here"]
+[connection signal="button_down" from="Vertical arrangement/Movement/Actions/Toggle RPG mode" to="Vertical arrangement/Movement" method="toggle_rpg_mode"]
 [connection signal="toggled" from="Vertical arrangement/Movement/Actions/Select RPG start" to="Vertical arrangement/Movement" method="toggle_select_start_mode"]
-[connection signal="button_down" from="Vertical arrangement/Movement/Actions/Enter Edit mode" to="Vertical arrangement/Movement" method="enter_edit_mode"]

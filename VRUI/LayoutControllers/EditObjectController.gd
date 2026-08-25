@@ -8,4 +8,5 @@ func assign(_object_edit_controller : ObjectEditController):
 	object_edit_controller = _object_edit_controller
 
 func enabled(state : bool):
-	object_edit_controller.active = state
+	if object_edit_controller:
+		object_edit_controller.active = state

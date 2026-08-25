@@ -25,7 +25,8 @@ func assign(_voxel_editor : VoxelEditor):
 	voxel_editor = _voxel_editor
 
 func enabled(state : bool):
-	voxel_editor.PaintingActive = state
+	if voxel_editor:
+		voxel_editor.PaintingActive = state
 
 
 func setup():
