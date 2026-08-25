@@ -10,7 +10,6 @@ class_name TerrainEditModeController
 
 var _tools : Array[Button]
 
-var player_side_coordinator: PlayerSideCoordinator
 var voxel_editor : VoxelEditor
 
 func _ready() -> void:
@@ -22,12 +21,12 @@ func _ready() -> void:
 	for button in _tools:
 		button.pressed.connect(select.bind(button))
 
-func assign(_player_side_coordinator: PlayerSideCoordinator):
-	player_side_coordinator = _player_side_coordinator
+func assign(_voxel_editor : VoxelEditor):
+	voxel_editor = _voxel_editor
 
 func enabled(state : bool):
-	if state:
-		player_side_coordinator.interaction_state = PlayerSideCoordinator.interaction_states.painting
+	voxel_editor.paintingActive = state
+
 
 func setup():
 	select(default_tool)

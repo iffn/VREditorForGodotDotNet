@@ -2,11 +2,10 @@ extends UIModeController
 
 class_name EditObjectController
 
-var player_side_coordinator: PlayerSideCoordinator
+var object_edit_controller : ObjectEditController
 
-func assign(_player_side_coordinator: PlayerSideCoordinator):
-	player_side_coordinator = _player_side_coordinator
+func assign(_object_edit_controller : ObjectEditController):
+	object_edit_controller = _object_edit_controller
 
 func enabled(state : bool):
-	if state:
-		player_side_coordinator.interaction_state = PlayerSideCoordinator.interaction_states.interacting
+	object_edit_controller.active = state

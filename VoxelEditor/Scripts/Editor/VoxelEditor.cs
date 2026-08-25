@@ -10,11 +10,12 @@ namespace VoxelEditorForGodotDotNet.Core
 	public partial class VoxelEditor : Node
 	{
 		[Export] private VoxelController controller;
+		[Export] private Node3D shapeHolder;
 		[Export] private SphereEditShape sphereShape;
 		[Export] public XRController3D RightController { get; set; }
 
 		[Export] private Vector3I gridSize = new Vector3I(32, 32, 32);
-		[Export] private float sphereScale = 12.0f;
+		[Export] private float shapeScale = 12.0f;
 		[Export] private float scaleSpeed = 1f;
 
 		// Assign your .json file here in the Inspector via drag-and-drop
@@ -24,7 +25,19 @@ namespace VoxelEditorForGodotDotNet.Core
 		[Export] private bool enableAutoSave = true;
 		[Export] private float autoSaveDelaySeconds = 2.0f; // Save 2 seconds after finishing paint stroke
 
-		public bool paintingActive = true;
+		bool paintingActive = true;
+		public bool PaintingActive
+		{
+			get
+			{
+				return paintingActive;
+			}
+			set
+			{
+				paintingActive = value;
+				shapeHolder.Visible = value;
+			}
+		}
 		public bool autosaveEnabled = true;
 		
 		private bool isDirty = false;
@@ -97,7 +110,7 @@ namespace VoxelEditorForGodotDotNet.Core
 			bool shouldPaint = RightController.IsButtonPressed("trigger_click");
 
 			float scaleInput = RightController.GetVector2("primary").Y;
-			sphereShape.Scale *= 1f + scaleInput * scaleSpeed * delta;
+			shapeHolder.Scale *= 1f + scaleInput * scaleSpeed * delta;
 
 			// Active modification
 			if (shouldPaint)

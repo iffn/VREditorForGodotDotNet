@@ -11,7 +11,16 @@ class_name ElementLinker
 @onready var settings_controller : SettingsController = $"Vertical arrangement/Settings"
 @onready var tab_controller : TabController = $"Vertical arrangement/Tabs"
 
+@export var player_movement_controller : PlayerMovementController
+@export var voxel_editor : VoxelEditor
+@export var object_edit_controller : ObjectEditController
+
 func _ready() -> void:
+	movement_mode_controller.assign(player_movement_controller)
+	terrain_edit_controller.assign(voxel_editor)
+	edit_object_controller.assign(object_edit_controller)
+	print("UI setup complete")
+	
 	return
 	print(movement_mode_controller != null)
 	print(terrain_edit_controller != null)
@@ -19,17 +28,3 @@ func _ready() -> void:
 	print(save_and_load_controller != null)
 	print(settings_controller != null)
 	print(tab_controller != null)
-
-func assign(player_side_coordinator: PlayerSideCoordinator):
-	print("Assignment trying")
-	
-	while edit_object_controller == null or save_and_load_controller == null:
-		await get_tree().process_frame
-	movement_mode_controller.assign(player_side_coordinator)
-	terrain_edit_controller.assign(player_side_coordinator)
-	edit_object_controller.assign(player_side_coordinator)
-	save_and_load_controller.assign(player_side_coordinator)
-	settings_controller.assign(player_side_coordinator)
-	
-	tab_controller.set_visibility()
-	print("Assignmnent complete")

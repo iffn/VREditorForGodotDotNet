@@ -13,7 +13,8 @@
 [ext_resource type="JSON" path="res://VoxelEditorForGodotDotNet/SampleSave.json" id="6_kybn2"]
 [ext_resource type="Script" uid="uid://c5tqoains5ikr" path="res://VoxelEditorForGodotDotNet/Movement/PlayerScaler.gd" id="7_4andk"]
 [ext_resource type="Material" uid="uid://cr2gj02o7km1c" path="res://VoxelEditorForGodotDotNet/MaterialsAndShaders/TriplanarTerrain.tres" id="7_rweoq"]
-[ext_resource type="Script" uid="uid://cvjda7yiv4yti" path="res://VoxelEditorForGodotDotNet/Movement/PlayerSideCoordinator.gd" id="9_cje6n"]
+[ext_resource type="Script" uid="uid://c63j7k3woej6n" path="res://VoxelEditorForGodotDotNet/Movement/PlayerMovementController.gd" id="10_g3w6v"]
+[ext_resource type="Script" uid="uid://drkudl2nccimn" path="res://VoxelEditorForGodotDotNet/Movement/ObjectEditController.gd" id="13_mh0st"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_4myu2"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -78,10 +79,12 @@ fly_in_head_direction = true
 [node name="InteractionPoint" type="Node3D" parent="VR player/RightHand/RightHand" parent_id_path=PackedInt32Array(1445165384, 392314345) index="2" unique_id=820863047]
 transform = Transform3D(-0.2, 0, 3.019916e-08, 0, 0.2, 0, -3.019916e-08, 0, -0.2, -0.07419953, 0, -0.019258518)
 
-[node name="Sphere edit shape" type="Node3D" parent="VR player/RightHand/RightHand/InteractionPoint" unique_id=984267362]
+[node name="EditShapes" type="Node3D" parent="VR player/RightHand/RightHand/InteractionPoint" unique_id=1200788089]
+
+[node name="Sphere edit shape" type="Node3D" parent="VR player/RightHand/RightHand/InteractionPoint/EditShapes" unique_id=984267362]
 script = ExtResource("5_a1cwr")
 
-[node name="Sphere shape" type="MeshInstance3D" parent="VR player/RightHand/RightHand/InteractionPoint/Sphere edit shape" unique_id=1244715999]
+[node name="Sphere shape" type="MeshInstance3D" parent="VR player/RightHand/RightHand/InteractionPoint/EditShapes/Sphere edit shape" unique_id=1244715999]
 mesh = SubResource("SphereMesh_bld8a")
 surface_material_override/0 = SubResource("StandardMaterial3D_ley5p")
 
@@ -91,12 +94,15 @@ visible = false
 mesh = SubResource("SphereMesh_bld8a")
 surface_material_override/0 = SubResource("StandardMaterial3D_ley5p")
 
-[node name="Hand menu" parent="VR player/RightHand" parent_id_path=PackedInt32Array(1445165384, 1988565191) index="2" unique_id=67990177 instance=ExtResource("4_pkb7p")]
+[node name="Hand menu" parent="VR player/RightHand" parent_id_path=PackedInt32Array(1445165384, 1988565191) index="2" unique_id=67990177 node_paths=PackedStringArray("player_movement_controller", "voxel_editor", "object_edit_controller") instance=ExtResource("4_pkb7p")]
 transform = Transform3D(0.07071067, 0, -0.07071069, 0, 0.1, 0, 0.07071069, 0, 0.07071067, 0.13402732, 0.117425606, 0.1682572)
 scene = ExtResource("5_pkb7p")
 viewport_size = Vector2(1280, 720)
 material = SubResource("StandardMaterial3D_pkb7p")
-scene_properties_keys = PackedStringArray("ElementLinker.gd")
+scene_properties_keys = PackedStringArray("ElementLinker.gd", "player_movement_controller", "voxel_editor", "object_edit_controller")
+player_movement_controller = NodePath("../../PlayerMovementController")
+voxel_editor = NodePath("../../VoxelEditor")
+object_edit_controller = NodePath("../../ObjectEditController")
 
 [node name="Scaler" type="Node3D" parent="VR player" unique_id=1210497391 node_paths=PackedStringArray("xr_origin", "left_controller", "right_controller", "scale_indicator", "scale_text") groups=["movement_providers"]]
 script = ExtResource("7_4andk")
@@ -116,19 +122,26 @@ transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0
 no_depth_test = true
 text = "1.0"
 
-[node name="PlayerSideCoordinator" type="Node3D" parent="VR player" unique_id=876242536 node_paths=PackedStringArray("player", "body", "scaler", "hand_menu", "rpg_movement_provider", "ghost_movement_provider", "voxel_editor", "interaction_point", "sphere_edit_shape", "interaction_visualizer")]
-script = ExtResource("9_cje6n")
-player = NodePath("..")
+[node name="PlayerMovementController" type="Node3D" parent="VR player" unique_id=1905506584 node_paths=PackedStringArray("body", "rpg_movement_provider", "ghost_movement_provider", "scaler")]
+script = ExtResource("10_g3w6v")
 body = NodePath("../PlayerBody")
-scaler = NodePath("../Scaler")
-hand_menu = NodePath("../RightHand/Hand menu")
 rpg_movement_provider = NodePath("../LeftHand/MovementDirect")
 ghost_movement_provider = NodePath("../LeftHand/Ghost movement")
-voxel_editor = NodePath("../../VoxelEditor")
-interaction_point = NodePath("../RightHand/RightHand/InteractionPoint")
-sphere_edit_shape = NodePath("../RightHand/RightHand/InteractionPoint/Sphere edit shape")
-interaction_visualizer = NodePath("../RightHand/RightHand/InteractionPoint/InteractionVisualizer")
+scaler = NodePath("../Scaler")
 rgp_collisions = 1023
+
+[node name="VoxelEditor" type="Node3D" parent="VR player" unique_id=1260496153 node_paths=PackedStringArray("controller", "shapeHolder", "sphereShape", "RightController")]
+script = ExtResource("3_0ke6k")
+controller = NodePath("../../VoxelController")
+shapeHolder = NodePath("../RightHand/RightHand/InteractionPoint/EditShapes")
+sphereShape = NodePath("../RightHand/RightHand/InteractionPoint/EditShapes/Sphere edit shape")
+RightController = NodePath("../RightHand")
+gridSize = Vector3i(128, 128, 128)
+voxelWorldFile = ExtResource("6_kybn2")
+
+[node name="ObjectEditController" type="Node3D" parent="VR player" unique_id=1116789243 node_paths=PackedStringArray("interaciton_point")]
+script = ExtResource("13_mh0st")
+interaciton_point = NodePath("../RightHand/RightHand/InteractionPoint/InteractionVisualizer")
 
 [node name="Ground" parent="." unique_id=993000832 instance=ExtResource("3_ley5p")]
 
@@ -143,14 +156,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.6631265, 0.5000005, 7.82397
 
 [node name="RandomBox 4" type="CSGBox3D" parent="." unique_id=1450972371]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.1967235, 0.5, 8.693771)
-
-[node name="VoxelEditor" type="Node3D" parent="." unique_id=1260496153 node_paths=PackedStringArray("controller", "sphereShape", "RightController")]
-script = ExtResource("3_0ke6k")
-controller = NodePath("../VoxelController")
-sphereShape = NodePath("../VR player/RightHand/RightHand/InteractionPoint/Sphere edit shape")
-RightController = NodePath("../VR player/RightHand")
-gridSize = Vector3i(128, 128, 128)
-voxelWorldFile = ExtResource("6_kybn2")
 
 [node name="VoxelController" parent="." unique_id=264195901 instance=ExtResource("4_5a50w")]
 transform = Transform3D(0.05, 0, 0, 0, 0.05, 0, 0, 0, 0.05, 0, 0, 0)
