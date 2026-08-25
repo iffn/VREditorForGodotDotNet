@@ -72,7 +72,7 @@ namespace VoxelEditorForGodotDotNet.Core
 				controller.Initialize(gridSize.X, gridSize.Y, gridSize.Z, setEmpty: true, skipViewSetup: false);
 			}
 
-			GD.Print("Setup complete");
+			GD.Print("Voxel editor setup complete");
 		}
 
 		public override void _Notification(int what)

@@ -31,6 +31,9 @@ func _ready() -> void:
 	current_button.button_pressed = true
 	current_element.visible = true
 
+func activate_current():
+	current_element.enabled(true)
+
 func select(new_index: int):
 	current_button.button_pressed = false
 	current_element.visible = false
