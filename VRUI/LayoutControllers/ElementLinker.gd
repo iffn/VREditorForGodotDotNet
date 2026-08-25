@@ -5,7 +5,7 @@ class_name ElementLinker
 # Usin Onready, since XRToolsViewport2DIn3D breaks @export assigned in prefab scene
 # https://github.com/GodotVR/godot-xr-tools/issues/889
 @onready var movement_mode_ui : MovementUI = $"Vertical arrangement/Movement"
-@onready var terrain_edit_ui : VoxelUI = $"Vertical arrangement/Terrain editing"
+@onready var terrain_edit_ui : VoxelUI = $"Vertical arrangement/Voxel editor"
 @onready var edit_object_ui : EditObjectController = $"Vertical arrangement/Edit objects"
 @onready var save_and_load_ui : SaveAndLoadUI = $"Vertical arrangement/Save and load"
 @onready var settings_ui : SettingsUI = $"Vertical arrangement/Settings"
