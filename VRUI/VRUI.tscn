@@ -80,6 +80,7 @@ toggle_mode = true
 text = "Settings"
 
 [node name="Movement" type="HBoxContainer" parent="Vertical arrangement" unique_id=78061369 node_paths=PackedStringArray("edit_mode_elements", "rpg_mode_elements", "start_select_toggle")]
+visible = false
 layout_mode = 2
 script = ExtResource("2_pfr3i")
 edit_mode_elements = [NodePath("Actions/Enter RPG here"), NodePath("Actions/Select RPG start"), NodePath("Controls/VR Editor controls"), NodePath("Actions/Edit active")]
@@ -148,6 +149,7 @@ text = "RPG mode:
 - A Button: Jump"
 
 [node name="Voxel editor" type="HBoxContainer" parent="Vertical arrangement" unique_id=1457802167 node_paths=PackedStringArray("sphere_tool", "box_tool", "cylinder_tool", "default_tool")]
+visible = false
 layout_mode = 2
 script = ExtResource("5_f1uaf")
 sphere_tool = NodePath("Actions/Sphere tool")
@@ -213,6 +215,7 @@ text = "Terrain editing controls:
 - Right Stick Up Down: Scale tool"
 
 [node name="Edit objects" type="HBoxContainer" parent="Vertical arrangement" unique_id=1774076046]
+visible = false
 layout_mode = 2
 script = ExtResource("7_rwoe2")
 
@@ -268,6 +271,7 @@ text = "Object edit controls:
 - B Button: Remove"
 
 [node name="Save and load" type="HBoxContainer" parent="Vertical arrangement" unique_id=559272270]
+visible = false
 layout_mode = 2
 script = ExtResource("8_v73p8")
 
@@ -309,6 +313,7 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="Settings" type="HBoxContainer" parent="Vertical arrangement" unique_id=1880190788]
+visible = false
 layout_mode = 2
 script = ExtResource("9_2rud3")
 

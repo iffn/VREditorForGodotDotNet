@@ -128,7 +128,6 @@ body = NodePath("../PlayerBody")
 rpg_movement_provider = NodePath("../LeftHand/MovementDirect")
 ghost_movement_provider = NodePath("../LeftHand/Ghost movement")
 scaler = NodePath("../Scaler")
-rgp_collisions = 1023
 
 [node name="VoxelEditor" type="Node3D" parent="VR player" unique_id=1260496153 node_paths=PackedStringArray("controller", "shapeHolder", "sphereShape", "RightController")]
 script = ExtResource("3_0ke6k")

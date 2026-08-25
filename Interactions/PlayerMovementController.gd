@@ -7,8 +7,8 @@ class_name PlayerMovementController
 @export var ghost_movement_provider : XRToolsMovementProvider
 @export var scaler : XRToolsMovementScalingGhost
 
-@export_flags_3d_physics var rgp_collisions
-@export_flags_3d_physics var ghost_collisions
+@export_flags_3d_physics var rgp_collisions = 1023
+@export_flags_3d_physics var ghost_collisions = 0
 
 var rpg_movement : bool:
 	set(rpg_movement_active):

@@ -21,6 +21,7 @@ func disable_start_toggle():
 
 func assign(_player_movement_controller : PlayerMovementController):
 	player_movement_controller = _player_movement_controller
+	_rpg_mode = false
 
 func enabled(state : bool):
 	if !state:
