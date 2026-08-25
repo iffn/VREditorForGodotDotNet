@@ -42,4 +42,3 @@ func toggle_select_start_mode(active: bool):
 
 func toggle_rpg_mode():
 	_rpg_mode = !_rpg_mode
-	print("Toggle rpg")

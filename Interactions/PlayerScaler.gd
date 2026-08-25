@@ -1,5 +1,5 @@
 @tool
-class_name XRToolsMovementScalingGhost
+class_name PlayerScaler
 extends XRToolsMovementProvider
 
 ## XR Tools Movement Provider for Two-Handed Scaling
