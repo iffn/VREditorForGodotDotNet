@@ -36,6 +36,7 @@ mesh = SubResource("CapsuleMesh_akvqr")
 surface_material_override/0 = SubResource("StandardMaterial3D_f032d")
 
 [node name="XRToolsHighlightVisible" type="Node3D" parent="." index="2" unique_id=426397079]
+visible = false
 script = ExtResource("2_w24xb")
 metadata/_custom_type_script = "uid://0b7wkxi4vymb"
 
