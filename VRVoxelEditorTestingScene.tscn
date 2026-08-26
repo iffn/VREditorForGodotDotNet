@@ -15,6 +15,9 @@
 [ext_resource type="Script" uid="uid://c5tqoains5ikr" path="res://VoxelEditorForGodotDotNet/Interactions/PlayerScaler.gd" id="7_4andk"]
 [ext_resource type="Material" uid="uid://cr2gj02o7km1c" path="res://VoxelEditorForGodotDotNet/MaterialsAndShaders/TriplanarTerrain.tres" id="7_rweoq"]
 [ext_resource type="Script" uid="uid://c63j7k3woej6n" path="res://VoxelEditorForGodotDotNet/Interactions/PlayerMovementController.gd" id="10_g3w6v"]
+[ext_resource type="PackedScene" uid="uid://c8l60rnugru40" path="res://addons/godot-xr-tools/objects/pickable.tscn" id="10_wadvf"]
+[ext_resource type="Script" uid="uid://0b7wkxi4vymb" path="res://addons/godot-xr-tools/objects/highlight/highlight_visible.gd" id="11_x14m1"]
+[ext_resource type="Shader" uid="uid://bleg0kybifn7i" path="res://VoxelEditorForGodotDotNet/PlaceableItems/Highlihgt.gdshader" id="12_iuu37"]
 [ext_resource type="Script" uid="uid://drkudl2nccimn" path="res://VoxelEditorForGodotDotNet/Interactions/ObjectEditController.gd" id="13_mh0st"]
 [ext_resource type="PackedScene" uid="uid://cl0132hwrpdl2" path="res://VoxelEditorForGodotDotNet/PlaceableItems/Cube.tscn" id="15_cljue"]
 [ext_resource type="PackedScene" uid="uid://c6xn8c7vwo0c4" path="res://VoxelEditorForGodotDotNet/PlaceableItems/Cylinder.tscn" id="15_w30bf"]
@@ -41,6 +44,38 @@ albedo_color = Color(0, 0.69803923, 1, 0.5686275)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pkb7p"]
 shading_mode = 0
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ivlqx"]
+radius = 0.2
+height = 1.65
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_akvqr"]
+radius = 0.2
+height = 1.65
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_f032d"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_w24xb"]
+render_priority = 0
+shader = ExtResource("12_iuu37")
+shader_parameter/outline_distance = 0.02
+shader_parameter/albedo = Color(1, 1, 0, 1)
+
+[sub_resource type="PackedScene" id="PackedScene_f5qcx"]
+_bundled = {
+"base_scene": 0,
+"conn_count": 0,
+"conns": PackedInt32Array(),
+"editable_instances": [],
+"id_paths": [],
+"names": PackedStringArray("Player sized capsule", "collision_mask", "gravity_scale", "linear_damp", "angular_damp", "CollisionShape3D", "transform", "shape", "Mesh", "mesh", "surface_material_override/0", "MeshInstance3D", "XRToolsHighlightVisible", "visible", "script", "metadata/_custom_type_script", "Node3D", "Highlihgt"),
+"node_count": 5,
+"node_ids": PackedInt32Array(480645879, 0, 775529829, 426397079, 1208041471),
+"node_paths": [],
+"nodes": PackedInt32Array(-1, -1, 2147483647, 0, -1, 4, 1, 1, 2, 2, 3, 3, 4, 3, 0, 0, 0, 2147483647, 262149, -1, 2, 6, 4, 7, 5, 0, 0, 0, 11, 524296, -1, 3, 6, 4, 9, 6, 10, 7, 0, 0, 0, 16, 786444, -1, 3, 13, 8, 14, 9, 15, 10, 0, 3, 0, 11, 262161, -1, 3, 6, 4, 9, 6, 10, 11, 0),
+"variants": [ExtResource("10_wadvf"), 0, 0.0, 100.0, Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.825, 0), SubResource("CapsuleShape3D_ivlqx"), SubResource("CapsuleMesh_akvqr"), SubResource("StandardMaterial3D_f032d"), false, ExtResource("11_x14m1"), "uid://0b7wkxi4vymb", SubResource("ShaderMaterial_w24xb")],
+"version": 3
+}
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lpj5r"]
 transparency = 1
@@ -110,11 +145,24 @@ material = SubResource("StandardMaterial3D_pkb7p")
 scene_properties_keys = PackedStringArray("ElementLinker.gd", "player_movement_controller", "voxel_editor", "object_edit_controller")
 player_movement_controller = NodePath("../../../PlayerMovementController")
 voxel_editor = NodePath("../../../VoxelEditor")
-object_edit_controller = NodePath("../../../ObjectEditController")
+object_edit_controller = NodePath("../../ObjectEditController")
 
 [node name="XRToolsFunctionPickup" type="Node3D" parent="VR player/RightHand" parent_id_path=PackedInt32Array(1445165384, 1988565191) index="2" unique_id=1177906302]
 script = ExtResource("5_fi4kq")
 metadata/_custom_type_script = "uid://b18kkstg643yw"
+
+[node name="ObjectEditController" type="Node3D" parent="VR player/RightHand" parent_id_path=PackedInt32Array(1445165384, 1988565191) index="3" unique_id=1116789243 node_paths=PackedStringArray("interaction_point", "interaction_visualizer", "controller", "function_pickup")]
+script = ExtResource("13_mh0st")
+interaction_point = NodePath("../RightHand/InteractionPoint")
+interaction_visualizer = NodePath("../RightHand/InteractionPoint/InteractionVisualizer")
+controller = NodePath("..")
+function_pickup = NodePath("../XRToolsFunctionPickup")
+spawnable_scenes = Dictionary[int, PackedScene]({
+0: SubResource("PackedScene_f5qcx"),
+1: ExtResource("15_cljue"),
+2: ExtResource("17_2puu8"),
+3: ExtResource("15_w30bf")
+})
 
 [node name="Scaler" type="Node3D" parent="VR player" unique_id=1210497391 node_paths=PackedStringArray("xr_origin", "left_controller", "right_controller", "scale_indicator", "scale_text") groups=["movement_providers"]]
 script = ExtResource("7_4andk")
@@ -149,17 +197,6 @@ sphereShape = NodePath("../RightHand/RightHand/InteractionPoint/EditShapes/Spher
 RightController = NodePath("../RightHand")
 gridSize = Vector3i(128, 128, 128)
 voxelWorldFile = ExtResource("6_kybn2")
-
-[node name="ObjectEditController" type="Node3D" parent="VR player" unique_id=1116789243 node_paths=PackedStringArray("spawn_point", "interaction_visualizer")]
-script = ExtResource("13_mh0st")
-spawn_point = NodePath("../RightHand/RightHand/InteractionPoint")
-interaction_visualizer = NodePath("../RightHand/RightHand/InteractionPoint/InteractionVisualizer")
-spawnable_scenes = Dictionary[int, PackedScene]({
-0: ExtResource("16_mh0st"),
-1: ExtResource("15_cljue"),
-2: ExtResource("17_2puu8"),
-3: ExtResource("15_w30bf")
-})
 
 [node name="Ground" parent="." unique_id=993000832 instance=ExtResource("3_ley5p")]
 
