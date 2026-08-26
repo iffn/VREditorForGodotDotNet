@@ -9,12 +9,14 @@
 [ext_resource type="Script" uid="uid://bt6va6t8psdoo" path="res://VoxelEditorForGodotDotNet/Interactions/GhostMovement.gd" id="4_kyy50"]
 [ext_resource type="PackedScene" uid="uid://clujaf3u776a3" path="res://addons/godot-xr-tools/objects/viewport_2d_in_3d.tscn" id="4_pkb7p"]
 [ext_resource type="Script" uid="uid://bjeiev8dmyfdj" path="res://VoxelEditorForGodotDotNet/VoxelEditor/Scripts/EditTools/SphereEditShape.cs" id="5_a1cwr"]
+[ext_resource type="Script" uid="uid://b18kkstg643yw" path="res://addons/godot-xr-tools/functions/function_pickup.gd" id="5_fi4kq"]
 [ext_resource type="PackedScene" uid="uid://drnw7l2nvb6rk" path="res://VoxelEditorForGodotDotNet/VRUI/VRUI.tscn" id="5_pkb7p"]
 [ext_resource type="JSON" path="res://VoxelEditorForGodotDotNet/SampleSave.json" id="6_kybn2"]
 [ext_resource type="Script" uid="uid://c5tqoains5ikr" path="res://VoxelEditorForGodotDotNet/Interactions/PlayerScaler.gd" id="7_4andk"]
 [ext_resource type="Material" uid="uid://cr2gj02o7km1c" path="res://VoxelEditorForGodotDotNet/MaterialsAndShaders/TriplanarTerrain.tres" id="7_rweoq"]
 [ext_resource type="Script" uid="uid://c63j7k3woej6n" path="res://VoxelEditorForGodotDotNet/Interactions/PlayerMovementController.gd" id="10_g3w6v"]
 [ext_resource type="Script" uid="uid://drkudl2nccimn" path="res://VoxelEditorForGodotDotNet/Interactions/ObjectEditController.gd" id="13_mh0st"]
+[ext_resource type="PackedScene" uid="uid://bbv22y7gt2hc2" path="res://VoxelEditorForGodotDotNet/PlaceableItems/PlayerSizedCapsule.tscn" id="16_mh0st"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_4myu2"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -76,6 +78,10 @@ script = ExtResource("4_kyy50")
 xr_origin = NodePath("../..")
 fly_in_head_direction = true
 
+[node name="XRToolsFunctionPickup" type="Node3D" parent="VR player/LeftHand" parent_id_path=PackedInt32Array(1445165384, 1533857695) index="4" unique_id=1549664515]
+script = ExtResource("5_fi4kq")
+metadata/_custom_type_script = "uid://b18kkstg643yw"
+
 [node name="InteractionPoint" type="Node3D" parent="VR player/RightHand/RightHand" parent_id_path=PackedInt32Array(1445165384, 392314345) index="2" unique_id=820863047]
 transform = Transform3D(-0.2, 0, 3.019916e-08, 0, 0.2, 0, -3.019916e-08, 0, -0.2, -0.07419953, 0, -0.019258518)
 
@@ -103,6 +109,10 @@ scene_properties_keys = PackedStringArray("ElementLinker.gd", "player_movement_c
 player_movement_controller = NodePath("../../../PlayerMovementController")
 voxel_editor = NodePath("../../../VoxelEditor")
 object_edit_controller = NodePath("../../../ObjectEditController")
+
+[node name="XRToolsFunctionPickup" type="Node3D" parent="VR player/RightHand" parent_id_path=PackedInt32Array(1445165384, 1988565191) index="2" unique_id=1177906302]
+script = ExtResource("5_fi4kq")
+metadata/_custom_type_script = "uid://b18kkstg643yw"
 
 [node name="Scaler" type="Node3D" parent="VR player" unique_id=1210497391 node_paths=PackedStringArray("xr_origin", "left_controller", "right_controller", "scale_indicator", "scale_text") groups=["movement_providers"]]
 script = ExtResource("7_4andk")
@@ -164,5 +174,11 @@ currentMainMaterial = ExtResource("7_rweoq")
 transform = Transform3D(1, 0, 0, 0, 1.1924881e-08, 1, 0, -1, 1.1924881e-08, 0, 0.01, 0)
 mesh = SubResource("QuadMesh_lpj5r")
 surface_material_override/0 = SubResource("StandardMaterial3D_erkc8")
+
+[node name="Player sized capsule" parent="." unique_id=480645879 instance=ExtResource("16_mh0st")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.1752, 1.4305115e-06, 0.27174222)
+
+[node name="Player sized capsule2" parent="." unique_id=499244775 instance=ExtResource("16_mh0st")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.9063411, 1.4305115e-06, -0.62578964)
 
 [editable path="VR player"]
