@@ -79,7 +79,6 @@ suppress_radius = 0.0
 [node name="Ghost movement" type="Node3D" parent="VR player/LeftHand" parent_id_path=PackedInt32Array(1445165384, 1533857695) index="3" unique_id=246850508 node_paths=PackedStringArray("xr_origin") groups=["movement_providers"]]
 script = ExtResource("4_kyy50")
 xr_origin = NodePath("../..")
-fly_in_head_direction = true
 
 [node name="XRToolsFunctionPickup" type="Node3D" parent="VR player/LeftHand" parent_id_path=PackedInt32Array(1445165384, 1533857695) index="4" unique_id=1549664515]
 script = ExtResource("5_fi4kq")
