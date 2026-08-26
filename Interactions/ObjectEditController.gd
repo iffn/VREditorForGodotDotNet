@@ -18,7 +18,7 @@ enum SpawnableElement {
 
 @export var spawnable_scenes: Dictionary[SpawnableElement, PackedScene] = {}
 
-var active: bool:
+var active: bool = true:
 	set(value):
 		active = value
 		if interaction_visualizer:
@@ -46,10 +46,15 @@ func _ready() -> void:
 		function_pickup = XRToolsFunctionPickup.find_right(self)
 
 func _on_button_pressed(p_name: String) -> void:
-	if !active:
+	# Ignore input if the controller is inactive
+	if not active:
 		return
-	if p_name == "by_button":
-		delete_highlighted_element()
+
+	match p_name:
+		"by_button": # B Button
+			delete_highlighted_element()
+		"ax_button": # A Button
+			duplicate_highlighted_element()
 
 func delete_highlighted_element() -> void:
 	if not function_pickup:
@@ -65,6 +70,28 @@ func delete_highlighted_element() -> void:
 			function_pickup.drop_object()
 
 		target.queue_free()
+
+func duplicate_highlighted_element() -> void:
+	if not function_pickup:
+		push_warning("FunctionPickup reference is missing.")
+		return
+
+	if not interaction_point:
+		push_warning("Interaction point is not assigned.")
+		return
+
+	var target = function_pickup.closest_object
+
+	if is_instance_valid(target) and target is Node3D:
+		# Create a full runtime duplicate of the node and sub-nodes
+		var duplicate_instance = target.duplicate(DUPLICATE_USE_INSTANTIATION | DUPLICATE_SIGNALS | DUPLICATE_GROUPS) as Node3D
+		
+		# Add to the current scene tree
+		get_tree().current_scene.add_child(duplicate_instance)
+
+		# Preserve rotation and scale from original object, move origin to interaction point
+		duplicate_instance.global_transform = target.global_transform
+		duplicate_instance.global_position = interaction_point.global_position
 
 func spawn_element(element: SpawnableElement) -> void:
 	if not interaction_point:
