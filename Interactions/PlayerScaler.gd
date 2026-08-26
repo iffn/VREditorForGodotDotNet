@@ -65,10 +65,6 @@ var hand_distance_world: float:
 func _ready() -> void:
 	super._ready()
 
-	# Ghost Mode: Disable World Gravity across physics server
-	var world_space: RID = get_tree().root.get_world_3d().space
-	PhysicsServer3D.area_set_param(world_space, PhysicsServer3D.AREA_PARAM_GRAVITY, 0.0)
-
 	if scale_indicator:
 		scale_indicator.visible = false
 		scale_indicator.top_level = true
@@ -87,7 +83,7 @@ func _process(_delta: float) -> void:
 
 
 func is_xr_class(xr_name: String) -> bool:
-	return xr_name == "XRToolsMovementScalingGhost" or super(xr_name)
+	return xr_name == "PlayerScaler" or super(xr_name)
 
 
 func physics_movement(_delta: float, player_body: XRToolsPlayerBody, disabled: bool) -> bool:
@@ -99,10 +95,7 @@ func physics_movement(_delta: float, player_body: XRToolsPlayerBody, disabled: b
 	if not xr_origin and player_body:
 		xr_origin = player_body.get_node_or_null(player_body.origin) as XROrigin3D
 
-	# Permanent ghost state: eliminate accumulated gravity/momentum
-	if player_body:
-		player_body.velocity = Vector3.ZERO
-
+	# Returns true only while two-handed scaling is actively taking place
 	return _scaling_active
 
 
@@ -134,14 +127,12 @@ func _handle_hand_scale() -> void:
 		if current_dist <= 0.001:
 			return
 
-		# --- Your Original Scaling Math ---
 		var target_hand_distance_scale: float = current_dist / current_player_scale
 		if target_hand_distance_scale > 0.0001:
 			var new_scale: float = (_initial_hand_distance_player_scale * _initial_scale) / target_hand_distance_scale
 			scale_player_and_objects(new_scale)
 
 		if xr_origin:
-			# Re-sample controller_center_world AFTER world_scale update so transforms match the current frame
 			var current_center_world: Vector3 = controller_center_world
 			var offset_world: Vector3 = _initial_scale_center_world - current_center_world
 			xr_origin.global_position += offset_world

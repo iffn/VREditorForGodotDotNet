@@ -49,17 +49,17 @@ func physics_movement(delta: float, player_body: XRToolsPlayerBody, disabled: bo
 	if disabled or not enabled or not _controller or not _controller.get_is_active():
 		return false
 
-	# 1. Nullify internal body physics
+	# 1. Continually zero out body physics so you hover cleanly in place
 	if player_body:
 		player_body.velocity = Vector3.ZERO
 
-	# 2. Get adjusted joystick vector
+	# 2. Process translation input if the joystick is pushed
 	var input: Vector2 = XRToolsUserSettings.get_adjusted_vector2(_controller, move_input_action)
-
 	if input.length_squared() >= (deadzone * deadzone):
 		_apply_ghost_translation(delta, player_body, input)
 
-	return false
+	# 3. ALWAYS return true while Ghost Mode is active to prevent gravity from pulling you down
+	return true
 
 
 func _apply_ghost_translation(delta: float, player_body: XRToolsPlayerBody, input: Vector2) -> void:
