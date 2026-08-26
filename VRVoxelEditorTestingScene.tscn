@@ -45,6 +45,10 @@ albedo_color = Color(0, 0.69803923, 1, 0.5686275)
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pkb7p"]
 shading_mode = 0
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lpj5r"]
+transparency = 1
+albedo_color = Color(0, 1, 1, 0.49803922)
+
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ivlqx"]
 radius = 0.2
 height = 1.65
@@ -76,10 +80,6 @@ _bundled = {
 "variants": [ExtResource("10_wadvf"), 0, 0.0, 100.0, Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.825, 0), SubResource("CapsuleShape3D_ivlqx"), SubResource("CapsuleMesh_akvqr"), SubResource("StandardMaterial3D_f032d"), false, ExtResource("11_x14m1"), "uid://0b7wkxi4vymb", SubResource("ShaderMaterial_w24xb")],
 "version": 3
 }
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lpj5r"]
-transparency = 1
-albedo_color = Color(0, 1, 1, 0.49803922)
 
 [sub_resource type="QuadMesh" id="QuadMesh_lpj5r"]
 size = Vector2(128, 128)
@@ -145,24 +145,11 @@ material = SubResource("StandardMaterial3D_pkb7p")
 scene_properties_keys = PackedStringArray("ElementLinker.gd", "player_movement_controller", "voxel_editor", "object_edit_controller")
 player_movement_controller = NodePath("../../../PlayerMovementController")
 voxel_editor = NodePath("../../../VoxelEditor")
-object_edit_controller = NodePath("../../ObjectEditController")
+object_edit_controller = NodePath("../../../ObjectEditController")
 
 [node name="XRToolsFunctionPickup" type="Node3D" parent="VR player/RightHand" parent_id_path=PackedInt32Array(1445165384, 1988565191) index="2" unique_id=1177906302]
 script = ExtResource("5_fi4kq")
 metadata/_custom_type_script = "uid://b18kkstg643yw"
-
-[node name="ObjectEditController" type="Node3D" parent="VR player/RightHand" parent_id_path=PackedInt32Array(1445165384, 1988565191) index="3" unique_id=1116789243 node_paths=PackedStringArray("interaction_point", "interaction_visualizer", "controller", "function_pickup")]
-script = ExtResource("13_mh0st")
-interaction_point = NodePath("../RightHand/InteractionPoint")
-interaction_visualizer = NodePath("../RightHand/InteractionPoint/InteractionVisualizer")
-controller = NodePath("..")
-function_pickup = NodePath("../XRToolsFunctionPickup")
-spawnable_scenes = Dictionary[int, PackedScene]({
-0: SubResource("PackedScene_f5qcx"),
-1: ExtResource("15_cljue"),
-2: ExtResource("17_2puu8"),
-3: ExtResource("15_w30bf")
-})
 
 [node name="Scaler" type="Node3D" parent="VR player" unique_id=1210497391 node_paths=PackedStringArray("xr_origin", "left_controller", "right_controller", "scale_indicator", "scale_text") groups=["movement_providers"]]
 script = ExtResource("7_4andk")
@@ -197,6 +184,21 @@ sphereShape = NodePath("../RightHand/RightHand/InteractionPoint/EditShapes/Spher
 RightController = NodePath("../RightHand")
 gridSize = Vector3i(128, 128, 128)
 voxelWorldFile = ExtResource("6_kybn2")
+
+[node name="ObjectEditController" type="Node3D" parent="VR player" unique_id=1116789243 node_paths=PackedStringArray("interaction_point", "interaction_visualizer", "controller", "function_pickup", "pickup_left", "pickup_right")]
+script = ExtResource("13_mh0st")
+interaction_point = NodePath("../RightHand/RightHand/InteractionPoint")
+interaction_visualizer = NodePath("../RightHand/RightHand/InteractionPoint/InteractionVisualizer")
+controller = NodePath("../RightHand")
+function_pickup = NodePath("../RightHand/XRToolsFunctionPickup")
+pickup_left = NodePath("../LeftHand/XRToolsFunctionPickup")
+pickup_right = NodePath("../RightHand/XRToolsFunctionPickup")
+spawnable_scenes = Dictionary[int, PackedScene]({
+0: SubResource("PackedScene_f5qcx"),
+1: ExtResource("15_cljue"),
+2: ExtResource("17_2puu8"),
+3: ExtResource("15_w30bf")
+})
 
 [node name="Ground" parent="." unique_id=993000832 instance=ExtResource("3_ley5p")]
 

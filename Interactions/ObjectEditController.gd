@@ -9,6 +9,9 @@ class_name ObjectEditController
 @export var controller: XRController3D
 @export var function_pickup: XRToolsFunctionPickup
 
+@export var pickup_left : XRToolsFunctionPickup
+@export var pickup_right : XRToolsFunctionPickup
+
 enum SpawnableElement {
 	PLAYER_SIZED_CAPSULE,
 	CUBE,
@@ -21,6 +24,17 @@ enum SpawnableElement {
 var active: bool = true:
 	set(value):
 		active = value
+		
+		if pickup_left:
+			pickup_left.enabled = value
+			if not value and is_instance_valid(pickup_left.picked_up_object):
+				pickup_left.drop_object()
+				
+		if pickup_right:
+			pickup_right.enabled = value
+			if not value and is_instance_valid(pickup_right.picked_up_object):
+				pickup_right.drop_object()
+
 		if interaction_visualizer:
 			interaction_visualizer.visible = value
 
