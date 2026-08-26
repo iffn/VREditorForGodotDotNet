@@ -59,7 +59,7 @@ transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545
 shadow_enabled = true
 
 [node name="VR player" parent="." unique_id=1445165384 instance=ExtResource("2_b5hl1")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+transform = Transform3D(-0.70710677, 0, -0.70710677, 0, 1, 0, 0.70710677, 0, -0.70710677, 0, 0, 0)
 
 [node name="MovementDirect" parent="VR player/LeftHand" parent_id_path=PackedInt32Array(1445165384, 1533857695) index="1" unique_id=2073954715]
 enabled = false
