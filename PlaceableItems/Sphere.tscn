@@ -1,0 +1,39 @@
+[gd_scene format=3 uid="uid://n7po5nma3c6u"]
+
+[ext_resource type="PackedScene" uid="uid://c8l60rnugru40" path="res://addons/godot-xr-tools/objects/pickable.tscn" id="1_3cp1q"]
+[ext_resource type="Script" uid="uid://0b7wkxi4vymb" path="res://addons/godot-xr-tools/objects/highlight/highlight_visible.gd" id="2_0rykh"]
+[ext_resource type="Shader" uid="uid://bleg0kybifn7i" path="res://VoxelEditorForGodotDotNet/PlaceableItems/Highlihgt.gdshader" id="3_dbrom"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_cymd7"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_eovfj"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_f032d"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_w24xb"]
+render_priority = 0
+shader = ExtResource("3_dbrom")
+shader_parameter/outline_distance = 0.02
+shader_parameter/albedo = Color(1, 1, 0, 1)
+
+[node name="Sphere" unique_id=480645879 instance=ExtResource("1_3cp1q")]
+collision_mask = 0
+gravity_scale = 0.0
+linear_damp = 100.0
+angular_damp = 100.0
+
+[node name="CollisionShape3D" parent="." index="0"]
+shape = SubResource("SphereShape3D_cymd7")
+
+[node name="Mesh" type="MeshInstance3D" parent="." index="1" unique_id=775529829]
+mesh = SubResource("SphereMesh_eovfj")
+surface_material_override/0 = SubResource("StandardMaterial3D_f032d")
+
+[node name="XRToolsHighlightVisible" type="Node3D" parent="." index="2" unique_id=426397079]
+visible = false
+script = ExtResource("2_0rykh")
+metadata/_custom_type_script = "uid://0b7wkxi4vymb"
+
+[node name="Highlihgt" type="MeshInstance3D" parent="XRToolsHighlightVisible" index="0" unique_id=1208041471]
+mesh = SubResource("SphereMesh_eovfj")
+surface_material_override/0 = SubResource("ShaderMaterial_w24xb")

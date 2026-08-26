@@ -10,3 +10,15 @@ func assign(_object_edit_controller : ObjectEditController):
 func enabled(state : bool):
 	if object_edit_controller:
 		object_edit_controller.active = state
+
+func spawn_player_sized_capsule():
+	object_edit_controller.spawn_element(ObjectEditController.SpawnableElement.PLAYER_SIZED_CAPSULE)
+
+func spawn_cube():
+	object_edit_controller.spawn_element(ObjectEditController.SpawnableElement.CUBE)
+
+func spawn_sphere():
+	object_edit_controller.spawn_element(ObjectEditController.SpawnableElement.SPHERE)
+
+func spawn_cylinder():
+	object_edit_controller.spawn_element(ObjectEditController.SpawnableElement.CYLINDER)

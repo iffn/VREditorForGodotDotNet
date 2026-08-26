@@ -80,6 +80,7 @@ toggle_mode = true
 text = "Settings"
 
 [node name="Movement" type="HBoxContainer" parent="Vertical arrangement" unique_id=78061369 node_paths=PackedStringArray("edit_mode_elements", "rpg_mode_elements", "start_select_toggle", "toggle_button")]
+visible = false
 layout_mode = 2
 script = ExtResource("2_pfr3i")
 edit_mode_elements = [NodePath("Actions/Select RPG start"), NodePath("Controls/VR Editor controls"), NodePath("Actions/Edit active")]
@@ -211,7 +212,6 @@ text = "Terrain editing controls:
 - Right Stick Up Down: Scale tool"
 
 [node name="Edit objects" type="HBoxContainer" parent="Vertical arrangement" unique_id=1774076046]
-visible = false
 layout_mode = 2
 script = ExtResource("7_rwoe2")
 
@@ -229,6 +229,21 @@ custom_minimum_size = Vector2(0, 80)
 layout_mode = 2
 text = "Spawn player 
 sized capsule"
+
+[node name="Spawn cube" type="Button" parent="Vertical arrangement/Edit objects/Actions" unique_id=1738429067]
+custom_minimum_size = Vector2(0, 80)
+layout_mode = 2
+text = "Spawn cube"
+
+[node name="Spawn sphere" type="Button" parent="Vertical arrangement/Edit objects/Actions" unique_id=1606144980]
+custom_minimum_size = Vector2(0, 80)
+layout_mode = 2
+text = "Spawn sphere"
+
+[node name="Spawn cylinder" type="Button" parent="Vertical arrangement/Edit objects/Actions" unique_id=1323159395]
+custom_minimum_size = Vector2(0, 80)
+layout_mode = 2
+text = "Spawn cylinder"
 
 [node name="Spawn tree" type="Button" parent="Vertical arrangement/Edit objects/Actions" unique_id=225016596]
 custom_minimum_size = Vector2(0, 80)
@@ -352,3 +367,7 @@ layout_mode = 2
 
 [connection signal="button_down" from="Vertical arrangement/Movement/Actions/Toggle RPG mode" to="Vertical arrangement/Movement" method="toggle_rpg_mode"]
 [connection signal="toggled" from="Vertical arrangement/Movement/Actions/Select RPG start" to="Vertical arrangement/Movement" method="toggle_select_start_mode"]
+[connection signal="button_down" from="Vertical arrangement/Edit objects/Actions/Spawn player capsule" to="Vertical arrangement/Edit objects" method="spawn_player_sized_capsule"]
+[connection signal="button_down" from="Vertical arrangement/Edit objects/Actions/Spawn cube" to="Vertical arrangement/Edit objects" method="spawn_cube"]
+[connection signal="button_down" from="Vertical arrangement/Edit objects/Actions/Spawn sphere" to="Vertical arrangement/Edit objects" method="spawn_sphere"]
+[connection signal="button_down" from="Vertical arrangement/Edit objects/Actions/Spawn cylinder" to="Vertical arrangement/Edit objects" method="spawn_cylinder"]
