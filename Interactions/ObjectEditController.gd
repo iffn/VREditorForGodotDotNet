@@ -86,12 +86,27 @@ func duplicate_highlighted_element() -> void:
 		# Create a full runtime duplicate of the node and sub-nodes
 		var duplicate_instance = target.duplicate(DUPLICATE_USE_INSTANTIATION | DUPLICATE_SIGNALS | DUPLICATE_GROUPS) as Node3D
 		
-		# Add to the current scene tree
+		# Add to current scene tree
 		get_tree().current_scene.add_child(duplicate_instance)
 
-		# Preserve rotation and scale from original object, move origin to interaction point
+		# Set transform
 		duplicate_instance.global_transform = target.global_transform
 		duplicate_instance.global_position = interaction_point.global_position
+
+		# --- XR TOOLS PICKABLE CLEANUP ---
+		# Clear any copied highlight state on the new object
+		if duplicate_instance.has_method("request_highlight"):
+			duplicate_instance.request_highlight(function_pickup, false)
+
+		# Ensure the duplicate's physics state is active and unheld
+		if duplicate_instance is XRToolsPickable:
+			duplicate_instance.enabled = true
+			if duplicate_instance.is_picked_up():
+				duplicate_instance.let_go(null, Vector3.ZERO, Vector3.ZERO)
+		elif duplicate_instance is RigidBody3D:
+			duplicate_instance.freeze = false
+			duplicate_instance.linear_velocity = Vector3.ZERO
+			duplicate_instance.angular_velocity = Vector3.ZERO
 
 func spawn_element(element: SpawnableElement) -> void:
 	if not interaction_point:
