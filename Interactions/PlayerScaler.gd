@@ -74,6 +74,18 @@ func _ready() -> void:
 		scale_indicator.top_level = true
 
 
+func _process(_delta: float) -> void:
+	if Engine.is_editor_hint():
+		return
+
+	if not enabled:
+		_reset_scaling_state()
+		return
+
+	# Run scale and transform updates at rendering framerate (90Hz+) to eliminate jitter
+	_handle_hand_scale()
+
+
 func is_xr_class(xr_name: String) -> bool:
 	return xr_name == "XRToolsMovementScalingGhost" or super(xr_name)
 
@@ -91,11 +103,6 @@ func physics_movement(_delta: float, player_body: XRToolsPlayerBody, disabled: b
 	if player_body:
 		player_body.velocity = Vector3.ZERO
 
-	# Process 2-Handed Scale Logic
-	_handle_hand_scale()
-
-	# Return true ONLY while actively scaling to lock movement during scale gestures.
-	# When idle, return false so XRToolsMovementGhost handles joystick movement.
 	return _scaling_active
 
 
@@ -113,11 +120,11 @@ func _handle_hand_scale() -> void:
 
 	if left_active and right_active:
 		var current_dist: float = hand_distance_world
-		var center_world: Vector3 = controller_center_world
+		var initial_sample_center: Vector3 = controller_center_world
 
 		if not _scaling_active:
 			_scaling_active = true
-			_initial_scale_center_world = center_world
+			_initial_scale_center_world = initial_sample_center
 			_initial_scale = current_player_scale
 			_initial_hand_distance_player_scale = current_dist / _initial_scale
 
@@ -127,16 +134,20 @@ func _handle_hand_scale() -> void:
 		if current_dist <= 0.001:
 			return
 
+		# --- Your Original Scaling Math ---
 		var target_hand_distance_scale: float = current_dist / current_player_scale
 		if target_hand_distance_scale > 0.0001:
 			var new_scale: float = (_initial_hand_distance_player_scale * _initial_scale) / target_hand_distance_scale
 			scale_player_and_objects(new_scale)
 
 		if xr_origin:
-			var offset_world: Vector3 = _initial_scale_center_world - center_world
+			# Re-sample controller_center_world AFTER world_scale update so transforms match the current frame
+			var current_center_world: Vector3 = controller_center_world
+			var offset_world: Vector3 = _initial_scale_center_world - current_center_world
 			xr_origin.global_position += offset_world
 
 		if scale_indicator:
+			var center_world: Vector3 = controller_center_world
 			scale_indicator.global_position = center_world
 			if left_controller.global_position.distance_squared_to(right_controller.global_position) > 0.0001:
 				scale_indicator.look_at(right_controller.global_position, Vector3.UP)
