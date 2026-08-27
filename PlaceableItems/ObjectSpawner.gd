@@ -49,6 +49,7 @@ func bake_scene_baseline() -> void:
 			scene_baseline_data.append(pickable.serialize_data())
 
 ## Spawns new runtime objects and assigns dynamic IDs
+## Spawns new runtime objects and assigns dynamic IDs (preserves native scale)
 func spawn_element(element: SpawnableElement, spawn_transform: Transform3D) -> VREditorPickableSerializable:
 	var scene: PackedScene = spawnable_scenes.get(element)
 	if not scene:
@@ -58,7 +59,11 @@ func spawn_element(element: SpawnableElement, spawn_transform: Transform3D) -> V
 	var instance = scene.instantiate()
 	if instance is VREditorPickableSerializable:
 		add_child(instance)
-		instance.global_transform = spawn_transform
+		
+		# Retain native object scale while applying target rotation and origin position
+		var target_basis := spawn_transform.basis.orthonormalized().scaled(instance.scale)
+		instance.global_transform = Transform3D(target_basis, spawn_transform.origin)
+
 		instance.instance_id = "runtime_node_%s" % str(instance.get_instance_id())
 		return instance
 	else:
