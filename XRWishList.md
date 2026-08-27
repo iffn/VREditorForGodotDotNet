@@ -13,5 +13,3 @@ https://github.com/GodotVR/godot-xr-tools/issues/889
 - The `class_name` and name of the file should be the same imo. The file of `XRToolsFunctionPointer` is called function_pointer for example.
 
 - `XRToolsFunctionPickup` should drop the held object if `enabled` is set to false
-
-- Currently unable to scale held object, due to `XRToolsGrabDriver` setting the entire transform
