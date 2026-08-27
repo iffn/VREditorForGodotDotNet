@@ -2,6 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://c8l60rnugru40" path="res://addons/godot-xr-tools/objects/pickable.tscn" id="1_h8hd8"]
 [ext_resource type="Shader" uid="uid://bleg0kybifn7i" path="res://VoxelEditorForGodotDotNet/PlaceableItems/Highlihgt.gdshader" id="2_7ksuu"]
+[ext_resource type="Script" uid="uid://cu8lxu6berk45" path="res://VoxelEditorForGodotDotNet/PlaceableItems/VREditorPickableSerializable.gd" id="2_o3y3a"]
 [ext_resource type="Script" uid="uid://0b7wkxi4vymb" path="res://addons/godot-xr-tools/objects/highlight/highlight_visible.gd" id="2_w24xb"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ivlqx"]
@@ -25,6 +26,9 @@ collision_mask = 0
 gravity_scale = 0.0
 linear_damp = 100.0
 angular_damp = 100.0
+script = ExtResource("2_o3y3a")
+instance_id = "20079794303446"
+scene_file_path_override = "res://VoxelEditorForGodotDotNet/PlaceableItems/PlayerSizedCapsule.tscn"
 
 [node name="CollisionShape3D" parent="." index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.825, 0)

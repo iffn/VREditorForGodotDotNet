@@ -7,19 +7,19 @@
 [ext_resource type="Script" uid="uid://b18kkstg643yw" path="res://addons/godot-xr-tools/functions/function_pickup.gd" id="5_01x5s"]
 [ext_resource type="Script" uid="uid://bjeiev8dmyfdj" path="res://VoxelEditorForGodotDotNet/VoxelEditor/Scripts/EditTools/SphereEditShape.cs" id="6_cb16o"]
 [ext_resource type="PackedScene" uid="uid://clujaf3u776a3" path="res://addons/godot-xr-tools/objects/viewport_2d_in_3d.tscn" id="7_tfhxa"]
+[ext_resource type="Script" uid="uid://cu8lxu6berk45" path="res://VoxelEditorForGodotDotNet/PlaceableItems/VREditorPickableSerializable.gd" id="8_4hfjv"]
 [ext_resource type="PackedScene" uid="uid://drnw7l2nvb6rk" path="res://VoxelEditorForGodotDotNet/VRUI/VRUI.tscn" id="8_c1kk3"]
 [ext_resource type="Script" uid="uid://c5tqoains5ikr" path="res://VoxelEditorForGodotDotNet/Interactions/PlayerScaler.gd" id="9_kqai8"]
 [ext_resource type="Script" uid="uid://c63j7k3woej6n" path="res://VoxelEditorForGodotDotNet/Interactions/PlayerMovementController.gd" id="10_4iv8x"]
 [ext_resource type="Script" uid="uid://5gxxof5umue8" path="res://VoxelEditorForGodotDotNet/VoxelEditor/Scripts/Editor/VoxelEditor.cs" id="11_6khcx"]
-[ext_resource type="JSON" path="res://VoxelEditorForGodotDotNet/SampleSave.json" id="12_q2pmc"]
+[ext_resource type="JSON" path="res://VoxelEditorForGodotDotNet/VoxelSample.json" id="12_q2pmc"]
 [ext_resource type="Script" uid="uid://drkudl2nccimn" path="res://VoxelEditorForGodotDotNet/Interactions/ObjectEditController.gd" id="13_omrdi"]
-[ext_resource type="PackedScene" uid="uid://c8l60rnugru40" path="res://addons/godot-xr-tools/objects/pickable.tscn" id="14_dq5ek"]
-[ext_resource type="Script" uid="uid://0b7wkxi4vymb" path="res://addons/godot-xr-tools/objects/highlight/highlight_visible.gd" id="15_hp514"]
-[ext_resource type="Shader" uid="uid://bleg0kybifn7i" path="res://VoxelEditorForGodotDotNet/PlaceableItems/Highlihgt.gdshader" id="16_aj3rg"]
+[ext_resource type="JSON" path="res://VoxelEditorForGodotDotNet/ObjectSaver.json" id="15_jf42m"]
 [ext_resource type="PackedScene" uid="uid://cl0132hwrpdl2" path="res://VoxelEditorForGodotDotNet/PlaceableItems/Cube.tscn" id="17_b6dwn"]
 [ext_resource type="PackedScene" uid="uid://n7po5nma3c6u" path="res://VoxelEditorForGodotDotNet/PlaceableItems/Sphere.tscn" id="18_ent35"]
 [ext_resource type="PackedScene" uid="uid://c6xn8c7vwo0c4" path="res://VoxelEditorForGodotDotNet/PlaceableItems/Cylinder.tscn" id="19_vi1oe"]
 [ext_resource type="PackedScene" uid="uid://75xt687g4r3j" path="res://VoxelEditorForGodotDotNet/VRSetup/Ground.tscn" id="20_6belf"]
+[ext_resource type="Script" uid="uid://dtuc0sjxck2pw" path="res://VoxelEditorForGodotDotNet/PlaceableItems/ObjectSpawner.gd" id="20_uoj7x"]
 [ext_resource type="PackedScene" uid="uid://d0kisqcq43ebm" path="res://VoxelEditorForGodotDotNet/VoxelEditor/VoxelController.tscn" id="21_fl6ki"]
 [ext_resource type="Material" uid="uid://cr2gj02o7km1c" path="res://VoxelEditorForGodotDotNet/MaterialsAndShaders/TriplanarTerrain.tres" id="22_70n0f"]
 [ext_resource type="PackedScene" uid="uid://bbv22y7gt2hc2" path="res://VoxelEditorForGodotDotNet/PlaceableItems/PlayerSizedCapsule.tscn" id="23_ghkfn"]
@@ -49,38 +49,6 @@ shading_mode = 0
 transparency = 1
 albedo_color = Color(0, 1, 1, 0.49803922)
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ivlqx"]
-radius = 0.2
-height = 1.65
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_akvqr"]
-radius = 0.2
-height = 1.65
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_f032d"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_w24xb"]
-render_priority = 0
-shader = ExtResource("16_aj3rg")
-shader_parameter/outline_distance = 0.02
-shader_parameter/albedo = Color(1, 1, 0, 1)
-
-[sub_resource type="PackedScene" id="PackedScene_f5qcx"]
-_bundled = {
-"base_scene": 0,
-"conn_count": 0,
-"conns": PackedInt32Array(),
-"editable_instances": [],
-"id_paths": [],
-"names": PackedStringArray("Player sized capsule", "collision_mask", "gravity_scale", "linear_damp", "angular_damp", "CollisionShape3D", "transform", "shape", "Mesh", "mesh", "surface_material_override/0", "MeshInstance3D", "XRToolsHighlightVisible", "visible", "script", "metadata/_custom_type_script", "Node3D", "Highlihgt"),
-"node_count": 5,
-"node_ids": PackedInt32Array(480645879, 0, 775529829, 426397079, 1208041471),
-"node_paths": [],
-"nodes": PackedInt32Array(-1, -1, 2147483647, 0, -1, 4, 1, 1, 2, 2, 3, 3, 4, 3, 0, 0, 0, 2147483647, 262149, -1, 2, 6, 4, 7, 5, 0, 0, 0, 11, 524296, -1, 3, 6, 4, 9, 6, 10, 7, 0, 0, 0, 16, 786444, -1, 3, 13, 8, 14, 9, 15, 10, 0, 3, 0, 11, 262161, -1, 3, 6, 4, 9, 6, 10, 11, 0),
-"variants": [ExtResource("14_dq5ek"), 0, 0.0, 100.0, Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.825, 0), SubResource("CapsuleShape3D_ivlqx"), SubResource("CapsuleMesh_akvqr"), SubResource("StandardMaterial3D_f032d"), false, ExtResource("15_hp514"), "uid://0b7wkxi4vymb", SubResource("ShaderMaterial_w24xb")],
-"version": 3
-}
-
 [sub_resource type="QuadMesh" id="QuadMesh_lpj5r"]
 size = Vector2(128, 128)
 center_offset = Vector3(64, -64, 0)
@@ -97,6 +65,37 @@ environment = SubResource("Environment_p8rij")
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1858147971]
 transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
 shadow_enabled = true
+
+[node name="ObjectSpawner" type="Node3D" parent="." unique_id=320593309]
+transform = Transform3D(-0.70710677, 0, -0.70710677, 0, 1, 0, 0.70710677, 0, -0.70710677, 0, 0, 0)
+script = ExtResource("20_uoj7x")
+layout_file = ExtResource("15_jf42m")
+spawnable_scenes = Dictionary[int, PackedScene]({
+0: ExtResource("23_ghkfn"),
+1: ExtResource("17_b6dwn"),
+2: ExtResource("18_ent35"),
+3: ExtResource("19_vi1oe")
+})
+
+[node name="Cube" type="RigidBody3D" parent="ObjectSpawner" unique_id=480645879 instance=ExtResource("17_b6dwn")]
+transform = Transform3D(-0.7353877, -0.6321075, 0.24422342, -0.39017093, 0.6896281, 0.61006534, -0.5540502, 0.35334563, -0.753774, 0.83754754, 0.86846423, -5.6952667)
+collision_layer = 4
+collision_mask = 0
+gravity_scale = 0.0
+freeze_mode = 1
+linear_damp = 100.0
+angular_damp = 100.0
+script = ExtResource("8_4hfjv")
+instance_id = "222314893733"
+scene_file_path_override = "res://VoxelEditorForGodotDotNet/PlaceableItems/Cube.tscn"
+
+[node name="Player sized capsule" parent="ObjectSpawner" unique_id=311145354 instance=ExtResource("23_ghkfn")]
+transform = Transform3D(-0.7071068, 0, 0.7071068, 0, 1, 0, -0.7071068, 0, -0.7071068, -1.345948, 1.4305115e-06, -1.7302496)
+instance_id = "18464785929230"
+
+[node name="Player sized capsule2" parent="ObjectSpawner" unique_id=499244775 instance=ExtResource("23_ghkfn")]
+transform = Transform3D(-0.7071068, 0, 0.7071068, 0, 1, 0, -0.7071068, 0, -0.7071068, -1.7904869, 1.4305115e-06, -0.9054867)
+instance_id = "18464869825121"
 
 [node name="VR player" parent="." unique_id=1445165384 instance=ExtResource("2_uoj7x")]
 transform = Transform3D(-0.70710677, 0, -0.70710677, 0, 1, 0, 0.70710677, 0, -0.70710677, 0, 0, 0)
@@ -185,20 +184,15 @@ RightController = NodePath("../RightHand")
 gridSize = Vector3i(128, 128, 128)
 voxelWorldFile = ExtResource("12_q2pmc")
 
-[node name="ObjectEditController" type="Node3D" parent="VR player" unique_id=1116789243 node_paths=PackedStringArray("interaction_point", "interaction_visualizer", "controller", "function_pickup", "pickup_left", "pickup_right")]
+[node name="ObjectEditController" type="Node3D" parent="VR player" unique_id=1116789243 node_paths=PackedStringArray("spawner", "interaction_point", "interaction_visualizer", "controller", "function_pickup", "pickup_left", "pickup_right")]
 script = ExtResource("13_omrdi")
+spawner = NodePath("../../ObjectSpawner")
 interaction_point = NodePath("../RightHand/RightHand/InteractionPoint")
 interaction_visualizer = NodePath("../RightHand/RightHand/InteractionPoint/InteractionVisualizer")
 controller = NodePath("../RightHand")
 function_pickup = NodePath("../RightHand/XRToolsFunctionPickup")
 pickup_left = NodePath("../LeftHand/XRToolsFunctionPickup")
 pickup_right = NodePath("../RightHand/XRToolsFunctionPickup")
-spawnable_scenes = Dictionary[int, PackedScene]({
-0: SubResource("PackedScene_f5qcx"),
-1: ExtResource("17_b6dwn"),
-2: ExtResource("18_ent35"),
-3: ExtResource("19_vi1oe")
-})
 
 [node name="Ground" parent="." unique_id=993000832 instance=ExtResource("20_6belf")]
 
@@ -222,12 +216,6 @@ currentMainMaterial = ExtResource("22_70n0f")
 transform = Transform3D(1, 0, 0, 0, 1.1924881e-08, 1, 0, -1, 1.1924881e-08, 0, 0.01, 0)
 mesh = SubResource("QuadMesh_lpj5r")
 surface_material_override/0 = SubResource("StandardMaterial3D_erkc8")
-
-[node name="Player sized capsule" parent="." unique_id=480645879 instance=ExtResource("23_ghkfn")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.1752, 1.4305115e-06, 0.27174222)
-
-[node name="Player sized capsule2" parent="." unique_id=499244775 instance=ExtResource("23_ghkfn")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.9063411, 1.4305115e-06, -0.62578964)
 
 [node name="ToDo" type="Node" parent="." unique_id=2106738790]
 
