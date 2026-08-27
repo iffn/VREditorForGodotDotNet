@@ -160,6 +160,14 @@ func _apply_layout_to_editor(diff_data: Dictionary) -> void:
 	if not scene_root:
 		return
 
+	# Quick check if there are actual diff items to process
+	var deleted_ids: Array = diff_data.get("deleted", [])
+	var modified_items: Array = diff_data.get("modified", [])
+	var added_items: Array = diff_data.get("added", [])
+
+	if deleted_ids.is_empty() and modified_items.is_empty() and added_items.is_empty():
+		return
+
 	var existing_nodes: Dictionary = {}
 	var all_pickables = find_children("*", "VREditorPickableSerializable", true, false)
 	
@@ -170,7 +178,6 @@ func _apply_layout_to_editor(diff_data: Dictionary) -> void:
 	var has_changes: bool = false
 
 	# 1. Apply Deletions
-	var deleted_ids: Array = diff_data.get("deleted", [])
 	for del_id in deleted_ids:
 		if existing_nodes.has(del_id):
 			var node_to_free = existing_nodes[del_id]
@@ -179,7 +186,6 @@ func _apply_layout_to_editor(diff_data: Dictionary) -> void:
 			has_changes = true
 
 	# 2. Apply Modifications
-	var modified_items: Array = diff_data.get("modified", [])
 	for item in modified_items:
 		var item_id: String = item.get("id", "")
 		if existing_nodes.has(item_id):
@@ -188,7 +194,6 @@ func _apply_layout_to_editor(diff_data: Dictionary) -> void:
 			has_changes = true
 
 	# 3. Instantiate Additions
-	var added_items: Array = diff_data.get("added", [])
 	var restored_nodes: Dictionary = existing_nodes.duplicate()
 
 	for item in added_items:
@@ -229,8 +234,11 @@ func _apply_layout_to_editor(diff_data: Dictionary) -> void:
 				node.reparent(self)
 				node.owner = scene_root
 
-	# Trigger Godot scene dirty flag via standard EditorUndoRedoManager context
 	if has_changes:
+		# Wipe the JSON file so modifications are not re-applied on subsequent focus events
+		_clear_vr_json()
+
+		# Trigger Godot scene dirty flag via standard EditorUndoRedoManager context
 		var dummy_plugin := EditorPlugin.new()
 		var undo_redo := dummy_plugin.get_undo_redo()
 		dummy_plugin.free()
@@ -240,3 +248,25 @@ func _apply_layout_to_editor(diff_data: Dictionary) -> void:
 			undo_redo.add_do_property(scene_root, "position", scene_root.position)
 			undo_redo.add_undo_property(scene_root, "position", scene_root.position)
 			undo_redo.commit_action()
+
+## Clears the content of the target layout JSON file after successful application
+func _clear_vr_json() -> void:
+	if not layout_file:
+		return
+
+	var file_path: String = layout_file.resource_path
+	if file_path.is_empty():
+		return
+
+	var empty_payload = {
+		"diff": {
+			"added": [],
+			"modified": [],
+			"deleted": []
+		}
+	}
+
+	var file = FileAccess.open(file_path, FileAccess.WRITE)
+	if file:
+		file.store_string(JSON.stringify(empty_payload, "\t"))
+		file.close()

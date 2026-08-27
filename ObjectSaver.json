@@ -2,29 +2,6 @@
 	"diff": {
 		"added": [],
 		"deleted": [],
-		"modified": [
-			{
-				"id": "18464869825121",
-				"parent_id": "",
-				"scene_path": "res://VoxelEditorForGodotDotNet/PlaceableItems/PlayerSizedCapsule.tscn",
-				"transform": {
-					"pos": [
-						-1.79048705101013,
-						1.4305114746e-06,
-						-0.905486822128296
-					],
-					"rot": [
-						0.0,
-						2.35619449615479,
-						0.0
-					],
-					"scale": [
-						1.0,
-						1.0,
-						1.0
-					]
-				}
-			}
-		]
+		"modified": []
 	}
 }
