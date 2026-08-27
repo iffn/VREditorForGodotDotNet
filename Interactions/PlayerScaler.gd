@@ -54,6 +54,10 @@ var _initial_scale_center_world: Vector3
 var _initial_hand_distance_player_scale: float
 var _initial_scale: float
 
+# State backup for pickups modified by other scripts
+var _left_was_enabled: bool = true
+var _right_was_enabled: bool = true
+
 # Independent tracking per hand
 var _left_picked_object: Node3D = null
 var _left_pickup_transform: Transform3D
@@ -179,15 +183,12 @@ func _handle_hand_scale() -> void:
 			var left_holding = is_instance_valid(left_pickup_func) and left_pickup_func.picked_up_object != null
 			var right_holding = is_instance_valid(right_pickup_func) and right_pickup_func.picked_up_object != null
 
-			# Evaluate individual timing for both hands
 			var left_in_window = left_holding and (current_time - _left_pickup_time_ms) <= cancel_pickup_window_ms
 			var right_in_window = right_holding and (current_time - _right_pickup_time_ms) <= cancel_pickup_window_ms
 
-			# IF either hand holds an item outside the window -> BLOCK SCALING PERMANENTLY
 			if (left_holding and not left_in_window) or (right_holding and not right_in_window):
 				return
 
-			# IF items were picked up within the grace window -> cancel them & revert position
 			if left_holding and left_in_window:
 				_cancel_hand_pickup(left_pickup_func, _left_picked_object, _left_pickup_transform)
 				_left_picked_object = null
@@ -198,7 +199,12 @@ func _handle_hand_scale() -> void:
 				_right_picked_object = null
 				_right_pickup_time_ms = 0
 
-			# Both hands are now free -> Activate world scaling
+			# Save pre-existing states managed by external scripts before temporarily overriding them
+			if is_instance_valid(left_pickup_func):
+				_left_was_enabled = left_pickup_func.enabled
+			if is_instance_valid(right_pickup_func):
+				_right_was_enabled = right_pickup_func.enabled
+
 			_scaling_active = true
 			_initial_scale_center_world = initial_sample_center
 			_initial_scale = current_player_scale
@@ -273,7 +279,13 @@ func scale_player_and_objects(scale: float) -> void:
 func _reset_scaling_state() -> void:
 	if _scaling_active:
 		_scaling_active = false
-		_set_pickups_enabled(true)
+		
+		# Only restore pick-up capability if another script hadn't disabled it prior to scaling
+		if is_instance_valid(left_pickup_func) and _left_was_enabled:
+			left_pickup_func.enabled = true
+		if is_instance_valid(right_pickup_func) and _right_was_enabled:
+			right_pickup_func.enabled = true
+
 		if scale_indicator:
 			scale_indicator.visible = false
 
