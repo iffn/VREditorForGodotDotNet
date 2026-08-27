@@ -266,6 +266,8 @@ surface_material_override/0 = SubResource("StandardMaterial3D_erkc8")
 
 [node name="Test and fix RPGg start height" type="Node" parent="ToDo/Movement" unique_id=1919559064]
 
+[node name="Stop initial falling if not active" type="Node" parent="ToDo/Movement" unique_id=902631122]
+
 [node name="Voxel editor" type="Node" parent="ToDo" unique_id=717234250]
 
 [node name="Outlines" type="Node" parent="ToDo/Voxel editor" unique_id=778926802]
@@ -276,13 +278,11 @@ surface_material_override/0 = SubResource("StandardMaterial3D_erkc8")
 
 [node name="Items" type="Node" parent="ToDo" unique_id=728677396]
 
-[node name="Scale item if scaleable" type="Node" parent="ToDo/Items" unique_id=372926198]
+[node name="Implement if scaleable" type="Node" parent="ToDo/Items" unique_id=372926198]
 
 [node name="Implement tree" type="Node" parent="ToDo/Items" unique_id=1851619102]
 
 [node name="Implement river" type="Node" parent="ToDo/Items" unique_id=971794866]
-
-[node name="Save and apply" type="Node" parent="ToDo/Items" unique_id=663634535]
 
 [node name="Save and load" type="Node" parent="ToDo" unique_id=528217398]
 
