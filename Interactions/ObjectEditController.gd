@@ -12,6 +12,9 @@ class_name ObjectEditController
 @export var pickup_left : XRToolsFunctionPickup
 @export var pickup_right : XRToolsFunctionPickup
 
+# Scaling settings
+@export var scale_speed: float = 1.0
+
 enum SpawnableElement {
 	PLAYER_SIZED_CAPSULE,
 	CUBE,
@@ -58,6 +61,28 @@ func _ready() -> void:
 	# Fallback: Auto-find right hand pickup if not manually assigned
 	if not function_pickup:
 		function_pickup = XRToolsFunctionPickup.find_right(self)
+
+func _process(delta: float) -> void:
+	if not active:
+		return
+
+	# Fallback to function_pickup controller if 'controller' is null
+	var target_controller: XRController3D = controller
+	if not target_controller and function_pickup:
+		target_controller = function_pickup.get_controller()
+
+	if not target_controller or not function_pickup:
+		return
+
+	var input_y: float = target_controller.get_vector2("primary").y
+
+	# Scale the highlighted (closest) object instead of the held object
+	var highlighted_object = function_pickup.closest_object
+	if is_instance_valid(highlighted_object) and highlighted_object is Node3D:
+		if abs(input_y) > 0.1:
+			print("Scaling Highlighted Object Y: ", input_y)
+			var scale_factor: float = 1.0 + (input_y * scale_speed * delta)
+			highlighted_object.scale *= scale_factor
 
 func _on_button_pressed(p_name: String) -> void:
 	# Ignore input if the controller is inactive

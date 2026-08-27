@@ -273,11 +273,11 @@ layout_mode = 2
 [node name="VR Editor controls" parent="Vertical arrangement/Edit objects/Controls" unique_id=1507914316 instance=ExtResource("2_pwdga")]
 layout_mode = 2
 
-[node name="Terrain editing controls" type="Label" parent="Vertical arrangement/Edit objects/Controls" unique_id=1586843586]
+[node name="Object editing controls" type="Label" parent="Vertical arrangement/Edit objects/Controls" unique_id=1586843586]
 layout_mode = 2
 text = "Object edit controls:
 - Hold Grab: Pick up and move item
-- Right Stick Up Down: Scale item in right hand
+- Right Stick Up Down: Scale item highlighted by right hand
 - A Button: Duplicate
 - B Button: Remove"
 
