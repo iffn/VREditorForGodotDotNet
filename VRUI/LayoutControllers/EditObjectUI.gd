@@ -1,6 +1,6 @@
 extends UIModeController
 
-class_name EditObjectController
+class_name EditObjectUI
 
 var object_edit_controller : ObjectEditController
 

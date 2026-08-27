@@ -6,7 +6,7 @@
 [ext_resource type="Script" uid="uid://ss7nveo1bxow" path="res://VoxelEditorForGodotDotNet/VRUI/LayoutControllers/MovementUI.gd" id="2_pfr3i"]
 [ext_resource type="PackedScene" uid="uid://ycmpv6k3hxhn" path="res://VoxelEditorForGodotDotNet/VRUI/Elements/VR Editor controls.tscn" id="2_pwdga"]
 [ext_resource type="Script" uid="uid://7fkpar0ek3wi" path="res://VoxelEditorForGodotDotNet/VRUI/LayoutControllers/VoxelUI.gd" id="5_f1uaf"]
-[ext_resource type="Script" uid="uid://b8x7b3jjfgx70" path="res://VoxelEditorForGodotDotNet/VRUI/LayoutControllers/EditObjectController.gd" id="7_rwoe2"]
+[ext_resource type="Script" uid="uid://b8x7b3jjfgx70" path="res://VoxelEditorForGodotDotNet/VRUI/LayoutControllers/EditObjectUI.gd" id="7_rwoe2"]
 [ext_resource type="Script" uid="uid://bpqw20u5t4kio" path="res://VoxelEditorForGodotDotNet/VRUI/LayoutControllers/SaveAndLoadUI.gd" id="8_v73p8"]
 [ext_resource type="Script" uid="uid://dyqjn4cgkky3m" path="res://VoxelEditorForGodotDotNet/VRUI/LayoutControllers/SettingsUI.gd" id="9_2rud3"]
 
