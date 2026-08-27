@@ -7,7 +7,6 @@
 [ext_resource type="Script" uid="uid://b18kkstg643yw" path="res://addons/godot-xr-tools/functions/function_pickup.gd" id="5_01x5s"]
 [ext_resource type="Script" uid="uid://bjeiev8dmyfdj" path="res://VoxelEditorForGodotDotNet/VoxelEditor/Scripts/EditTools/SphereEditShape.cs" id="6_cb16o"]
 [ext_resource type="PackedScene" uid="uid://clujaf3u776a3" path="res://addons/godot-xr-tools/objects/viewport_2d_in_3d.tscn" id="7_tfhxa"]
-[ext_resource type="Script" uid="uid://cu8lxu6berk45" path="res://VoxelEditorForGodotDotNet/PlaceableItems/VREditorPickableSerializable.gd" id="8_4hfjv"]
 [ext_resource type="PackedScene" uid="uid://drnw7l2nvb6rk" path="res://VoxelEditorForGodotDotNet/VRUI/VRUI.tscn" id="8_c1kk3"]
 [ext_resource type="Script" uid="uid://c5tqoains5ikr" path="res://VoxelEditorForGodotDotNet/Interactions/PlayerScaler.gd" id="9_kqai8"]
 [ext_resource type="Script" uid="uid://c63j7k3woej6n" path="res://VoxelEditorForGodotDotNet/Interactions/PlayerMovementController.gd" id="10_4iv8x"]
@@ -77,25 +76,10 @@ spawnable_scenes = Dictionary[int, PackedScene]({
 3: ExtResource("19_vi1oe")
 })
 
-[node name="Cube" type="RigidBody3D" parent="ObjectSpawner" unique_id=480645879 instance=ExtResource("17_b6dwn")]
-transform = Transform3D(-0.7353877, -0.6321075, 0.24422342, -0.39017093, 0.6896281, 0.61006534, -0.5540502, 0.35334563, -0.753774, 0.83754754, 0.86846423, -5.6952667)
-collision_layer = 4
-collision_mask = 0
-gravity_scale = 0.0
-freeze_mode = 1
-linear_damp = 100.0
-angular_damp = 100.0
-script = ExtResource("8_4hfjv")
-instance_id = "222314893733"
-scene_file_path_override = "res://VoxelEditorForGodotDotNet/PlaceableItems/Cube.tscn"
-
-[node name="Player sized capsule" parent="ObjectSpawner" unique_id=311145354 instance=ExtResource("23_ghkfn")]
-transform = Transform3D(-0.7071068, 0, 0.7071068, 0, 1, 0, -0.7071068, 0, -0.7071068, -1.345948, 1.4305115e-06, -1.7302496)
-instance_id = "18464785929230"
-
-[node name="Player sized capsule2" parent="ObjectSpawner" unique_id=499244775 instance=ExtResource("23_ghkfn")]
-transform = Transform3D(-0.7071068, 0, 0.7071068, 0, 1, 0, -0.7071068, 0, -0.7071068, -1.7904869, 1.4305115e-06, -0.9054867)
+[node name="Player sized capsule" parent="ObjectSpawner" unique_id=499244775 instance=ExtResource("23_ghkfn")]
+transform = Transform3D(-0.7071067, 0, 0.7071067, 0, 1, 0, -0.7071067, 0, -0.7071067, -1.790487, 1.4305115e-06, -0.9054868)
 instance_id = "18464869825121"
+scale_factor = null
 
 [node name="VR player" parent="." unique_id=1445165384 instance=ExtResource("2_uoj7x")]
 transform = Transform3D(-0.70710677, 0, -0.70710677, 0, 1, 0, 0.70710677, 0, -0.70710677, 0, 0, 0)

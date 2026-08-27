@@ -1,63 +1,85 @@
 {
 	"objects": [
 		{
-			"id": "222314893733",
-			"parent_id": "",
-			"scene_path": "res://VoxelEditorForGodotDotNet/PlaceableItems/Cube.tscn",
-			"transform": {
-				"pos": [
-					0.837547540664673,
-					0.868464231491089,
-					-5.69526672363281
-				],
-				"rot": [
-					-0.656142950057983,
-					2.82826471328735,
-					-0.514870047569275
-				],
-				"scale": [
-					1.0,
-					1.0,
-					1.0
-				]
-			}
-		},
-		{
-			"id": "18464785929230",
-			"parent_id": "",
-			"scene_path": "res://VoxelEditorForGodotDotNet/PlaceableItems/PlayerSizedCapsule.tscn",
-			"transform": {
-				"pos": [
-					1.84681367874146,
-					0.600073456764221,
-					-0.203104734420776
-				],
-				"rot": [
-					-1.19102871417999,
-					1.92013144493103,
-					0.0750551298260689
-				],
-				"scale": [
-					1.0,
-					1.00000011920929,
-					1.0
-				]
-			}
-		},
-		{
 			"id": "18464869825121",
 			"parent_id": "",
 			"scene_path": "res://VoxelEditorForGodotDotNet/PlaceableItems/PlayerSizedCapsule.tscn",
 			"transform": {
 				"pos": [
-					-1.79048693180084,
-					0.00000143051147460938,
-					-0.905486702919006
+					-1.79048705101013,
+					1.4305114746e-06,
+					-0.905486822128296
 				],
 				"rot": [
 					0.0,
 					2.35619449615479,
 					0.0
+				],
+				"scale": [
+					1.0,
+					1.0,
+					1.0
+				]
+			}
+		},
+		{
+			"id": "210486956361",
+			"parent_id": "",
+			"scene_path": "res://VoxelEditorForGodotDotNet/PlaceableItems/Cube.tscn",
+			"transform": {
+				"pos": [
+					0.0462331920862198,
+					0.693813800811768,
+					-0.404800415039063
+				],
+				"rot": [
+					-0.00221888558007777,
+					-3.07117986679077,
+					0.00093132600886747
+				],
+				"scale": [
+					1.0,
+					1.0,
+					1.0
+				]
+			}
+		},
+		{
+			"id": "237565382990",
+			"parent_id": "",
+			"scene_path": "res://VoxelEditorForGodotDotNet/PlaceableItems/Cube.tscn",
+			"transform": {
+				"pos": [
+					1.15575742721558,
+					0.694053590297699,
+					-0.600875854492188
+				],
+				"rot": [
+					-0.0014157717814669,
+					-3.09006714820862,
+					-0.00465341378003359
+				],
+				"scale": [
+					1.0,
+					1.0,
+					1.0
+				]
+			}
+		},
+		{
+			"id": "257429606740",
+			"parent_id": "",
+			"scene_path": "res://VoxelEditorForGodotDotNet/PlaceableItems/Cube.tscn",
+			"transform": {
+				"pos": [
+					1.40139603614807,
+					0.693038642406464,
+					-0.140680253505707
+				],
+				"rot": [
+					-0.00159400783013552,
+					-3.08241438865662,
+					-0.00653903651982546
 				],
 				"scale": [
 					1.0,

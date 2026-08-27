@@ -61,10 +61,12 @@ func _process(delta: float) -> void:
 	var input_y: float = target_controller.get_vector2("primary").y
 
 	var highlighted_object = function_pickup.closest_object
-	if is_instance_valid(highlighted_object) and highlighted_object is Node3D:
+	if is_instance_valid(highlighted_object):
 		if abs(input_y) > 0.1:
 			var scale_factor: float = 1.0 + (input_y * scale_speed * delta)
-			highlighted_object.scale *= scale_factor
+			
+			if highlighted_object is VREditorPickableSerializable:
+				highlighted_object.apply_scale_delta(scale_factor)
 
 func _on_button_pressed(p_name: String) -> void:
 	if not active:

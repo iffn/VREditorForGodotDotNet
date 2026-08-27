@@ -4,6 +4,7 @@
 [ext_resource type="Shader" uid="uid://bleg0kybifn7i" path="res://VoxelEditorForGodotDotNet/PlaceableItems/Highlihgt.gdshader" id="2_7ksuu"]
 [ext_resource type="Script" uid="uid://cu8lxu6berk45" path="res://VoxelEditorForGodotDotNet/PlaceableItems/VREditorPickableSerializable.gd" id="2_o3y3a"]
 [ext_resource type="Script" uid="uid://0b7wkxi4vymb" path="res://addons/godot-xr-tools/objects/highlight/highlight_visible.gd" id="2_w24xb"]
+[ext_resource type="PackedScene" uid="uid://ck57a6mj81jll" path="res://VoxelEditorForGodotDotNet/PlaceableItems/NoteAboutScale.tscn" id="3_o3y3a"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ivlqx"]
 radius = 0.2
@@ -29,17 +30,20 @@ angular_damp = 100.0
 script = ExtResource("2_o3y3a")
 instance_id = "20079794303446"
 scene_file_path_override = "res://VoxelEditorForGodotDotNet/PlaceableItems/PlayerSizedCapsule.tscn"
+scale_factor = Vector3(1, 1, 1)
 
-[node name="CollisionShape3D" parent="." index="0"]
+[node name="Important - Positions must be at origin and scale must be 1" parent="." index="0" unique_id=1903908545 instance=ExtResource("3_o3y3a")]
+
+[node name="CollisionShape3D" parent="." index="1"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.825, 0)
 shape = SubResource("CapsuleShape3D_ivlqx")
 
-[node name="Mesh" type="MeshInstance3D" parent="." index="1" unique_id=775529829]
+[node name="Mesh" type="MeshInstance3D" parent="." index="2" unique_id=775529829]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.825, 0)
 mesh = SubResource("CapsuleMesh_akvqr")
 surface_material_override/0 = SubResource("StandardMaterial3D_f032d")
 
-[node name="XRToolsHighlightVisible" type="Node3D" parent="." index="2" unique_id=426397079]
+[node name="XRToolsHighlightVisible" type="Node3D" parent="." index="3" unique_id=426397079]
 visible = false
 script = ExtResource("2_w24xb")
 metadata/_custom_type_script = "uid://0b7wkxi4vymb"
