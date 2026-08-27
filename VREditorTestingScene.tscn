@@ -75,11 +75,20 @@ spawnable_scenes = Dictionary[int, PackedScene]({
 2: ExtResource("18_ent35"),
 3: ExtResource("19_vi1oe")
 })
+scene_baseline_data = Array[Dictionary]([{
+"id": "18464869825121",
+"parent_id": "",
+"scene_path": "res://VoxelEditorForGodotDotNet/PlaceableItems/PlayerSizedCapsule.tscn",
+"transform": {
+"pos": [-1.790487, 1.4305115e-06, -0.9054868],
+"rot": [0.0, 2.3561945, 0.0],
+"scale": [1.0, 1.0, 1.0]
+}
+}])
 
 [node name="Player sized capsule" parent="ObjectSpawner" unique_id=499244775 instance=ExtResource("23_ghkfn")]
 transform = Transform3D(-0.7071067, 0, 0.7071067, 0, 1, 0, -0.7071067, 0, -0.7071067, -1.790487, 1.4305115e-06, -0.9054868)
 instance_id = "18464869825121"
-scale_factor = null
 
 [node name="VR player" parent="." unique_id=1445165384 instance=ExtResource("2_uoj7x")]
 transform = Transform3D(-0.70710677, 0, -0.70710677, 0, 1, 0, 0.70710677, 0, -0.70710677, 0, 0, 0)
