@@ -7,8 +7,8 @@ extends XRToolsMovementProvider
 ## Provides two-handed scaling and world manipulation via two-handed grip gesture.
 
 @export_group("Provider Setup")
-## Execution order priority
-@export var order: int = 35
+## Execution order priority (Must run before XRToolsFunctionPickup or default movement)
+@export var order: int = 10
 
 @export_group("XR Nodes")
 ## Target XROrigin3D node (auto-resolved from player_body if unassigned)
@@ -20,9 +20,20 @@ extends XRToolsMovementProvider
 ## Right controller used for two-handed scaling
 @export var right_controller: XRController3D
 
+@export_group("Pickup Integration")
+## Left controller FunctionPickup
+@export var left_pickup_func: XRToolsFunctionPickup
+
+## Right controller FunctionPickup
+@export var right_pickup_func: XRToolsFunctionPickup
+
 @export_group("Scaling Settings")
 ## Button input action required on both controllers to trigger scaling
 @export var scale_button_action: String = "grip_click"
+
+## Maximum time window (in milliseconds) between hand grips where a gesture
+## is treated as a scaling command instead of picking up objects.
+@export var cancel_pickup_window_ms: int = 350
 
 ## Optional visual indicator shown between hands during scaling
 @export var scale_indicator: Node3D
@@ -42,6 +53,15 @@ var _scaling_active: bool = false
 var _initial_scale_center_world: Vector3
 var _initial_hand_distance_player_scale: float
 var _initial_scale: float
+
+# Independent tracking per hand
+var _left_picked_object: Node3D = null
+var _left_pickup_transform: Transform3D
+var _left_pickup_time_ms: int = 0
+
+var _right_picked_object: Node3D = null
+var _right_pickup_transform: Transform3D
+var _right_pickup_time_ms: int = 0
 
 var current_player_scale: float:
 	get:
@@ -69,6 +89,47 @@ func _ready() -> void:
 		scale_indicator.visible = false
 		scale_indicator.top_level = true
 
+	if not Engine.is_editor_hint():
+		call_deferred("_setup_pickup_listeners")
+
+
+func _setup_pickup_listeners() -> void:
+	if is_instance_valid(left_pickup_func):
+		if not left_pickup_func.has_picked_up.is_connected(_on_left_picked_up):
+			left_pickup_func.has_picked_up.connect(_on_left_picked_up)
+			left_pickup_func.has_dropped.connect(_on_left_dropped)
+
+	if is_instance_valid(right_pickup_func):
+		if not right_pickup_func.has_picked_up.is_connected(_on_right_picked_up):
+			right_pickup_func.has_picked_up.connect(_on_right_picked_up)
+			right_pickup_func.has_dropped.connect(_on_right_dropped)
+
+
+func _on_left_picked_up(what: Node3D) -> void:
+	if _scaling_active:
+		return
+	_left_picked_object = what
+	_left_pickup_transform = what.global_transform
+	_left_pickup_time_ms = Time.get_ticks_msec()
+
+
+func _on_left_dropped(_what: Node3D) -> void:
+	_left_picked_object = null
+	_left_pickup_time_ms = 0
+
+
+func _on_right_picked_up(what: Node3D) -> void:
+	if _scaling_active:
+		return
+	_right_picked_object = what
+	_right_pickup_transform = what.global_transform
+	_right_pickup_time_ms = Time.get_ticks_msec()
+
+
+func _on_right_dropped(_what: Node3D) -> void:
+	_right_picked_object = null
+	_right_pickup_time_ms = 0
+
 
 func _process(_delta: float) -> void:
 	if Engine.is_editor_hint():
@@ -78,7 +139,6 @@ func _process(_delta: float) -> void:
 		_reset_scaling_state()
 		return
 
-	# Run scale and transform updates at rendering framerate (90Hz+) to eliminate jitter
 	_handle_hand_scale()
 
 
@@ -91,11 +151,9 @@ func physics_movement(_delta: float, player_body: XRToolsPlayerBody, disabled: b
 		_reset_scaling_state()
 		return false
 
-	# Resolve XROrigin3D automatically if not set
 	if not xr_origin and player_body:
 		xr_origin = player_body.get_node_or_null(player_body.origin) as XROrigin3D
 
-	# Returns true only while two-handed scaling is actively taking place
 	return _scaling_active
 
 
@@ -116,10 +174,37 @@ func _handle_hand_scale() -> void:
 		var initial_sample_center: Vector3 = controller_center_world
 
 		if not _scaling_active:
+			var current_time = Time.get_ticks_msec()
+
+			var left_holding = is_instance_valid(left_pickup_func) and left_pickup_func.picked_up_object != null
+			var right_holding = is_instance_valid(right_pickup_func) and right_pickup_func.picked_up_object != null
+
+			# Evaluate individual timing for both hands
+			var left_in_window = left_holding and (current_time - _left_pickup_time_ms) <= cancel_pickup_window_ms
+			var right_in_window = right_holding and (current_time - _right_pickup_time_ms) <= cancel_pickup_window_ms
+
+			# IF either hand holds an item outside the window -> BLOCK SCALING PERMANENTLY
+			if (left_holding and not left_in_window) or (right_holding and not right_in_window):
+				return
+
+			# IF items were picked up within the grace window -> cancel them & revert position
+			if left_holding and left_in_window:
+				_cancel_hand_pickup(left_pickup_func, _left_picked_object, _left_pickup_transform)
+				_left_picked_object = null
+				_left_pickup_time_ms = 0
+
+			if right_holding and right_in_window:
+				_cancel_hand_pickup(right_pickup_func, _right_picked_object, _right_pickup_transform)
+				_right_picked_object = null
+				_right_pickup_time_ms = 0
+
+			# Both hands are now free -> Activate world scaling
 			_scaling_active = true
 			_initial_scale_center_world = initial_sample_center
 			_initial_scale = current_player_scale
 			_initial_hand_distance_player_scale = current_dist / _initial_scale
+
+			_set_pickups_enabled(false)
 
 			if scale_indicator:
 				scale_indicator.visible = true
@@ -150,6 +235,21 @@ func _handle_hand_scale() -> void:
 		_reset_scaling_state()
 
 
+func _cancel_hand_pickup(pickup: XRToolsFunctionPickup, obj: Node3D, saved_transform: Transform3D) -> void:
+	if is_instance_valid(pickup) and pickup.picked_up_object != null:
+		pickup.drop_object()
+
+	if is_instance_valid(obj):
+		obj.global_transform = saved_transform
+
+
+func _set_pickups_enabled(enable_state: bool) -> void:
+	if is_instance_valid(left_pickup_func):
+		left_pickup_func.enabled = enable_state
+	if is_instance_valid(right_pickup_func):
+		right_pickup_func.enabled = enable_state
+
+
 func scale_player_and_objects(scale: float) -> void:
 	var old_scale: float = current_player_scale
 	if old_scale <= 0.0:
@@ -173,6 +273,7 @@ func scale_player_and_objects(scale: float) -> void:
 func _reset_scaling_state() -> void:
 	if _scaling_active:
 		_scaling_active = false
+		_set_pickups_enabled(true)
 		if scale_indicator:
 			scale_indicator.visible = false
 
