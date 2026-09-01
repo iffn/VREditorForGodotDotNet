@@ -13,6 +13,15 @@ extends XRToolsPickable
 ## Uniform or non-uniform scale factor applied to all direct Node3D children.
 @export var scale_factor: Vector3 = Vector3.ONE
 
+@export var axis_handler : AxisHandler
+
+@export var scaleable := true
+
+func update_axis(axis_selection : ObjectEditController.AxisOptions):
+	if !scaleable:
+		return
+	axis_handler.update_axis(axis_selection)
+
 func _ready() -> void:
 	super._ready()
 	
@@ -28,7 +37,8 @@ func _ready() -> void:
 
 ## Applies incremental uniform scale multiplier from controller input
 func apply_scale_delta(factor: float) -> void:
-	
+	if !scaleable:
+		return
 	match ObjectEditController.axis_selection:
 		ObjectEditController.AxisOptions.NONE:
 			print("a")

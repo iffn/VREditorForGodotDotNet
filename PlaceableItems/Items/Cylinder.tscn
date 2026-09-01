@@ -5,6 +5,7 @@
 [ext_resource type="Script" uid="uid://cu8lxu6berk45" path="res://VoxelEditorForGodotDotNet/PlaceableItems/VREditorPickableSerializable.gd" id="2_ditgs"]
 [ext_resource type="PackedScene" uid="uid://ck57a6mj81jll" path="res://VoxelEditorForGodotDotNet/PlaceableItems/NoteAboutScale.tscn" id="3_7tjix"]
 [ext_resource type="Shader" uid="uid://bleg0kybifn7i" path="res://VoxelEditorForGodotDotNet/PlaceableItems/Highlihgt.gdshader" id="3_ditgs"]
+[ext_resource type="PackedScene" uid="uid://b5kp0y6edft5i" path="res://VoxelEditorForGodotDotNet/PlaceableItems/AxisDisplay.tscn" id="6_jubrk"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_7tjix"]
 
@@ -18,7 +19,7 @@ shader = ExtResource("3_ditgs")
 shader_parameter/outline_distance = 0.02
 shader_parameter/albedo = Color(1, 1, 0, 1)
 
-[node name="Cylinder" unique_id=480645879 instance=ExtResource("1_ptscl")]
+[node name="Cylinder" unique_id=480645879 node_paths=PackedStringArray("axis_handler") instance=ExtResource("1_ptscl")]
 collision_mask = 0
 gravity_scale = 0.0
 linear_damp = 100.0
@@ -27,6 +28,8 @@ script = ExtResource("2_ditgs")
 instance_id = "20340478686357"
 scene_file_path_override = "res://VoxelEditorForGodotDotNet/PlaceableItems/Cylinder.tscn"
 scale_factor = Vector3(1, 1, 1)
+axis_handler = NodePath("XRToolsHighlightVisible/AxisDisplay")
+scaleable = true
 
 [node name="Important - Positions must be at origin and scale must be 1" parent="." index="0" unique_id=1903908545 instance=ExtResource("3_7tjix")]
 
@@ -45,3 +48,5 @@ metadata/_custom_type_script = "uid://0b7wkxi4vymb"
 [node name="Highlihgt" type="MeshInstance3D" parent="XRToolsHighlightVisible" index="0" unique_id=1208041471]
 mesh = SubResource("CylinderMesh_bgrme")
 surface_material_override/0 = SubResource("ShaderMaterial_w24xb")
+
+[node name="AxisDisplay" parent="XRToolsHighlightVisible" index="1" unique_id=1048828621 instance=ExtResource("6_jubrk")]

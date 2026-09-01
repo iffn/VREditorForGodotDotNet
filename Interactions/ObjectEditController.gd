@@ -21,7 +21,6 @@ enum AxisOptions {
 }
 
 static var axis_selection : AxisOptions
-static var current_highlight : HighlightWithAxis
 
 var active: bool = true:
 	set(value):
@@ -74,9 +73,10 @@ func _process(delta: float) -> void:
 	var trigger_is_active := controller.is_button_pressed("trigger_click")
 	if !trigger_was_active && trigger_is_active:
 		axis_selection = ((axis_selection + 1) % AxisOptions.size()) as AxisOptions
-		if current_highlight != null:
-			current_highlight.update_axis()
 	trigger_was_active = trigger_is_active
+
+	if pickup_right.closest_object && pickup_right.closest_object is VREditorPickableSerializable:
+		pickup_right.closest_object.update_axis(axis_selection)
 
 	# Scaling
 	var input_y: float = target_controller.get_vector2("primary").y

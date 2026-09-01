@@ -4,7 +4,8 @@
 [ext_resource type="Script" uid="uid://cu8lxu6berk45" path="res://VoxelEditorForGodotDotNet/PlaceableItems/VREditorPickableSerializable.gd" id="2_jmtlm"]
 [ext_resource type="Shader" uid="uid://bleg0kybifn7i" path="res://VoxelEditorForGodotDotNet/PlaceableItems/Highlihgt.gdshader" id="3_jmtlm"]
 [ext_resource type="PackedScene" uid="uid://ck57a6mj81jll" path="res://VoxelEditorForGodotDotNet/PlaceableItems/NoteAboutScale.tscn" id="3_mh3wr"]
-[ext_resource type="Script" uid="uid://b36m446f6tgmj" path="res://VoxelEditorForGodotDotNet/PlaceableItems/HighlightWithAxis.gd" id="4_d56my"]
+[ext_resource type="Script" uid="uid://0b7wkxi4vymb" path="res://addons/godot-xr-tools/objects/highlight/highlight_visible.gd" id="4_duqh5"]
+[ext_resource type="PackedScene" uid="uid://b5kp0y6edft5i" path="res://VoxelEditorForGodotDotNet/PlaceableItems/AxisDisplay.tscn" id="6_duqh5"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_mh3wr"]
 
@@ -12,33 +13,13 @@
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_f032d"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_d56my"]
-no_depth_test = true
-albedo_color = Color(1, 0, 0, 1)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_duqh5"]
-no_depth_test = true
-albedo_color = Color(1, 0, 0, 1)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bld8a"]
-no_depth_test = true
-albedo_color = Color(0, 1, 0, 1)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_urnuv"]
-no_depth_test = true
-albedo_color = Color(0, 0, 1, 1)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_obc4l"]
-no_depth_test = true
-albedo_color = Color(0, 0, 1, 1)
-
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_w24xb"]
 render_priority = 0
 shader = ExtResource("3_jmtlm")
 shader_parameter/outline_distance = 0.02
 shader_parameter/albedo = Color(1, 1, 0, 1)
 
-[node name="Cube" unique_id=480645879 instance=ExtResource("1_v1i7i")]
+[node name="Cube" unique_id=480645879 node_paths=PackedStringArray("axis_handler") instance=ExtResource("1_v1i7i")]
 collision_mask = 0
 gravity_scale = 0.0
 linear_damp = 100.0
@@ -47,6 +28,8 @@ script = ExtResource("2_jmtlm")
 instance_id = "16296750194356"
 scene_file_path_override = "res://VoxelEditorForGodotDotNet/PlaceableItems/Cube.tscn"
 scale_factor = Vector3(1, 1, 1)
+axis_handler = NodePath("XRToolsHighlightVisible/AxisDisplay")
+scaleable = true
 
 [node name="Important - Positions must be at origin and scale must be 1" parent="." index="0" unique_id=1903908545 instance=ExtResource("3_mh3wr")]
 
@@ -57,61 +40,13 @@ shape = SubResource("BoxShape3D_mh3wr")
 mesh = SubResource("BoxMesh_rd1sj")
 surface_material_override/0 = SubResource("StandardMaterial3D_f032d")
 
-[node name="XRToolsHighlightVisible" type="Node3D" parent="." index="3" unique_id=426397079 node_paths=PackedStringArray("x_axis", "y_axis", "z_axis")]
+[node name="XRToolsHighlightVisible" type="Node3D" parent="." index="3" unique_id=426397079]
 visible = false
-script = ExtResource("4_d56my")
-x_axis = NodePath("X")
-y_axis = NodePath("Y")
-z_axis = NodePath("Z")
+script = ExtResource("4_duqh5")
 metadata/_custom_type_script = "uid://0b7wkxi4vymb"
 
-[node name="X" type="Node3D" parent="XRToolsHighlightVisible" index="0" unique_id=2135752055]
-transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, 0, 0, 0)
-
-[node name="CSGCylinder3D" type="CSGCylinder3D" parent="XRToolsHighlightVisible/X" index="0" unique_id=594405722]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
-radius = 0.03
-height = 1.0
-material = SubResource("StandardMaterial3D_d56my")
-
-[node name="CSGCylinder3D2" type="CSGCylinder3D" parent="XRToolsHighlightVisible/X" index="1" unique_id=937070792]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, 0)
-radius = 0.1
-height = 0.3
-cone = true
-material = SubResource("StandardMaterial3D_duqh5")
-
-[node name="Y" type="Node3D" parent="XRToolsHighlightVisible" index="1" unique_id=1633713776]
-
-[node name="CSGCylinder3D" type="CSGCylinder3D" parent="XRToolsHighlightVisible/Y" index="0" unique_id=1169224399]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
-radius = 0.03
-height = 1.0
-material = SubResource("StandardMaterial3D_bld8a")
-
-[node name="CSGCylinder3D2" type="CSGCylinder3D" parent="XRToolsHighlightVisible/Y" index="1" unique_id=1477295755]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, 0)
-radius = 0.1
-height = 0.3
-cone = true
-material = SubResource("StandardMaterial3D_bld8a")
-
-[node name="Z" type="Node3D" parent="XRToolsHighlightVisible" index="2" unique_id=1395675560]
-transform = Transform3D(-5.3290705e-15, 1.1920929e-07, -1, -1, -4.371139e-08, 0, -4.371139e-08, 1, 1.1920929e-07, 0, 0, 0)
-
-[node name="CSGCylinder3D" type="CSGCylinder3D" parent="XRToolsHighlightVisible/Z" index="0" unique_id=1255902067]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
-radius = 0.03
-height = 1.0
-material = SubResource("StandardMaterial3D_urnuv")
-
-[node name="CSGCylinder3D2" type="CSGCylinder3D" parent="XRToolsHighlightVisible/Z" index="1" unique_id=455810499]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, 0)
-radius = 0.1
-height = 0.3
-cone = true
-material = SubResource("StandardMaterial3D_obc4l")
-
-[node name="Highlihgt" type="MeshInstance3D" parent="XRToolsHighlightVisible" index="3" unique_id=1208041471]
+[node name="Highlihgt" type="MeshInstance3D" parent="XRToolsHighlightVisible" index="0" unique_id=1208041471]
 mesh = SubResource("BoxMesh_rd1sj")
 surface_material_override/0 = SubResource("ShaderMaterial_w24xb")
+
+[node name="AxisDisplay" parent="XRToolsHighlightVisible" index="1" unique_id=1048828621 instance=ExtResource("6_duqh5")]

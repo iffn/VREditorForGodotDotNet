@@ -1,0 +1,76 @@
+[gd_scene format=3 uid="uid://b5kp0y6edft5i"]
+
+[ext_resource type="Script" uid="uid://5qwf1d2vxnds" path="res://VoxelEditorForGodotDotNet/PlaceableItems/AxisHandler.gd" id="1_xekhi"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_d56my"]
+no_depth_test = true
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_duqh5"]
+no_depth_test = true
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bld8a"]
+no_depth_test = true
+albedo_color = Color(0, 1, 0, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_urnuv"]
+no_depth_test = true
+albedo_color = Color(0, 0, 1, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_obc4l"]
+no_depth_test = true
+albedo_color = Color(0, 0, 1, 1)
+
+[node name="AxisDisplay" type="Node3D" unique_id=1048828621 node_paths=PackedStringArray("x_axis", "y_axis", "z_axis")]
+script = ExtResource("1_xekhi")
+x_axis = NodePath("X")
+y_axis = NodePath("Y")
+z_axis = NodePath("Z")
+
+[node name="X" type="Node3D" parent="." unique_id=1747876573]
+transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="X" unique_id=2055441790]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+radius = 0.03
+height = 1.0
+material = SubResource("StandardMaterial3D_d56my")
+
+[node name="CSGCylinder3D2" type="CSGCylinder3D" parent="X" unique_id=596252156]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, 0)
+radius = 0.1
+height = 0.3
+cone = true
+material = SubResource("StandardMaterial3D_duqh5")
+
+[node name="Y" type="Node3D" parent="." unique_id=1806457092]
+
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="Y" unique_id=1811957882]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+radius = 0.03
+height = 1.0
+material = SubResource("StandardMaterial3D_bld8a")
+
+[node name="CSGCylinder3D2" type="CSGCylinder3D" parent="Y" unique_id=773950672]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, 0)
+radius = 0.1
+height = 0.3
+cone = true
+material = SubResource("StandardMaterial3D_bld8a")
+
+[node name="Z" type="Node3D" parent="." unique_id=2133672067]
+transform = Transform3D(-5.3290705e-15, 1.1920929e-07, -1, -1, -4.371139e-08, 0, -4.371139e-08, 1, 1.1920929e-07, 0, 0, 0)
+
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="Z" unique_id=1431317271]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+radius = 0.03
+height = 1.0
+material = SubResource("StandardMaterial3D_urnuv")
+
+[node name="CSGCylinder3D2" type="CSGCylinder3D" parent="Z" unique_id=1921423606]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, 0)
+radius = 0.1
+height = 0.3
+cone = true
+material = SubResource("StandardMaterial3D_obc4l")
