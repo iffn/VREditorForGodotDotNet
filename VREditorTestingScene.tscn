@@ -14,14 +14,14 @@
 [ext_resource type="JSON" path="res://VoxelEditorForGodotDotNet/VoxelSample.json" id="12_q2pmc"]
 [ext_resource type="Script" uid="uid://drkudl2nccimn" path="res://VoxelEditorForGodotDotNet/Interactions/ObjectEditController.gd" id="13_omrdi"]
 [ext_resource type="JSON" path="res://VoxelEditorForGodotDotNet/ObjectSaver.json" id="15_jf42m"]
-[ext_resource type="PackedScene" uid="uid://cl0132hwrpdl2" path="res://VoxelEditorForGodotDotNet/PlaceableItems/Cube.tscn" id="17_b6dwn"]
-[ext_resource type="PackedScene" uid="uid://n7po5nma3c6u" path="res://VoxelEditorForGodotDotNet/PlaceableItems/Sphere.tscn" id="18_ent35"]
-[ext_resource type="PackedScene" uid="uid://c6xn8c7vwo0c4" path="res://VoxelEditorForGodotDotNet/PlaceableItems/Cylinder.tscn" id="19_vi1oe"]
+[ext_resource type="PackedScene" uid="uid://cl0132hwrpdl2" path="res://VoxelEditorForGodotDotNet/PlaceableItems/Items/Cube.tscn" id="17_b6dwn"]
+[ext_resource type="PackedScene" uid="uid://n7po5nma3c6u" path="res://VoxelEditorForGodotDotNet/PlaceableItems/Items/Sphere.tscn" id="18_ent35"]
+[ext_resource type="PackedScene" uid="uid://c6xn8c7vwo0c4" path="res://VoxelEditorForGodotDotNet/PlaceableItems/Items/Cylinder.tscn" id="19_vi1oe"]
 [ext_resource type="PackedScene" uid="uid://75xt687g4r3j" path="res://VoxelEditorForGodotDotNet/VRSetup/Ground.tscn" id="20_6belf"]
 [ext_resource type="Script" uid="uid://dtuc0sjxck2pw" path="res://VoxelEditorForGodotDotNet/PlaceableItems/ObjectSpawner.gd" id="20_uoj7x"]
 [ext_resource type="PackedScene" uid="uid://d0kisqcq43ebm" path="res://VoxelEditorForGodotDotNet/VoxelEditor/VoxelController.tscn" id="21_fl6ki"]
 [ext_resource type="Material" uid="uid://cr2gj02o7km1c" path="res://VoxelEditorForGodotDotNet/MaterialsAndShaders/TriplanarTerrain.tres" id="22_70n0f"]
-[ext_resource type="PackedScene" uid="uid://bbv22y7gt2hc2" path="res://VoxelEditorForGodotDotNet/PlaceableItems/PlayerSizedCapsule.tscn" id="23_ghkfn"]
+[ext_resource type="PackedScene" uid="uid://bbv22y7gt2hc2" path="res://VoxelEditorForGodotDotNet/PlaceableItems/Items/PlayerSizedCapsule.tscn" id="23_ghkfn"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_4myu2"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -176,6 +176,7 @@ transform = Transform3D(0.07071067, 0, -0.07071069, 0, 0.1, 0, 0.07071069, 0, 0.
 scene = ExtResource("8_c1kk3")
 viewport_size = Vector2(1280, 720)
 material = SubResource("StandardMaterial3D_pkb7p")
+transparent = 1
 scene_properties_keys = PackedStringArray("ElementLinker.gd", "player_movement_controller", "voxel_editor", "object_edit_controller")
 player_movement_controller = NodePath("../../../PlayerMovementController")
 voxel_editor = NodePath("../../../VoxelEditor")
@@ -214,10 +215,9 @@ rpg_movement_provider = NodePath("../LeftHand/MovementDirect")
 ghost_movement_provider = NodePath("../LeftHand/Ghost movement")
 scaler = NodePath("../Scaler")
 
-[node name="VoxelEditor" type="Node3D" parent="VR player" unique_id=1260496153 node_paths=PackedStringArray("controller", "shapeHolder", "sphereShape", "RightController")]
+[node name="VoxelEditor" type="Node3D" parent="VR player" unique_id=1260496153 node_paths=PackedStringArray("controller", "sphereShape", "RightController")]
 script = ExtResource("11_6khcx")
 controller = NodePath("../../VoxelController")
-shapeHolder = NodePath("../RightHand/RightHand/InteractionPoint/EditShapes")
 sphereShape = NodePath("../RightHand/RightHand/InteractionPoint/EditShapes/Sphere edit shape")
 RightController = NodePath("../RightHand")
 gridSize = Vector3i(128, 128, 128)
@@ -258,6 +258,18 @@ surface_material_override/0 = SubResource("StandardMaterial3D_erkc8")
 
 [node name="ToDo" type="Node" parent="." unique_id=2106738790]
 
+[node name="Environment" type="Node" parent="ToDo" unique_id=267490039]
+
+[node name="Add water layer" type="Node" parent="ToDo/Environment" unique_id=2098509548]
+
+[node name="Load voxel mesh in editor" type="Node" parent="ToDo/Environment" unique_id=1197521083]
+
+[node name="Implement grid bounds outline" type="Node" parent="ToDo/Environment" unique_id=1812544055]
+
+[node name="Set useable starting scale" type="Node" parent="ToDo/Environment" unique_id=557223765]
+
+[node name="Paint starting island" type="Node" parent="ToDo/Environment" unique_id=323931233]
+
 [node name="Movement" type="Node" parent="ToDo" unique_id=1814867935]
 
 [node name="Select RPG start mode" type="Node" parent="ToDo/Movement" unique_id=1047374018]
@@ -274,11 +286,17 @@ surface_material_override/0 = SubResource("StandardMaterial3D_erkc8")
 
 [node name="Wireframe toggle" type="Node" parent="ToDo/Voxel editor" unique_id=1826125203]
 
-[node name="Differenet shapes" type="Node" parent="ToDo/Voxel editor" unique_id=657126578]
+[node name="Differenet basic shapes" type="Node" parent="ToDo/Voxel editor" unique_id=657126578]
+
+[node name="Rock SDF shape" type="Node" parent="ToDo/Voxel editor" unique_id=160016406]
+
+[node name="Single click add with A button" type="Node" parent="ToDo/Voxel editor" unique_id=1876040158]
 
 [node name="Items" type="Node" parent="ToDo" unique_id=728677396]
 
 [node name="Implement if scaleable" type="Node" parent="ToDo/Items" unique_id=372926198]
+
+[node name="Implement edit mode" type="Node" parent="ToDo/Items" unique_id=2071621762]
 
 [node name="Implement tree" type="Node" parent="ToDo/Items" unique_id=1851619102]
 
