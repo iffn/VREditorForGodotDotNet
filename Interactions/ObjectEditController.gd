@@ -13,6 +13,16 @@ class_name ObjectEditController
 
 @export var scale_speed: float = 1.0
 
+enum axis_options {
+	NONE,
+	X,
+	Y,
+	Z
+}
+
+static var axis_selection : axis_options
+static var current_highlight : HighlightWithAxis
+
 var active: bool = true:
 	set(value):
 		active = value
