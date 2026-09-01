@@ -1,10 +1,10 @@
 [gd_scene format=3 uid="uid://cl0132hwrpdl2"]
 
 [ext_resource type="PackedScene" uid="uid://c8l60rnugru40" path="res://addons/godot-xr-tools/objects/pickable.tscn" id="1_v1i7i"]
-[ext_resource type="Script" uid="uid://0b7wkxi4vymb" path="res://addons/godot-xr-tools/objects/highlight/highlight_visible.gd" id="2_dtfqw"]
 [ext_resource type="Script" uid="uid://cu8lxu6berk45" path="res://VoxelEditorForGodotDotNet/PlaceableItems/VREditorPickableSerializable.gd" id="2_jmtlm"]
 [ext_resource type="Shader" uid="uid://bleg0kybifn7i" path="res://VoxelEditorForGodotDotNet/PlaceableItems/Highlihgt.gdshader" id="3_jmtlm"]
 [ext_resource type="PackedScene" uid="uid://ck57a6mj81jll" path="res://VoxelEditorForGodotDotNet/PlaceableItems/NoteAboutScale.tscn" id="3_mh3wr"]
+[ext_resource type="Script" uid="uid://b36m446f6tgmj" path="res://VoxelEditorForGodotDotNet/PlaceableItems/HighlightWithAxis.gd" id="4_d56my"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_mh3wr"]
 
@@ -57,9 +57,12 @@ shape = SubResource("BoxShape3D_mh3wr")
 mesh = SubResource("BoxMesh_rd1sj")
 surface_material_override/0 = SubResource("StandardMaterial3D_f032d")
 
-[node name="XRToolsHighlightVisible" type="Node3D" parent="." index="3" unique_id=426397079]
+[node name="XRToolsHighlightVisible" type="Node3D" parent="." index="3" unique_id=426397079 node_paths=PackedStringArray("x_axis", "y_axis", "z_axis")]
 visible = false
-script = ExtResource("2_dtfqw")
+script = ExtResource("4_d56my")
+x_axis = NodePath("X")
+y_axis = NodePath("Y")
+z_axis = NodePath("Z")
 metadata/_custom_type_script = "uid://0b7wkxi4vymb"
 
 [node name="X" type="Node3D" parent="XRToolsHighlightVisible" index="0" unique_id=2135752055]

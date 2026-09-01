@@ -13,14 +13,14 @@ class_name ObjectEditController
 
 @export var scale_speed: float = 1.0
 
-enum axis_options {
+enum AxisOptions {
 	NONE,
 	X,
 	Y,
 	Z
 }
 
-static var axis_selection : axis_options
+static var axis_selection : AxisOptions
 static var current_highlight : HighlightWithAxis
 
 var active: bool = true:
@@ -28,7 +28,7 @@ var active: bool = true:
 		active = value
 		
 		if pickup_left:
-			pickup_left.enabled = value
+			#pickup_left.enabled = value
 			if not value and is_instance_valid(pickup_left.picked_up_object):
 				pickup_left.drop_object()
 				
@@ -57,6 +57,8 @@ func _ready() -> void:
 	if not function_pickup:
 		function_pickup = XRToolsFunctionPickup.find_right(self)
 
+var trigger_was_active := false
+
 func _process(delta: float) -> void:
 	if not active:
 		return
@@ -68,8 +70,16 @@ func _process(delta: float) -> void:
 	if not target_controller or not function_pickup:
 		return
 
-	var input_y: float = target_controller.get_vector2("primary").y
+	# Scale direction
+	var trigger_is_active := controller.is_button_pressed("trigger_click")
+	if !trigger_was_active && trigger_is_active:
+		axis_selection = ((axis_selection + 1) % AxisOptions.size()) as AxisOptions
+		if current_highlight != null:
+			current_highlight.update_axis()
+	trigger_was_active = trigger_is_active
 
+	# Scaling
+	var input_y: float = target_controller.get_vector2("primary").y
 	var highlighted_object = function_pickup.closest_object
 	if is_instance_valid(highlighted_object):
 		if abs(input_y) > 0.1:
@@ -87,6 +97,7 @@ func _on_button_pressed(p_name: String) -> void:
 			delete_highlighted_element()
 		"ax_button":
 			duplicate_highlighted_element()
+		
 
 func delete_highlighted_element() -> void:
 	if not function_pickup:

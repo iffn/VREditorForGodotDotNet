@@ -277,7 +277,9 @@ layout_mode = 2
 layout_mode = 2
 text = "Object edit controls:
 - Hold Grab: Pick up and move item
+- Trigger: Swap scaling axis
 - Right Stick Up Down: Scale item highlighted by right hand
+   in the selected axis
 - A Button: Duplicate
 - B Button: Remove"
 

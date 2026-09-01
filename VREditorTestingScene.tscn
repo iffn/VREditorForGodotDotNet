@@ -84,53 +84,11 @@ scene_baseline_data = Array[Dictionary]([{
 "rot": [0.0, 2.3561945, 0.0],
 "scale": [1.0, 1.0, 1.0]
 }
-}, {
-"id": "runtime_node_208725348652",
-"parent_id": "",
-"scene_path": "res://VoxelEditorForGodotDotNet/PlaceableItems/Cube.tscn",
-"transform": {
-"pos": [-0.56890726, 1.5439746, -3.4006321],
-"rot": [0.024507131, -2.386159, 0.03478319],
-"scale": [0.09609618, 0.09609618, 0.09609618]
-}
-}, {
-"id": "runtime_node_517962994010",
-"parent_id": "",
-"scene_path": "res://VoxelEditorForGodotDotNet/PlaceableItems/Cube.tscn",
-"transform": {
-"pos": [-0.57224, 1.8105218, -3.4035678],
-"rot": [-0.0066767517, 0.7669078, 1.5628082],
-"scale": [0.09060636, 0.09060636, 0.09060636]
-}
-}, {
-"id": "runtime_node_1495252603233",
-"parent_id": "",
-"scene_path": "res://VoxelEditorForGodotDotNet/PlaceableItems/Cylinder.tscn",
-"transform": {
-"pos": [-0.57278895, 1.6799412, -3.4005442],
-"rot": [0.019139118, 2.8028197, -0.010664417],
-"scale": [0.08560019, 0.08560019, 0.08560019]
-}
 }])
 
 [node name="Player sized capsule" parent="ObjectSpawner" unique_id=499244775 instance=ExtResource("23_ghkfn")]
 transform = Transform3D(-0.7071067, 0, 0.7071067, 0, 1, 0, -0.7071067, 0, -0.7071067, -1.790487, 1.4305115e-06, -0.9054868)
 instance_id = "18464869825121"
-
-[node name="Cube" parent="ObjectSpawner" unique_id=480645879 instance=ExtResource("17_b6dwn")]
-transform = Transform3D(-0.7281182, 0.0085257925, -0.6853984, 0.034765724, 0.9990948, -0.024504678, 0.68456936, -0.041670673, -0.72775537, -0.56890726, 1.5439746, -3.4006321)
-instance_id = "runtime_node_208725348652"
-scale_factor = Vector3(0.09609618, 0.09609618, 0.09609618)
-
-[node name="@RigidBody3D@56920" parent="ObjectSpawner" unique_id=1008258028 instance=ExtResource("17_b6dwn")]
-transform = Transform3D(0.0011190026, -0.7200737, 0.6938963, 0.9999457, 0.007987906, 0.006676702, -0.0103505, 0.6938513, 0.72004354, -0.57224, 1.8105218, -3.4035678)
-instance_id = "runtime_node_517962994010"
-scale_factor = Vector3(0.09060636, 0.09060636, 0.09060636)
-
-[node name="Cylinder" parent="ObjectSpawner" unique_id=23254430 instance=ExtResource("19_vi1oe")]
-transform = Transform3D(-0.94317734, -0.0036983395, 0.3322691, -0.010662261, 0.9997599, -0.01913795, -0.33211863, -0.021593222, -0.94299036, -0.57278895, 1.6799412, -3.4005442)
-instance_id = "runtime_node_1495252603233"
-scale_factor = Vector3(0.08560019, 0.08560019, 0.08560019)
 
 [node name="VR player" parent="." unique_id=1445165384 instance=ExtResource("2_uoj7x")]
 transform = Transform3D(-0.70710677, 0, -0.70710677, 0, 1, 0, 0.70710677, 0, -0.70710677, 0, 0, 0)
@@ -151,6 +109,7 @@ xr_origin = NodePath("../..")
 
 [node name="XRToolsFunctionPickup" type="Node3D" parent="VR player/LeftHand" parent_id_path=PackedInt32Array(1445165384, 1533857695) index="4" unique_id=1549664515]
 script = ExtResource("5_01x5s")
+enabled = false
 metadata/_custom_type_script = "uid://b18kkstg643yw"
 
 [node name="InteractionPoint" type="Node3D" parent="VR player/RightHand/RightHand" parent_id_path=PackedInt32Array(1445165384, 392314345) index="2" unique_id=820863047]
@@ -215,9 +174,10 @@ rpg_movement_provider = NodePath("../LeftHand/MovementDirect")
 ghost_movement_provider = NodePath("../LeftHand/Ghost movement")
 scaler = NodePath("../Scaler")
 
-[node name="VoxelEditor" type="Node3D" parent="VR player" unique_id=1260496153 node_paths=PackedStringArray("controller", "sphereShape", "RightController")]
+[node name="VoxelEditor" type="Node3D" parent="VR player" unique_id=1260496153 node_paths=PackedStringArray("controller", "shapeHolder", "sphereShape", "RightController")]
 script = ExtResource("11_6khcx")
 controller = NodePath("../../VoxelController")
+shapeHolder = NodePath("../RightHand/RightHand/InteractionPoint/EditShapes")
 sphereShape = NodePath("../RightHand/RightHand/InteractionPoint/EditShapes/Sphere edit shape")
 RightController = NodePath("../RightHand")
 gridSize = Vector3i(128, 128, 128)

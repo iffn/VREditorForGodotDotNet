@@ -28,7 +28,24 @@ func _ready() -> void:
 
 ## Applies incremental uniform scale multiplier from controller input
 func apply_scale_delta(factor: float) -> void:
-	scale_factor *= factor
+	
+	match ObjectEditController.axis_selection:
+		ObjectEditController.AxisOptions.NONE:
+			print("a")
+			scale_factor *= factor
+		ObjectEditController.AxisOptions.X:
+			print("x")
+			scale_factor.x *= factor
+		ObjectEditController.AxisOptions.Y:
+			print("y")
+			scale_factor.y *= factor
+		ObjectEditController.AxisOptions.Z:
+			print("z")
+			scale_factor.z *= factor
+		_:
+			print("d")
+			scale_factor *= factor
+	
 	_apply_current_scale()
 
 ## Recomputes transform scale for ALL direct Node3D children
