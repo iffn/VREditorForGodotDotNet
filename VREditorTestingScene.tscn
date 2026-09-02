@@ -121,15 +121,6 @@ scene_baseline_data = Array[Dictionary]([{
 "scale": [1.0, 1.0, 1.0]
 }
 }, {
-"id": "runtime_node_322407764393",
-"parent_id": "",
-"scene_path": "res://VoxelEditorForGodotDotNet/PlaceableItems/Items/PlayerSizedCapsule.tscn",
-"transform": {
-"pos": [52.46154, 13.200661, 35.467117],
-"rot": [-0.07387413, 1.1267098, -0.024727702],
-"scale": [1.0, 1.0, 1.0]
-}
-}, {
 "id": "runtime_node_341768671696",
 "parent_id": "",
 "scene_path": "res://VoxelEditorForGodotDotNet/PlaceableItems/Items/PlayerSizedCapsule.tscn",
@@ -323,10 +314,6 @@ scene_baseline_data = Array[Dictionary]([{
 [node name="Player sized capsule" parent="ObjectSpawner" unique_id=499244775 instance=ExtResource("23_ghkfn")]
 transform = Transform3D(0.99999976, 0, 0, 0, 1, 0, 0, 0, 0.99999976, 2.9283297, 0, -0.55138206)
 instance_id = "18464869825121"
-
-[node name="@RigidBody3D@98281" parent="ObjectSpawner" unique_id=727443316 instance=ExtResource("23_ghkfn")]
-transform = Transform3D(0.43114972, -0.05600482, 0.9005404, -0.024657745, 0.9969677, 0.07380696, -0.9019434, -0.054027155, 0.42846128, 52.46154, 13.200661, 35.467117)
-instance_id = "runtime_node_322407764393"
 
 [node name="@RigidBody3D@108850" parent="ObjectSpawner" unique_id=206623066 instance=ExtResource("23_ghkfn")]
 transform = Transform3D(0.9478914, 0.0029531792, 0.31857973, -0.020578936, 0.99843633, 0.051974542, -0.3179281, -0.055822257, 0.9464701, 25.28285, 3.845488, 15.86087)
