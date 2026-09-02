@@ -21,6 +21,7 @@
 [ext_resource type="PackedScene" uid="uid://d0kisqcq43ebm" path="res://VoxelEditorForGodotDotNet/VoxelEditor/VoxelController.tscn" id="21_fl6ki"]
 [ext_resource type="Material" uid="uid://cr2gj02o7km1c" path="res://VoxelEditorForGodotDotNet/MaterialsAndShaders/TriplanarTerrain.tres" id="22_70n0f"]
 [ext_resource type="Shader" uid="uid://dc08puwx45mxv" path="res://VoxelEditorForGodotDotNet/Environment/Water/NoiseWaves.gdshader" id="22_jf42m"]
+[ext_resource type="Shader" uid="uid://djx4uoydf32en" path="res://VoxelEditorForGodotDotNet/VoxelEditor/Outline/BoxOutline.gdshader" id="23_4hfjv"]
 [ext_resource type="PackedScene" uid="uid://bbv22y7gt2hc2" path="res://VoxelEditorForGodotDotNet/PlaceableItems/Items/PlayerSizedCapsule.tscn" id="23_ghkfn"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_4myu2"]
@@ -48,12 +49,10 @@ shading_mode = 0
 transparency = 1
 albedo_color = Color(0, 1, 1, 0.49803922)
 
-[sub_resource type="QuadMesh" id="QuadMesh_lpj5r"]
-size = Vector2(128, 128)
-center_offset = Vector3(64, -64, 0)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_erkc8"]
-albedo_color = Color(1, 0, 0, 1)
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_m3qap"]
+render_priority = 0
+shader = ExtResource("23_4hfjv")
+shader_parameter/line_size = 0.01
 
 [sub_resource type="QuadMesh" id="QuadMesh_bld8a"]
 size = Vector2(1000, 1000)
@@ -246,10 +245,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.1967235, 0.5, 8.693771)
 transform = Transform3D(0.05, 0, 0, 0, 0.05, 0, 0, 0, 0.05, 0, 0, 0)
 currentMainMaterial = ExtResource("22_70n0f")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="VoxelController" unique_id=709556083]
-transform = Transform3D(1, 0, 0, 0, 1.1924881e-08, 1, 0, -1, 1.1924881e-08, 0, 0.01, 0)
-mesh = SubResource("QuadMesh_lpj5r")
-surface_material_override/0 = SubResource("StandardMaterial3D_erkc8")
+[node name="Outline scaler" type="Node3D" parent="VoxelController" unique_id=1328015221]
+transform = Transform3D(128, 0, 0, 0, 128, 0, 0, 0, 128, 0, 0, 0)
+
+[node name="Outline" type="CSGBox3D" parent="VoxelController/Outline scaler" unique_id=606889441]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0.5, 0.5)
+material = SubResource("ShaderMaterial_m3qap")
 
 [node name="ToDo" type="Node" parent="." unique_id=2106738790]
 
@@ -308,6 +309,7 @@ surface_material_override/0 = SubResource("StandardMaterial3D_erkc8")
 [node name="Implement current settings" type="Node" parent="ToDo/Settings" unique_id=530130716]
 
 [node name="Environment" type="Node3D" parent="." unique_id=265808683]
+visible = false
 
 [node name="Ocean" type="MeshInstance3D" parent="Environment" unique_id=966831373]
 mesh = SubResource("QuadMesh_bld8a")
