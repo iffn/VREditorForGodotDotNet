@@ -3,6 +3,7 @@ using Godot;
 
 namespace VoxelEditorForGodotDotNet.Core
 {
+    [Tool]
     public partial class VoxelChunkView : Node3D
     {
         private static readonly System.Diagnostics.Stopwatch PostProcessingStopwatch = new System.Diagnostics.Stopwatch();
@@ -182,6 +183,11 @@ namespace VoxelEditorForGodotDotNet.Core
 
                 if (ColliderEnabled)
                     UpdateCollider();
+            }
+            else
+            {
+                if (linkedCollisionShape != null)
+                    linkedCollisionShape.Shape = null;
             }
 
             isDirty = false;

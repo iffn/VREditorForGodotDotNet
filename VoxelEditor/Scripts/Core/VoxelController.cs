@@ -5,6 +5,7 @@ using VoxelEditorForGodotDotNet.EditTools;
 
 namespace VoxelEditorForGodotDotNet.Core
 {
+    [Tool]
     public partial class VoxelController : Node3D
     {
         [Export] private PackedScene chunkPrefab;
@@ -12,6 +13,9 @@ namespace VoxelEditorForGodotDotNet.Core
         [Export] private Node3D chunkHolder;
         [Export] private Material currentMainMaterial;
         [Export] private Godot.Collections.Array<Material> debugMaterials = new Godot.Collections.Array<Material>();
+
+        [ExportGroup("Tool Configuration")]
+        [Export] private Vector3I defaultDimensions = new Vector3I(16, 16, 16);
 
         public bool ShowGridOutline = true;
 
@@ -26,7 +30,7 @@ namespace VoxelEditorForGodotDotNet.Core
         // Public access to the underlying VoxelModel
         public VoxelModel VoxelModel => mainModel;
 
-        // Helper to force-refresh all chunks (for instance, after bulk loads)
+        // Helper to force-refresh all chunks (e.g., after bulk edits or loading)
         public void UpdateAllViews()
         {
             UpdateAllChunks();
@@ -185,9 +189,10 @@ namespace VoxelEditorForGodotDotNet.Core
 
             foreach (Node child in chunkHolder.GetChildren())
             {
+                if (previewView != null && child == previewView) continue;
+
                 if (child is VoxelChunkView view)
                 {
-                    if (view == previewView) continue;
                     chunkViews.Add(view);
                 }
             }
@@ -196,6 +201,8 @@ namespace VoxelEditorForGodotDotNet.Core
         private void GenerateAndUpdateViewChunks()
         {
             ViewsSetUp = true;
+
+            if (mainModel == null) return;
 
             int resolutionX = mainModel.ResolutionX;
             int resolutionY = mainModel.ResolutionY;
@@ -215,27 +222,47 @@ namespace VoxelEditorForGodotDotNet.Core
                 return value / divisor + (value % divisor == 0 ? 0 : 1);
             }
 
+            if (chunkPrefab == null)
+            {
+                GD.PushError("VoxelController: ChunkPrefab is null! Assign a chunk prefab in the inspector.");
+                return;
+            }
+
             if (requiredChunks > chunkViews.Count)
             {
                 int additionalChunks = requiredChunks - chunkViews.Count;
 
                 for (int i = 0; i < additionalChunks; i++)
                 {
-                    if (chunkPrefab != null && chunkPrefab.Instantiate() is VoxelChunkView chunkView)
+                    if (chunkPrefab.Instantiate() is VoxelChunkView chunkView)
                     {
                         chunkHolder.AddChild(chunkView);
+
+                        if (Engine.IsEditorHint())
+                        {
+                            chunkView.Owner = GetTree()?.EditedSceneRoot;
+                        }
+
                         chunkViews.Add(chunkView);
                     }
                 }
             }
             else if (requiredChunks < chunkViews.Count)
             {
-                for (int i = requiredChunks; i < chunkViews.Count; i++)
+                for (int i = chunkViews.Count - 1; i >= requiredChunks; i--)
                 {
-                    chunkViews[i].QueueFree();
-                }
+                    VoxelChunkView viewToRemove = chunkViews[i];
+                    chunkViews.RemoveAt(i);
 
-                chunkViews.RemoveRange(requiredChunks, chunkViews.Count - requiredChunks);
+                    if (Engine.IsEditorHint())
+                    {
+                        viewToRemove.Free();
+                    }
+                    else
+                    {
+                        viewToRemove.QueueFree();
+                    }
+                }
             }
 
             int counter = 0;
@@ -246,6 +273,12 @@ namespace VoxelEditorForGodotDotNet.Core
                 {
                     for (int z = 0; z < resolutionZ; z += chunkSize.Z)
                     {
+                        if (counter >= chunkViews.Count)
+                        {
+                            GD.PushError($"VoxelController: Chunk count mismatch! Expected {requiredChunks}, but list only has {chunkViews.Count}.");
+                            break;
+                        }
+
                         Vector3I gridBoundsMin = new Vector3I(x, y, z);
                         Vector3I gridBoundsMax = new Vector3I(
                             Mathf.Min(gridBoundsMin.X + chunkSize.X, mainModel.MaxGrid.X),
@@ -288,7 +321,7 @@ namespace VoxelEditorForGodotDotNet.Core
             }
         }
 
-        // External functions
+        // Initialization called by VoxelEditor or Runtime managers
         public void Initialize(int resolutionX, int resolutionY, int resolutionZ, bool setEmpty, bool skipViewSetup)
         {
             ViewsSetUp = false;
@@ -318,18 +351,21 @@ namespace VoxelEditorForGodotDotNet.Core
                 GenerateAndUpdateViewChunks();
             }
 
-            // Setup preview model
-            if (previewModelWithOldData == null)
+            // Setup preview model (Runtime-only dependencies)
+            if (!Engine.IsEditorHint())
             {
-                previewModelWithOldData = new VoxelModel(resolutionX, resolutionY, resolutionZ);
-            }
-            else
-            {
-                previewModelWithOldData.ChangeGridSizeIfNeeded(resolutionX, resolutionY, resolutionZ, false);
-            }
+                if (previewModelWithOldData == null)
+                {
+                    previewModelWithOldData = new VoxelModel(resolutionX, resolutionY, resolutionZ);
+                }
+                else
+                {
+                    previewModelWithOldData.ChangeGridSizeIfNeeded(resolutionX, resolutionY, resolutionZ, false);
+                }
 
-            previewView?.Initialize(Vector3I.Zero, Vector3I.One, false);
-            DisplayPreviewShape = false;
+                previewView?.Initialize(Vector3I.Zero, Vector3I.One, false);
+                DisplayPreviewShape = false;
+            }
         }
 
         public void ClearAllViews()
@@ -338,7 +374,14 @@ namespace VoxelEditorForGodotDotNet.Core
             {
                 foreach (Node child in chunkHolder.GetChildren())
                 {
-                    child.QueueFree();
+                    if (Engine.IsEditorHint())
+                    {
+                        child.Free();
+                    }
+                    else
+                    {
+                        child.QueueFree();
+                    }
                 }
             }
 
@@ -408,7 +451,12 @@ namespace VoxelEditorForGodotDotNet.Core
         public void SetAllGridDataAndUpdateMesh(VoxelData[,,] newData)
         {
             mainModel.SetDataAndResizeIfNeeded(newData);
-            previewModelWithOldData.ChangeGridSizeIfNeeded(GridResolutionX, GridResolutionY, GridResolutionZ, false);
+
+            if (!Engine.IsEditorHint() && previewModelWithOldData != null)
+            {
+                previewModelWithOldData.ChangeGridSizeIfNeeded(GridResolutionX, GridResolutionY, GridResolutionZ, false);
+            }
+
             GenerateAndUpdateViewChunks();
         }
 
@@ -429,6 +477,8 @@ namespace VoxelEditorForGodotDotNet.Core
 
         public void SetupPreviewZone(Vector3I minGrid, Vector3I maxGrid)
         {
+            if (Engine.IsEditorHint() || previewModelWithOldData == null) return;
+
             previewModelWithOldData.CopyRegion(mainModel, minGrid, maxGrid);
             previewView?.UpdateBounds(minGrid, maxGrid);
             DisplayPreviewShape = true;
@@ -436,19 +486,22 @@ namespace VoxelEditorForGodotDotNet.Core
 
         public void SetPreviewDataPoint(int x, int y, int z, VoxelData value)
         {
+            if (Engine.IsEditorHint() || previewModelWithOldData == null) return;
+
             previewModelWithOldData.SetVoxel(x, y, z, value);
         }
 
         public void UpdatePreviewShape()
         {
-            if (previewView == null) return;
+            if (Engine.IsEditorHint() || previewView == null || previewModelWithOldData == null) return;
+
             previewView.MarkDirty();
             previewView.UpdateMeshIfDirty(previewModelWithOldData, false);
         }
 
         public void ApplyPreviewChanges()
         {
-            if (previewView == null) return;
+            if (Engine.IsEditorHint() || previewView == null || previewModelWithOldData == null) return;
 
             Vector3I gridBoundsMin = previewView.GridBoundsMin;
             Vector3I gridBoundsMax = previewView.GridBoundsMax;
@@ -485,7 +538,11 @@ namespace VoxelEditorForGodotDotNet.Core
             }
 
             mainModel.ChangeGridSize(resolutionX, resolutionY, resolutionZ, offsetX, offsetY, offsetZ);
-            previewModelWithOldData.ChangeGridSizeIfNeeded(resolutionX, resolutionY, resolutionZ, false);
+
+            if (!Engine.IsEditorHint() && previewModelWithOldData != null)
+            {
+                previewModelWithOldData.ChangeGridSizeIfNeeded(resolutionX, resolutionY, resolutionZ, false);
+            }
 
             GenerateAndUpdateViewChunks();
         }

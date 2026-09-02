@@ -6,6 +6,7 @@ using static VoxelEditorForGodotDotNet.EditTools.BaseModificationTools;
 
 namespace VoxelEditorForGodotDotNet.Core
 {
+	[Tool]
 	[GlobalClass]
 	public partial class VoxelEditor : Node
 	{
@@ -25,21 +26,38 @@ namespace VoxelEditorForGodotDotNet.Core
 		[Export] private bool enableAutoSave = true;
 		[Export] private float autoSaveDelaySeconds = 2.0f; // Save 2 seconds after finishing paint stroke
 
+		// Inspector load toggle button
+		private bool triggerLoadToggle = false;
+		[Export]
+		public bool TriggerLoadToggle
+		{
+			get => triggerLoadToggle;
+			set
+			{
+				triggerLoadToggle = value;
+				if (triggerLoadToggle)
+				{
+					ExecuteEditorLoad();
+					triggerLoadToggle = false; // Reset back like a button click
+				}
+			}
+		}
+
 		bool paintingActive = true;
 		public bool PaintingActive
 		{
-			get
-			{
-				return paintingActive;
-			}
+			get => paintingActive;
 			set
 			{
 				paintingActive = value;
-				shapeHolder.Visible = value;
+				if (shapeHolder != null)
+				{
+					shapeHolder.Visible = value;
+				}
 			}
 		}
 		public bool autosaveEnabled = true;
-		
+
 		private bool isDirty = false;
 		private bool wasPaintingLastFrame = false;
 		private float autoSaveTimer = 0f;
@@ -52,7 +70,7 @@ namespace VoxelEditorForGodotDotNet.Core
 				return;
 			}
 
-			if (sphereShape == null)
+			if (sphereShape == null && !Engine.IsEditorHint())
 			{
 				GD.PushError("VoxelEditor: SphereEditShape is not assigned in the Inspector!");
 				return;
@@ -75,10 +93,26 @@ namespace VoxelEditorForGodotDotNet.Core
 			GD.Print("Voxel editor setup complete");
 		}
 
+		private void ExecuteEditorLoad()
+		{
+			if (controller == null)
+			{
+				GD.PushError("VoxelEditor: Controller is not assigned in the Inspector!");
+				return;
+			}
+
+			bool loadedSuccessfully = LoadWorld();
+			if (!loadedSuccessfully)
+			{
+				GD.Print("VoxelEditor: Failed to load JSON in Editor. Initializing default empty grid.");
+				controller.Initialize(gridSize.X, gridSize.Y, gridSize.Z, setEmpty: true, skipViewSetup: false);
+			}
+		}
+
 		public override void _Notification(int what)
 		{
-			// Save on exit request or scene removal
-			if (what == NotificationWMCloseRequest || what == NotificationExitTree)
+			// Save on exit request or scene removal (runtime only)
+			if (!Engine.IsEditorHint() && (what == NotificationWMCloseRequest || what == NotificationExitTree))
 			{
 				if (isDirty)
 				{
@@ -95,10 +129,13 @@ namespace VoxelEditorForGodotDotNet.Core
 
 		public override void _Process(double delta)
 		{
-			if(paintingActive)
+			// Disable runtime input loops inside the Godot Editor viewport
+			if (Engine.IsEditorHint()) return;
+
+			if (paintingActive)
 				HandlePainting((float)delta);
-			
-			if(autosaveEnabled)
+
+			if (autosaveEnabled)
 				HandleAutoSaveTimer((float)delta);
 		}
 
@@ -110,10 +147,13 @@ namespace VoxelEditorForGodotDotNet.Core
 			bool shouldPaint = RightController.IsButtonPressed("trigger_click");
 
 			float scaleInput = RightController.GetVector2("primary").Y;
-			shapeHolder.Scale *= 1f + scaleInput * scaleSpeed * delta;
+			if (shapeHolder != null)
+			{
+				shapeHolder.Scale *= 1f + scaleInput * scaleSpeed * delta;
+			}
 
 			// Active modification
-			if (shouldPaint)
+			if (shouldPaint && sphereShape != null)
 			{
 				IVoxelModifier modifier = rightModifier ? new SubtractShapeModifier() : new AddShapeModifier();
 				controller.ModificationManager.ModifyData(sphereShape, modifier);

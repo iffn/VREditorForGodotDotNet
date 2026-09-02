@@ -2,6 +2,7 @@ using Godot;
 
 namespace VoxelEditorForGodotDotNet.EditTools
 {
+    [Tool]
     public partial class SphereEditShape : EditShape, IPlaceableByClick
     {
         public EditShape AsEditShape => this;
