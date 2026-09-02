@@ -8,7 +8,6 @@
 [ext_resource type="Script" uid="uid://bjeiev8dmyfdj" path="res://VoxelEditorForGodotDotNet/VoxelEditor/Scripts/EditTools/SphereEditShape.cs" id="6_cb16o"]
 [ext_resource type="PackedScene" uid="uid://clujaf3u776a3" path="res://addons/godot-xr-tools/objects/viewport_2d_in_3d.tscn" id="7_tfhxa"]
 [ext_resource type="PackedScene" uid="uid://drnw7l2nvb6rk" path="res://VoxelEditorForGodotDotNet/VRUI/VRUI.tscn" id="8_c1kk3"]
-[ext_resource type="Script" uid="uid://cu8lxu6berk45" path="res://VoxelEditorForGodotDotNet/PlaceableItems/VREditorPickableSerializable.gd" id="8_uoj7x"]
 [ext_resource type="Script" uid="uid://c5tqoains5ikr" path="res://VoxelEditorForGodotDotNet/Interactions/PlayerScaler.gd" id="9_kqai8"]
 [ext_resource type="Script" uid="uid://c63j7k3woej6n" path="res://VoxelEditorForGodotDotNet/Interactions/PlayerMovementController.gd" id="10_4iv8x"]
 [ext_resource type="Script" uid="uid://5gxxof5umue8" path="res://VoxelEditorForGodotDotNet/VoxelEditor/Scripts/Editor/VoxelEditor.cs" id="11_6khcx"]
@@ -120,33 +119,6 @@ scene_baseline_data = Array[Dictionary]([{
 "pos": [2.9283297, 0.0, -0.55138206],
 "rot": [0.0, 0.0, 0.0],
 "scale": [1.0, 1.0, 1.0]
-}
-}, {
-"id": "runtime_node_237196284981",
-"parent_id": "",
-"scene_path": "res://VoxelEditorForGodotDotNet/PlaceableItems/Items/Cube.tscn",
-"transform": {
-"pos": [2.6839147, 1.4989486, 2.0180235],
-"rot": [-0.025252175, -0.04711562, -0.047276273],
-"scale": [0.10919925, 0.043332506, 0.10919925]
-}
-}, {
-"id": "runtime_node_494307120207",
-"parent_id": "",
-"scene_path": "res://VoxelEditorForGodotDotNet/PlaceableItems/Items/Cylinder.tscn",
-"transform": {
-"pos": [2.6863792, 1.6148003, 2.0138273],
-"rot": [-0.0011568246, 0.4326106, -0.018081298],
-"scale": [0.08119117, 0.10390038, 0.08119117]
-}
-}, {
-"id": "946100769887",
-"parent_id": "",
-"scene_path": "res://VoxelEditorForGodotDotNet/PlaceableItems/Items/Cube.tscn",
-"transform": {
-"pos": [2.6874478, 1.7307156, 2.0160599],
-"rot": [-0.012583496, -0.088462986, -0.021527484],
-"scale": [0.10773287, 0.042750623, 0.10773287]
 }
 }, {
 "id": "runtime_node_322407764393",
@@ -352,21 +324,6 @@ scene_baseline_data = Array[Dictionary]([{
 transform = Transform3D(0.99999976, 0, 0, 0, 1, 0, 0, 0, 0.99999976, 2.9283297, 0, -0.55138206)
 instance_id = "18464869825121"
 
-[node name="Cube" parent="ObjectSpawner" unique_id=480645879 instance=ExtResource("17_b6dwn")]
-transform = Transform3D(0.99771804, 0.0483941, -0.047083177, -0.0472436, 0.99856424, 0.02524949, 0.048237503, -0.022967493, 0.9985718, 2.6839147, 1.4989486, 2.0180235)
-instance_id = "runtime_node_237196284981"
-scale_factor = Vector3(0.10919925, 0.043332506, 0.10919925)
-
-[node name="Cylinder" parent="ObjectSpawner" unique_id=1072816749 instance=ExtResource("19_vi1oe")]
-transform = Transform3D(0.90773475, 0.015929742, 0.41924205, -0.018080302, 0.9998359, 0.0011568244, -0.41915482, -0.008630112, 0.90787375, 2.6863792, 1.6148003, 2.0138273)
-instance_id = "runtime_node_494307120207"
-scale_factor = Vector3(0.08119117, 0.10390038, 0.08119117)
-
-[node name="@RigidBody3D@68541" parent="ObjectSpawner" unique_id=746418954 instance=ExtResource("17_b6dwn")]
-transform = Transform3D(0.995835, 0.022553084, -0.088340655, -0.021524118, 0.99968916, 0.012583164, 0.088596985, -0.0106293, 0.99601084, 2.6874478, 1.7307156, 2.0160599)
-instance_id = "946100769887"
-scale_factor = Vector3(0.10773287, 0.042750623, 0.10773287)
-
 [node name="@RigidBody3D@98281" parent="ObjectSpawner" unique_id=727443316 instance=ExtResource("23_ghkfn")]
 transform = Transform3D(0.43114972, -0.05600482, 0.9005404, -0.024657745, 0.9969677, 0.07380696, -0.9019434, -0.054027155, 0.42846128, 52.46154, 13.200661, 35.467117)
 instance_id = "runtime_node_322407764393"
@@ -375,285 +332,105 @@ instance_id = "runtime_node_322407764393"
 transform = Transform3D(0.9478914, 0.0029531792, 0.31857973, -0.020578936, 0.99843633, 0.051974542, -0.3179281, -0.055822257, 0.9464701, 25.28285, 3.845488, 15.86087)
 instance_id = "runtime_node_341768671696"
 
-[node name="@RigidBody3D@111747" type="RigidBody3D" parent="ObjectSpawner" unique_id=1485295017 node_paths=PackedStringArray("axis_handler") instance=ExtResource("19_vi1oe")]
+[node name="@RigidBody3D@111747" parent="ObjectSpawner" unique_id=1485295017 instance=ExtResource("19_vi1oe")]
 transform = Transform3D(0.9797692, 0.019976608, -0.19913125, -0.024027336, 0.9995502, -0.01794606, 0.19868319, 0.022367591, 0.97980845, 19.877598, 2.9465256, 19.602213)
-collision_layer = 4
-collision_mask = 0
-gravity_scale = 0.0
-freeze_mode = 1
-linear_damp = 100.0
-angular_damp = 100.0
-script = ExtResource("8_uoj7x")
 instance_id = "runtime_node_299959849447"
-scene_file_path_override = "res://VoxelEditorForGodotDotNet/PlaceableItems/Items/Cylinder.tscn"
 scale_factor = Vector3(0.40911633, 0.8135927, 0.40911633)
-axis_handler = NodePath("XRToolsHighlightVisible/AxisDisplay")
 
-[node name="@RigidBody3D@111748" type="RigidBody3D" parent="ObjectSpawner" unique_id=42630558 node_paths=PackedStringArray("axis_handler") instance=ExtResource("19_vi1oe")]
+[node name="@RigidBody3D@111748" parent="ObjectSpawner" unique_id=42630558 instance=ExtResource("19_vi1oe")]
 transform = Transform3D(0.99899054, 0.00125622, -0.044902533, -0.00044340687, 0.9998359, 0.018107101, 0.044917915, -0.018068912, 0.9988272, 20.853792, 2.9902875, 19.904062)
-collision_layer = 4
-collision_mask = 0
-gravity_scale = 0.0
-freeze_mode = 1
-linear_damp = 100.0
-angular_damp = 100.0
-script = ExtResource("8_uoj7x")
 instance_id = "554168226299"
-scene_file_path_override = "res://VoxelEditorForGodotDotNet/PlaceableItems/Items/Cylinder.tscn"
 scale_factor = Vector3(0.40911633, 0.8135927, 0.40911633)
-axis_handler = NodePath("XRToolsHighlightVisible/AxisDisplay")
 
-[node name="@RigidBody3D@111749" type="RigidBody3D" parent="ObjectSpawner" unique_id=1930031185 node_paths=PackedStringArray("axis_handler") instance=ExtResource("17_b6dwn")]
+[node name="@RigidBody3D@111749" parent="ObjectSpawner" unique_id=1930031185 instance=ExtResource("17_b6dwn")]
 transform = Transform3D(0.373533, -0.0039336663, 0.92760855, -0.042604025, 0.998863, 0.021391785, -0.926638, -0.047510397, 0.37294072, 19.831545, 2.3894534, 19.57029)
-collision_layer = 4
-collision_mask = 0
-gravity_scale = 0.0
-freeze_mode = 1
-linear_damp = 100.0
-angular_damp = 100.0
-script = ExtResource("8_uoj7x")
 instance_id = "986835849769"
-scene_file_path_override = "res://VoxelEditorForGodotDotNet/PlaceableItems/Items/Cube.tscn"
 scale_factor = Vector3(0.4751808, 0.20610593, 0.4751808)
-axis_handler = NodePath("XRToolsHighlightVisible/AxisDisplay")
 
-[node name="@RigidBody3D@111750" type="RigidBody3D" parent="ObjectSpawner" unique_id=1423512754 node_paths=PackedStringArray("axis_handler") instance=ExtResource("17_b6dwn")]
+[node name="@RigidBody3D@111750" parent="ObjectSpawner" unique_id=1423512754 instance=ExtResource("17_b6dwn")]
 transform = Transform3D(0.38016003, -0.05669444, 0.9231815, -0.055126756, 0.99495625, 0.08380311, -0.9232764, -0.08275059, 0.37511724, 20.812637, 2.5579257, 19.911127)
-collision_layer = 4
-collision_mask = 0
-gravity_scale = 0.0
-freeze_mode = 1
-linear_damp = 100.0
-angular_damp = 100.0
-script = ExtResource("8_uoj7x")
 instance_id = "1157208478229"
-scene_file_path_override = "res://VoxelEditorForGodotDotNet/PlaceableItems/Items/Cube.tscn"
 scale_factor = Vector3(0.4751808, 0.20610593, 0.4751808)
-axis_handler = NodePath("XRToolsHighlightVisible/AxisDisplay")
 
-[node name="@RigidBody3D@111751" type="RigidBody3D" parent="ObjectSpawner" unique_id=2121881350 node_paths=PackedStringArray("axis_handler") instance=ExtResource("17_b6dwn")]
+[node name="@RigidBody3D@111751" parent="ObjectSpawner" unique_id=2121881350 instance=ExtResource("17_b6dwn")]
 transform = Transform3D(0.31087625, -0.008880476, 0.95040894, 0.020234546, 0.99979156, 0.0027232328, -0.950235, 0.018384505, 0.31099114, 20.379917, 3.8047645, 19.7523)
-collision_layer = 4
-collision_mask = 0
-gravity_scale = 0.0
-freeze_mode = 1
-linear_damp = 100.0
-angular_damp = 100.0
-script = ExtResource("8_uoj7x")
 instance_id = "1236145279551"
-scene_file_path_override = "res://VoxelEditorForGodotDotNet/PlaceableItems/Items/Cube.tscn"
 scale_factor = Vector3(0.4751808, 0.20610593, 1.5596373)
-axis_handler = NodePath("XRToolsHighlightVisible/AxisDisplay")
 
-[node name="@RigidBody3D@111752" type="RigidBody3D" parent="ObjectSpawner" unique_id=888847712 node_paths=PackedStringArray("axis_handler") instance=ExtResource("17_b6dwn")]
+[node name="@RigidBody3D@111752" parent="ObjectSpawner" unique_id=888847712 instance=ExtResource("17_b6dwn")]
 transform = Transform3D(0.3727033, 0.023532555, 0.9276521, 0.023882452, 0.999104, -0.0349404, -0.9276432, 0.03517701, 0.37180737, 24.200975, 7.190284, 18.510283)
-collision_layer = 4
-collision_mask = 0
-gravity_scale = 0.0
-freeze_mode = 1
-linear_damp = 100.0
-angular_damp = 100.0
-script = ExtResource("8_uoj7x")
 instance_id = "2095876936105"
-scene_file_path_override = "res://VoxelEditorForGodotDotNet/PlaceableItems/Items/Cube.tscn"
 scale_factor = Vector3(0.4751808, 0.20610593, 1.5596373)
-axis_handler = NodePath("XRToolsHighlightVisible/AxisDisplay")
 
-[node name="@RigidBody3D@111753" type="RigidBody3D" parent="ObjectSpawner" unique_id=507314812 node_paths=PackedStringArray("axis_handler") instance=ExtResource("17_b6dwn")]
+[node name="@RigidBody3D@111753" parent="ObjectSpawner" unique_id=507314812 instance=ExtResource("17_b6dwn")]
 transform = Transform3D(0.31476837, 0.949146, -0.0065398314, 0.039781686, -0.020076314, -0.9990067, -0.94833446, 0.3141955, -0.044078015, 24.72831, 6.236358, 18.74969)
-collision_layer = 4
-collision_mask = 0
-gravity_scale = 0.0
-freeze_mode = 1
-linear_damp = 100.0
-angular_damp = 100.0
-script = ExtResource("8_uoj7x")
 instance_id = "2201657283182"
-scene_file_path_override = "res://VoxelEditorForGodotDotNet/PlaceableItems/Items/Cube.tscn"
 scale_factor = Vector3(0.4751808, 0.35720152, 1.7090424)
-axis_handler = NodePath("XRToolsHighlightVisible/AxisDisplay")
 
-[node name="@RigidBody3D@111754" type="RigidBody3D" parent="ObjectSpawner" unique_id=452008416 node_paths=PackedStringArray("axis_handler") instance=ExtResource("17_b6dwn")]
+[node name="@RigidBody3D@111754" parent="ObjectSpawner" unique_id=452008416 instance=ExtResource("17_b6dwn")]
 transform = Transform3D(0.42608866, -0.038876157, -0.9038457, -0.13572946, -0.99051523, -0.021381263, -0.89444166, 0.1317888, -0.42732397, 24.156704, 5.7472053, 18.942148)
-collision_layer = 4
-collision_mask = 0
-gravity_scale = 0.0
-freeze_mode = 1
-linear_damp = 100.0
-angular_damp = 100.0
-script = ExtResource("8_uoj7x")
 instance_id = "2287053312644"
-scene_file_path_override = "res://VoxelEditorForGodotDotNet/PlaceableItems/Items/Cube.tscn"
 scale_factor = Vector3(0.4751808, 0.20610593, 1.5596373)
-axis_handler = NodePath("XRToolsHighlightVisible/AxisDisplay")
 
-[node name="@RigidBody3D@111755" type="RigidBody3D" parent="ObjectSpawner" unique_id=1939335719 node_paths=PackedStringArray("axis_handler") instance=ExtResource("17_b6dwn")]
+[node name="@RigidBody3D@111755" parent="ObjectSpawner" unique_id=1939335719 instance=ExtResource("17_b6dwn")]
 transform = Transform3D(0.36884278, 0.9274568, 0.061472367, 0.025048414, 0.056193445, -0.99810565, -0.9291542, 0.36968386, -0.002504776, 23.719233, 6.4087915, 18.338663)
-collision_layer = 4
-collision_mask = 0
-gravity_scale = 0.0
-freeze_mode = 1
-linear_damp = 100.0
-angular_damp = 100.0
-script = ExtResource("8_uoj7x")
 instance_id = "2415063470746"
-scene_file_path_override = "res://VoxelEditorForGodotDotNet/PlaceableItems/Items/Cube.tscn"
 scale_factor = Vector3(0.4751808, 0.37707767, 1.4934522)
-axis_handler = NodePath("XRToolsHighlightVisible/AxisDisplay")
 
-[node name="@RigidBody3D@111756" type="RigidBody3D" parent="ObjectSpawner" unique_id=1278372127 node_paths=PackedStringArray("axis_handler") instance=ExtResource("17_b6dwn")]
+[node name="@RigidBody3D@111756" parent="ObjectSpawner" unique_id=1278372127 instance=ExtResource("17_b6dwn")]
 transform = Transform3D(0.37934962, 0.010556765, -0.9251932, -0.01469065, -0.9997401, -0.017430862, -0.9251368, 0.02020408, -0.37909594, 24.01343, 5.690405, 19.268343)
-collision_layer = 4
-collision_mask = 0
-gravity_scale = 0.0
-freeze_mode = 1
-linear_damp = 100.0
-angular_damp = 100.0
-script = ExtResource("8_uoj7x")
 instance_id = "2498614006450"
-scene_file_path_override = "res://VoxelEditorForGodotDotNet/PlaceableItems/Items/Cube.tscn"
 scale_factor = Vector3(0.4751808, 0.20610593, 1.5596373)
-axis_handler = NodePath("XRToolsHighlightVisible/AxisDisplay")
 
-[node name="@RigidBody3D@111757" type="RigidBody3D" parent="ObjectSpawner" unique_id=93589457 node_paths=PackedStringArray("axis_handler") instance=ExtResource("17_b6dwn")]
+[node name="@RigidBody3D@111757" parent="ObjectSpawner" unique_id=93589457 instance=ExtResource("17_b6dwn")]
 transform = Transform3D(0.43519098, -0.0342783, -0.8996854, -0.10313671, -0.9945948, -0.011994358, -0.8944113, 0.098010436, -0.4363741, 24.35932, 5.796737, 18.516869)
-collision_layer = 4
-collision_mask = 0
-gravity_scale = 0.0
-freeze_mode = 1
-linear_damp = 100.0
-angular_damp = 100.0
-script = ExtResource("8_uoj7x")
 instance_id = "2529232425673"
-scene_file_path_override = "res://VoxelEditorForGodotDotNet/PlaceableItems/Items/Cube.tscn"
 scale_factor = Vector3(0.4751808, 0.20610593, 1.5596373)
-axis_handler = NodePath("XRToolsHighlightVisible/AxisDisplay")
 
-[node name="@RigidBody3D@111758" type="RigidBody3D" parent="ObjectSpawner" unique_id=936072586 node_paths=PackedStringArray("axis_handler") instance=ExtResource("17_b6dwn")]
+[node name="@RigidBody3D@111758" parent="ObjectSpawner" unique_id=936072586 instance=ExtResource("17_b6dwn")]
 transform = Transform3D(0.31643912, 0.07247095, -0.9458405, 0.04493711, -0.99710333, -0.061364643, -0.94754785, -0.023085164, -0.31877917, 23.836851, 5.6185393, 19.686707)
-collision_layer = 4
-collision_mask = 0
-gravity_scale = 0.0
-freeze_mode = 1
-linear_damp = 100.0
-angular_damp = 100.0
-script = ExtResource("8_uoj7x")
 instance_id = "2827950756575"
-scene_file_path_override = "res://VoxelEditorForGodotDotNet/PlaceableItems/Items/Cube.tscn"
 scale_factor = Vector3(0.4751808, 0.20610593, 1.5596373)
-axis_handler = NodePath("XRToolsHighlightVisible/AxisDisplay")
 
-[node name="@RigidBody3D@111759" type="RigidBody3D" parent="ObjectSpawner" unique_id=796936925 node_paths=PackedStringArray("axis_handler") instance=ExtResource("17_b6dwn")]
+[node name="@RigidBody3D@111759" parent="ObjectSpawner" unique_id=796936925 instance=ExtResource("17_b6dwn")]
 transform = Transform3D(0.30944866, 0.1148386, -0.9439564, 0.042700525, -0.9933578, -0.10685049, -0.94995695, -0.007242691, -0.31229693, 23.680195, 5.5058722, 20.067919)
-collision_layer = 4
-collision_mask = 0
-gravity_scale = 0.0
-freeze_mode = 1
-linear_damp = 100.0
-angular_damp = 100.0
-script = ExtResource("8_uoj7x")
 instance_id = "2902106051319"
-scene_file_path_override = "res://VoxelEditorForGodotDotNet/PlaceableItems/Items/Cube.tscn"
 scale_factor = Vector3(0.4751808, 0.20610593, 1.5596373)
-axis_handler = NodePath("XRToolsHighlightVisible/AxisDisplay")
 
-[node name="@RigidBody3D@111760" type="RigidBody3D" parent="ObjectSpawner" unique_id=909539215 node_paths=PackedStringArray("axis_handler") instance=ExtResource("17_b6dwn")]
+[node name="@RigidBody3D@111760" parent="ObjectSpawner" unique_id=909539215 instance=ExtResource("17_b6dwn")]
 transform = Transform3D(0.3774466, 0.9247844, 0.0480412, -0.021603214, 0.06065799, -0.9979248, -0.92577934, 0.37562543, 0.04287347, 24.502058, 6.634397, 19.107733)
-collision_layer = 4
-collision_mask = 0
-gravity_scale = 0.0
-freeze_mode = 1
-linear_damp = 100.0
-angular_damp = 100.0
-script = ExtResource("8_uoj7x")
 instance_id = "3252917637389"
-scene_file_path_override = "res://VoxelEditorForGodotDotNet/PlaceableItems/Items/Cube.tscn"
 scale_factor = Vector3(0.4751808, 0.20610593, 1.7090424)
-axis_handler = NodePath("XRToolsHighlightVisible/AxisDisplay")
 
-[node name="@RigidBody3D@111761" type="RigidBody3D" parent="ObjectSpawner" unique_id=1869224057 node_paths=PackedStringArray("axis_handler") instance=ExtResource("17_b6dwn")]
+[node name="@RigidBody3D@111761" parent="ObjectSpawner" unique_id=1869224057 instance=ExtResource("17_b6dwn")]
 transform = Transform3D(0.28855574, 0.95435053, 0.077140026, -0.05740465, 0.09766627, -0.9935623, -0.9557407, 0.28226984, 0.08296632, 24.309198, 6.4933043, 19.440865)
-collision_layer = 4
-collision_mask = 0
-gravity_scale = 0.0
-freeze_mode = 1
-linear_damp = 100.0
-angular_damp = 100.0
-script = ExtResource("8_uoj7x")
 instance_id = "3419599278373"
-scene_file_path_override = "res://VoxelEditorForGodotDotNet/PlaceableItems/Items/Cube.tscn"
 scale_factor = Vector3(0.4751808, 0.20610593, 1.7090424)
-axis_handler = NodePath("XRToolsHighlightVisible/AxisDisplay")
 
-[node name="@RigidBody3D@111762" type="RigidBody3D" parent="ObjectSpawner" unique_id=2094434822 node_paths=PackedStringArray("axis_handler") instance=ExtResource("17_b6dwn")]
+[node name="@RigidBody3D@111762" parent="ObjectSpawner" unique_id=2094434822 instance=ExtResource("17_b6dwn")]
 transform = Transform3D(0.26912835, 0.95881385, 0.09080794, -0.026805002, 0.10170717, -0.9944532, -0.96273124, 0.26520142, 0.053073287, 24.176207, 6.4506288, 19.93539)
-collision_layer = 4
-collision_mask = 0
-gravity_scale = 0.0
-freeze_mode = 1
-linear_damp = 100.0
-angular_damp = 100.0
-script = ExtResource("8_uoj7x")
 instance_id = "3458606305596"
-scene_file_path_override = "res://VoxelEditorForGodotDotNet/PlaceableItems/Items/Cube.tscn"
 scale_factor = Vector3(0.4751808, 0.20610593, 1.7090424)
-axis_handler = NodePath("XRToolsHighlightVisible/AxisDisplay")
 
-[node name="@RigidBody3D@111763" type="RigidBody3D" parent="ObjectSpawner" unique_id=115970512 node_paths=PackedStringArray("axis_handler") instance=ExtResource("17_b6dwn")]
+[node name="@RigidBody3D@111763" parent="ObjectSpawner" unique_id=115970512 instance=ExtResource("17_b6dwn")]
 transform = Transform3D(0.28235784, 0.957989, 0.050312225, 0.010543795, 0.04934401, -0.9987262, -0.9592513, 0.28252864, 0.0038318287, 23.667416, 6.543467, 18.827951)
-collision_layer = 4
-collision_mask = 0
-gravity_scale = 0.0
-freeze_mode = 1
-linear_damp = 100.0
-angular_damp = 100.0
-script = ExtResource("8_uoj7x")
 instance_id = "3567607877970"
-scene_file_path_override = "res://VoxelEditorForGodotDotNet/PlaceableItems/Items/Cube.tscn"
 scale_factor = Vector3(0.4751808, 0.20610593, 1.350946)
-axis_handler = NodePath("XRToolsHighlightVisible/AxisDisplay")
 
-[node name="@RigidBody3D@111764" type="RigidBody3D" parent="ObjectSpawner" unique_id=542528328 node_paths=PackedStringArray("axis_handler") instance=ExtResource("17_b6dwn")]
+[node name="@RigidBody3D@111764" parent="ObjectSpawner" unique_id=542528328 instance=ExtResource("17_b6dwn")]
 transform = Transform3D(0.3130107, 0.9468852, 0.07370677, -0.0038169515, 0.07886007, -0.9968784, -0.94974184, 0.31175223, 0.028298259, 23.480095, 6.467771, 19.269657)
-collision_layer = 4
-collision_mask = 0
-gravity_scale = 0.0
-freeze_mode = 1
-linear_damp = 100.0
-angular_damp = 100.0
-script = ExtResource("8_uoj7x")
 instance_id = "3692849795433"
-scene_file_path_override = "res://VoxelEditorForGodotDotNet/PlaceableItems/Items/Cube.tscn"
 scale_factor = Vector3(0.4751808, 0.20610593, 1.4289688)
-axis_handler = NodePath("XRToolsHighlightVisible/AxisDisplay")
 
-[node name="@RigidBody3D@111765" type="RigidBody3D" parent="ObjectSpawner" unique_id=857544636 node_paths=PackedStringArray("axis_handler") instance=ExtResource("17_b6dwn")]
+[node name="@RigidBody3D@111765" parent="ObjectSpawner" unique_id=857544636 instance=ExtResource("17_b6dwn")]
 transform = Transform3D(0.59646606, 0.80236757, 0.020845514, -0.0043774545, 0.029222786, -0.99956334, -0.8026264, 0.5961144, 0.020942727, 23.28647, 6.444075, 19.64245)
-collision_layer = 4
-collision_mask = 0
-gravity_scale = 0.0
-freeze_mode = 1
-linear_damp = 100.0
-angular_damp = 100.0
-script = ExtResource("8_uoj7x")
 instance_id = "3785879458176"
-scene_file_path_override = "res://VoxelEditorForGodotDotNet/PlaceableItems/Items/Cube.tscn"
 scale_factor = Vector3(0.4751808, 0.20610593, 1.4289688)
-axis_handler = NodePath("XRToolsHighlightVisible/AxisDisplay")
 
-[node name="@RigidBody3D@111766" type="RigidBody3D" parent="ObjectSpawner" unique_id=926673827 node_paths=PackedStringArray("axis_handler") instance=ExtResource("17_b6dwn")]
+[node name="@RigidBody3D@111766" parent="ObjectSpawner" unique_id=926673827 instance=ExtResource("17_b6dwn")]
 transform = Transform3D(0.34283596, 0.031979587, -0.93885076, -0.026602406, -0.99868906, -0.04373211, -0.9390185, 0.03996863, -0.34153578, 24.337671, 5.9363465, 18.131588)
-collision_layer = 4
-collision_mask = 0
-gravity_scale = 0.0
-freeze_mode = 1
-linear_damp = 100.0
-angular_damp = 100.0
-script = ExtResource("8_uoj7x")
 instance_id = "4033309839767"
-scene_file_path_override = "res://VoxelEditorForGodotDotNet/PlaceableItems/Items/Cube.tscn"
 scale_factor = Vector3(0.4751808, 0.20610593, 1.5596373)
-axis_handler = NodePath("XRToolsHighlightVisible/AxisDisplay")
 
 [node name="VR player" parent="." unique_id=1445165384 instance=ExtResource("2_uoj7x")]
 transform = Transform3D(-0.70710677, 0, -0.70710677, 0, 1, 0, 0.70710677, 0, -0.70710677, 4.9060974, 0, 2.4147532)
@@ -757,18 +534,6 @@ function_pickup = NodePath("../RightHand/XRToolsFunctionPickup")
 pickup_left = NodePath("../LeftHand/XRToolsFunctionPickup")
 pickup_right = NodePath("../RightHand/XRToolsFunctionPickup")
 
-[node name="RandomBox 1" type="CSGBox3D" parent="." unique_id=1963019855]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.664727, 0.5000005, -8.559774)
-
-[node name="RandomBox 2" type="CSGBox3D" parent="." unique_id=1541083718]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.316182, 0.5, -9.1755905)
-
-[node name="RandomBox 3" type="CSGBox3D" parent="." unique_id=110837555]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.6631265, 0.5000005, 7.823978)
-
-[node name="RandomBox 4" type="CSGBox3D" parent="." unique_id=1450972371]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.1967235, 0.5, 8.693771)
-
 [node name="VoxelController" parent="." unique_id=264195901 node_paths=PackedStringArray("gridOutlineScaler") instance=ExtResource("21_fl6ki")]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, -8.666661, 0)
 gridOutlineScaler = NodePath("Outline scaler")
@@ -779,21 +544,12 @@ transform = Transform3D(127, 0, 0, 0, 127, 0, 0, 0, 127, 0, 0, 0)
 
 [node name="Outline" type="CSGBox3D" parent="VoxelController/Outline scaler" unique_id=606889441]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0.5, 0.5)
+visible = false
 material = SubResource("ShaderMaterial_m3qap")
 
 [node name="ToDo" type="Node" parent="." unique_id=2106738790]
 
 [node name="Environment" type="Node" parent="ToDo" unique_id=267490039]
-
-[node name="Add water layer" type="Node" parent="ToDo/Environment" unique_id=2098509548]
-
-[node name="Load voxel mesh in editor" type="Node" parent="ToDo/Environment" unique_id=1197521083]
-
-[node name="Implement grid bounds outline" type="Node" parent="ToDo/Environment" unique_id=1812544055]
-
-[node name="Set useable starting scale" type="Node" parent="ToDo/Environment" unique_id=557223765]
-
-[node name="Paint starting island" type="Node" parent="ToDo/Environment" unique_id=323931233]
 
 [node name="Movement" type="Node" parent="ToDo" unique_id=1814867935]
 
@@ -807,8 +563,6 @@ material = SubResource("ShaderMaterial_m3qap")
 
 [node name="Voxel editor" type="Node" parent="ToDo" unique_id=717234250]
 
-[node name="Outlines" type="Node" parent="ToDo/Voxel editor" unique_id=778926802]
-
 [node name="Wireframe toggle" type="Node" parent="ToDo/Voxel editor" unique_id=1826125203]
 
 [node name="Differenet basic shapes" type="Node" parent="ToDo/Voxel editor" unique_id=657126578]
@@ -819,8 +573,6 @@ material = SubResource("ShaderMaterial_m3qap")
 
 [node name="Items" type="Node" parent="ToDo" unique_id=728677396]
 
-[node name="Implement if scaleable" type="Node" parent="ToDo/Items" unique_id=372926198]
-
 [node name="Implement edit mode" type="Node" parent="ToDo/Items" unique_id=2071621762]
 
 [node name="Implement tree" type="Node" parent="ToDo/Items" unique_id=1851619102]
@@ -828,6 +580,8 @@ material = SubResource("ShaderMaterial_m3qap")
 [node name="Implement river" type="Node" parent="ToDo/Items" unique_id=971794866]
 
 [node name="Save and load" type="Node" parent="ToDo" unique_id=528217398]
+
+[node name="Unified save and load system" type="Node" parent="ToDo/Save and load" unique_id=23971257]
 
 [node name="Save and load settings" type="Node" parent="ToDo/Save and load" unique_id=1052252023]
 
