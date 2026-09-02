@@ -116,7 +116,7 @@ scene_baseline_data = Array[Dictionary]([{
 "parent_id": "",
 "scene_path": "res://VoxelEditorForGodotDotNet/PlaceableItems/Items/PlayerSizedCapsule.tscn",
 "transform": {
-"pos": [2.9283328, 0.0, -0.55138284],
+"pos": [2.9283307, 0.0, -0.5513823],
 "rot": [0.0, 0.0, 0.0],
 "scale": [1.0, 1.0, 1.0]
 }
@@ -125,8 +125,8 @@ scene_baseline_data = Array[Dictionary]([{
 "parent_id": "",
 "scene_path": "res://VoxelEditorForGodotDotNet/PlaceableItems/Items/Cube.tscn",
 "transform": {
-"pos": [2.6839178, 1.4989486, 2.0180266],
-"rot": [-0.02525218, -0.047115672, -0.047276277],
+"pos": [2.6839156, 1.4989486, 2.0180244],
+"rot": [-0.025252176, -0.047115635, -0.047276273],
 "scale": [0.10919925, 0.043332506, 0.10919925]
 }
 }, {
@@ -134,8 +134,8 @@ scene_baseline_data = Array[Dictionary]([{
 "parent_id": "",
 "scene_path": "res://VoxelEditorForGodotDotNet/PlaceableItems/Items/Cylinder.tscn",
 "transform": {
-"pos": [2.6863823, 1.6148003, 2.0138304],
-"rot": [-0.0011568235, 0.43261063, -0.018081293],
+"pos": [2.6863801, 1.6148003, 2.0138283],
+"rot": [-0.0011568246, 0.4326106, -0.018081298],
 "scale": [0.08119117, 0.10390038, 0.08119117]
 }
 }, {
@@ -143,28 +143,28 @@ scene_baseline_data = Array[Dictionary]([{
 "parent_id": "",
 "scene_path": "res://VoxelEditorForGodotDotNet/PlaceableItems/Items/Cube.tscn",
 "transform": {
-"pos": [2.687451, 1.7307156, 2.016063],
-"rot": [-0.0125835175, -0.088462934, -0.021527512],
+"pos": [2.6874487, 1.7307156, 2.0160608],
+"rot": [-0.012583501, -0.088462986, -0.021527492],
 "scale": [0.10773287, 0.042750623, 0.10773287]
 }
 }])
 
 [node name="Player sized capsule" parent="ObjectSpawner" unique_id=499244775 instance=ExtResource("23_ghkfn")]
-transform = Transform3D(0.99999976, 0, 0, 0, 1, 0, 0, 0, 0.99999976, 2.9283328, 0, -0.55138284)
+transform = Transform3D(0.99999976, 0, 0, 0, 1, 0, 0, 0, 0.99999976, 2.9283307, 0, -0.5513823)
 instance_id = "18464869825121"
 
 [node name="Cube" parent="ObjectSpawner" unique_id=480645879 instance=ExtResource("17_b6dwn")]
-transform = Transform3D(0.99771804, 0.048394106, -0.04708323, -0.047243603, 0.99856424, 0.025249496, 0.048237555, -0.022967495, 0.9985718, 2.6839178, 1.4989486, 2.0180266)
+transform = Transform3D(0.99771804, 0.0483941, -0.04708319, -0.0472436, 0.99856424, 0.025249492, 0.048237517, -0.022967495, 0.9985718, 2.6839156, 1.4989486, 2.0180244)
 instance_id = "runtime_node_237196284981"
 scale_factor = Vector3(0.10919925, 0.043332506, 0.10919925)
 
 [node name="Cylinder" parent="ObjectSpawner" unique_id=1072816749 instance=ExtResource("19_vi1oe")]
-transform = Transform3D(0.90773475, 0.015929738, 0.41924208, -0.018080296, 0.9998359, 0.0011568232, -0.41915485, -0.008630109, 0.90787375, 2.6863823, 1.6148003, 2.0138304)
+transform = Transform3D(0.90773475, 0.015929742, 0.41924205, -0.018080302, 0.9998359, 0.0011568244, -0.41915482, -0.008630112, 0.90787375, 2.6863801, 1.6148003, 2.0138283)
 instance_id = "runtime_node_494307120207"
 scale_factor = Vector3(0.08119117, 0.10390038, 0.08119117)
 
 [node name="@RigidBody3D@68541" parent="ObjectSpawner" unique_id=746418954 instance=ExtResource("17_b6dwn")]
-transform = Transform3D(0.995835, 0.022553114, -0.0883406, -0.021524146, 0.99968916, 0.012583185, 0.08859694, -0.0106293205, 0.99601084, 2.687451, 1.7307156, 2.016063)
+transform = Transform3D(0.995835, 0.022553094, -0.088340655, -0.021524126, 0.99968916, 0.012583168, 0.088596985, -0.010629304, 0.99601084, 2.6874487, 1.7307156, 2.0160608)
 instance_id = "946100769887"
 scale_factor = Vector3(0.10773287, 0.042750623, 0.10773287)
 
@@ -282,8 +282,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.6631265, 0.5000005, 7.82397
 [node name="RandomBox 4" type="CSGBox3D" parent="." unique_id=1450972371]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.1967235, 0.5, 8.693771)
 
-[node name="VoxelController" parent="." unique_id=264195901 instance=ExtResource("21_fl6ki")]
+[node name="VoxelController" parent="." unique_id=264195901 node_paths=PackedStringArray("gridOutlineScaler") instance=ExtResource("21_fl6ki")]
 transform = Transform3D(0.05, 0, 0, 0, 0.05, 0, 0, 0, 0.05, 0, 0, 0)
+gridOutlineScaler = NodePath("Outline scaler")
 currentMainMaterial = ExtResource("22_70n0f")
 
 [node name="Outline scaler" type="Node3D" parent="VoxelController" unique_id=1328015221]
