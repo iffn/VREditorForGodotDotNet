@@ -5,6 +5,7 @@
 [ext_resource type="Script" uid="uid://cu8lxu6berk45" path="res://VoxelEditorForGodotDotNet/PlaceableItems/VREditorPickableSerializable.gd" id="2_o3y3a"]
 [ext_resource type="Script" uid="uid://0b7wkxi4vymb" path="res://addons/godot-xr-tools/objects/highlight/highlight_visible.gd" id="2_w24xb"]
 [ext_resource type="PackedScene" uid="uid://ck57a6mj81jll" path="res://VoxelEditorForGodotDotNet/PlaceableItems/NoteAboutScale.tscn" id="3_o3y3a"]
+[ext_resource type="PackedScene" uid="uid://b5kp0y6edft5i" path="res://VoxelEditorForGodotDotNet/PlaceableItems/AxisDisplay.tscn" id="6_p4tfc"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ivlqx"]
 radius = 0.2
@@ -22,7 +23,7 @@ shader = ExtResource("2_7ksuu")
 shader_parameter/outline_distance = 0.02
 shader_parameter/albedo = Color(1, 1, 0, 1)
 
-[node name="Player sized capsule" unique_id=480645879 instance=ExtResource("1_h8hd8")]
+[node name="Player sized capsule" unique_id=480645879 node_paths=PackedStringArray("axis_handler") instance=ExtResource("1_h8hd8")]
 collision_mask = 0
 gravity_scale = 0.0
 linear_damp = 100.0
@@ -31,7 +32,8 @@ script = ExtResource("2_o3y3a")
 instance_id = "20079794303446"
 scene_file_path_override = "res://VoxelEditorForGodotDotNet/PlaceableItems/Items/PlayerSizedCapsule.tscn"
 scale_factor = Vector3(1, 1, 1)
-scaleable = true
+axis_handler = NodePath("XRToolsHighlightVisible/AxisDisplay")
+scaleable = false
 
 [node name="Important - Positions must be at origin and scale must be 1" parent="." index="0" unique_id=1903908545 instance=ExtResource("3_o3y3a")]
 
@@ -53,3 +55,6 @@ metadata/_custom_type_script = "uid://0b7wkxi4vymb"
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.825, 0)
 mesh = SubResource("CapsuleMesh_akvqr")
 surface_material_override/0 = SubResource("ShaderMaterial_w24xb")
+
+[node name="AxisDisplay" parent="XRToolsHighlightVisible" index="1" unique_id=1048828621 instance=ExtResource("6_p4tfc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.825, 0)
