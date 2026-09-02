@@ -302,91 +302,91 @@ namespace VoxelEditorForGodotDotNet.EditTools
             }
         }
 
-		public class WorldSpaceRougheningModifier : IVoxelModifier
-		{
-			private readonly VoxelData[,,] currentDataCopy;
-			private readonly int radius;
-			private readonly float intensity;
-			private readonly float frequency;
-			private readonly float falloffSharpness;
-			private readonly Vector3 voxelOrigin;
-			private readonly float voxelSize;
+        public class WorldSpaceRougheningModifier : IVoxelModifier
+        {
+            private readonly VoxelData[,,] currentDataCopy;
+            private readonly int radius;
+            private readonly float intensity;
+            private readonly float frequency;
+            private readonly float falloffSharpness;
+            private readonly Vector3 voxelOrigin;
+            private readonly float voxelSize;
 
-			// FastNoiseLite instance replaces Unity's Mathf.PerlinNoise
-			private static readonly FastNoiseLite noise = new FastNoiseLite()
-			{
-				NoiseType = FastNoiseLite.NoiseTypeEnum.Perlin
-			};
+            // FastNoiseLite instance replaces Unity's Mathf.PerlinNoise
+            private static readonly FastNoiseLite noise = new FastNoiseLite()
+            {
+                NoiseType = FastNoiseLite.NoiseTypeEnum.Perlin
+            };
 
-			public WorldSpaceRougheningModifier(
-				VoxelData[,,] currentDataCopy,
-				int radius,
-				float intensity,
-				float frequency,
-				float falloffSharpness,
-				Vector3 voxelOrigin,
-				float voxelSize)
-			{
-				this.currentDataCopy = currentDataCopy;
-				this.radius = radius;
-				this.intensity = intensity;
-				this.frequency = frequency;
-				this.falloffSharpness = falloffSharpness;
-				this.voxelOrigin = voxelOrigin;
-				this.voxelSize = voxelSize;
-			}
+            public WorldSpaceRougheningModifier(
+                VoxelData[,,] currentDataCopy,
+                int radius,
+                float intensity,
+                float frequency,
+                float falloffSharpness,
+                Vector3 voxelOrigin,
+                float voxelSize)
+            {
+                this.currentDataCopy = currentDataCopy;
+                this.radius = radius;
+                this.intensity = intensity;
+                this.frequency = frequency;
+                this.falloffSharpness = falloffSharpness;
+                this.voxelOrigin = voxelOrigin;
+                this.voxelSize = voxelSize;
+            }
 
-			public virtual VoxelData ModifyVoxel(int x, int y, int z, VoxelData currentValue, float distanceOutsideIsPositive)
-			{
-				if (distanceOutsideIsPositive > 0) return currentValue;
+            public virtual VoxelData ModifyVoxel(int x, int y, int z, VoxelData currentValue, float distanceOutsideIsPositive)
+            {
+                if (distanceOutsideIsPositive > 0) return currentValue;
 
-				bool hasDifferentSign = false;
-				int offset = 1;
+                bool hasDifferentSign = false;
+                int offset = 1;
 
-				int xMin = Mathf.Max(x - offset, 0);
-				int xMax = Mathf.Min(x + offset, currentDataCopy.GetLength(0) - 1);
-				int yMin = Mathf.Max(y - offset, 0);
-				int yMax = Mathf.Min(y + offset, currentDataCopy.GetLength(1) - 1);
-				int zMin = Mathf.Max(z - offset, 0);
-				int zMax = Mathf.Min(z + offset, currentDataCopy.GetLength(2) - 1);
+                int xMin = Mathf.Max(x - offset, 0);
+                int xMax = Mathf.Min(x + offset, currentDataCopy.GetLength(0) - 1);
+                int yMin = Mathf.Max(y - offset, 0);
+                int yMax = Mathf.Min(y + offset, currentDataCopy.GetLength(1) - 1);
+                int zMin = Mathf.Max(z - offset, 0);
+                int zMax = Mathf.Min(z + offset, currentDataCopy.GetLength(2) - 1);
 
-				for (int nx = xMin; nx <= xMax; nx++)
-				{
-					for (int ny = yMin; ny <= yMax; ny++)
-					{
-						for (int nz = zMin; nz <= zMax; nz++)
-						{
-							if (nx == x && ny == y && nz == z) continue;
+                for (int nx = xMin; nx <= xMax; nx++)
+                {
+                    for (int ny = yMin; ny <= yMax; ny++)
+                    {
+                        for (int nz = zMin; nz <= zMax; nz++)
+                        {
+                            if (nx == x && ny == y && nz == z) continue;
 
-							float neighborWeight = currentDataCopy[nx, ny, nz].WeightInsideIsPositive;
+                            float neighborWeight = currentDataCopy[nx, ny, nz].WeightInsideIsPositive;
 
-							if ((currentValue.WeightInsideIsPositive * neighborWeight) < 0)
-							{
-								hasDifferentSign = true;
-								break;
-							}
-						}
-						if (hasDifferentSign) break;
-					}
-					if (hasDifferentSign) break;
-				}
+                            if ((currentValue.WeightInsideIsPositive * neighborWeight) < 0)
+                            {
+                                hasDifferentSign = true;
+                                break;
+                            }
+                        }
+                        if (hasDifferentSign) break;
+                    }
+                    if (hasDifferentSign) break;
+                }
 
-				if (!hasDifferentSign) return currentValue;
+                if (!hasDifferentSign) return currentValue;
 
-				Vector3 worldPos = voxelOrigin + new Vector3(x, y, z) * voxelSize;
+                Vector3 worldPos = voxelOrigin + new Vector3(x, y, z) * voxelSize;
 
-				// FastNoiseLite GetNoise2D returns values in the range [-1, 1]
-				float noiseXY = noise.GetNoise2D(worldPos.X * frequency, worldPos.Y * frequency);
-				float noiseYZ = noise.GetNoise2D(worldPos.Y * frequency, worldPos.Z * frequency);
-				float noiseXZ = noise.GetNoise2D(worldPos.X * frequency, worldPos.Z * frequency);
-				float noiseValue = (noiseXY + noiseYZ + noiseXZ) / 3f;
+                // FastNoiseLite GetNoise2D returns values in the range [-1, 1]
+                float noiseXY = noise.GetNoise2D(worldPos.X * frequency, worldPos.Y * frequency);
+                float noiseYZ = noise.GetNoise2D(worldPos.Y * frequency, worldPos.Z * frequency);
+                float noiseXZ = noise.GetNoise2D(worldPos.X * frequency, worldPos.Z * frequency);
+                float noiseValue = (noiseXY + noiseYZ + noiseXZ) / 3f;
 
-				float addition = noiseValue * intensity;
-				float modifiedWeight = currentValue.WeightInsideIsPositive + addition;
+                float addition = noiseValue * intensity;
+                float modifiedWeight = currentValue.WeightInsideIsPositive + addition;
 
-				return currentValue.WithWeightInsideIsPositive(modifiedWeight);
-			}
-		}
+                return currentValue.WithWeightInsideIsPositive(modifiedWeight);
+            }
+        }
 
         public class ChangeColorModifier : IVoxelModifier
         {

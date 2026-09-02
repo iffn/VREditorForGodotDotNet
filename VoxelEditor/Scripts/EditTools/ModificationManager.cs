@@ -109,29 +109,29 @@ namespace VoxelEditorForGodotDotNet.EditTools
         }
 
         private void ModifyModel(EditShape shape, IVoxelModifier modifier, Vector3I minGrid, Vector3I maxGrid, Func<int, int, int, VoxelData> getDataPoint, Action<int, int, int, VoxelData> setDataPoint)
-		{
-			// Fix: Extract scale from the Basis or directly from the Node3D
-			float worldToGridScaleFactor = linkedControllerNode.Scale.Length(); 
-			// Alternatively: linkedControllerNode.GlobalTransform.Basis.GetScale().Length();
+        {
+            // Fix: Extract scale from the Basis or directly from the Node3D
+            float worldToGridScaleFactor = linkedControllerNode.Scale.Length(); 
+            // Alternatively: linkedControllerNode.GlobalTransform.Basis.GetScale().Length();
 
-			// Parallel voxel processing across X slice
-			Parallel.For(minGrid.X, maxGrid.X + 1, x =>
-			{
-				for (int y = minGrid.Y; y <= maxGrid.Y; y++)
-				{
-					for (int z = minGrid.Z; z <= maxGrid.Z; z++)
-					{
-						Vector3 gridPoint = new Vector3(x, y, z);
+            // Parallel voxel processing across X slice
+            Parallel.For(minGrid.X, maxGrid.X + 1, x =>
+            {
+                for (int y = minGrid.Y; y <= maxGrid.Y; y++)
+                {
+                    for (int z = minGrid.Z; z <= maxGrid.Z; z++)
+                    {
+                        Vector3 gridPoint = new Vector3(x, y, z);
 
-						// Calculate distance using the shape's transformation
-						float distanceOutsideIsPositive = shape.OptimizedDistanceOutsideIsPositive(gridPoint);
+                        // Calculate distance using the shape's transformation
+                        float distanceOutsideIsPositive = shape.OptimizedDistanceOutsideIsPositive(gridPoint);
 
-						// Modify the voxel value
-						VoxelData newValue = modifier.ModifyVoxel(x, y, z, linkedController.VoxelDataReference[x, y, z], distanceOutsideIsPositive);
-						setDataPoint(x, y, z, newValue);
-					}
-				}
-			});
-		}
+                        // Modify the voxel value
+                        VoxelData newValue = modifier.ModifyVoxel(x, y, z, linkedController.VoxelDataReference[x, y, z], distanceOutsideIsPositive);
+                        setDataPoint(x, y, z, newValue);
+                    }
+                }
+            });
+        }
     }
 }
