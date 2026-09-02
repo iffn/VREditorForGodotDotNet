@@ -29,8 +29,9 @@ linear_damp = 100.0
 angular_damp = 100.0
 script = ExtResource("2_o3y3a")
 instance_id = "20079794303446"
-scene_file_path_override = "res://VoxelEditorForGodotDotNet/PlaceableItems/PlayerSizedCapsule.tscn"
+scene_file_path_override = "res://VoxelEditorForGodotDotNet/PlaceableItems/Items/PlayerSizedCapsule.tscn"
 scale_factor = Vector3(1, 1, 1)
+scaleable = true
 
 [node name="Important - Positions must be at origin and scale must be 1" parent="." index="0" unique_id=1903908545 instance=ExtResource("3_o3y3a")]
 

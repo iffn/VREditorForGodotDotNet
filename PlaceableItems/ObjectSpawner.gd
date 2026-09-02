@@ -9,24 +9,36 @@ enum SpawnableElement {
 	CYLINDER
 }
 
-## Assign your target JSON file from the project FileSystem (res://)
 @export var layout_file: JSON
 
 @export var spawnable_scenes: Dictionary[SpawnableElement, PackedScene] = {}
 
-## Pre-baked baseline captured in the editor before game start. Saved directly into the scene (.tscn).
 @export var scene_baseline_data: Array[Dictionary] = []
 
-## Inspector toggle to manually bake the scene baseline
+@export_group("Debug")
+## If true, keeps the JSON file contents intact after successfully applying changes for inspection.
+@export var keep_json: bool = false
+
 @export var bake_baseline_now: bool = false:
 	set(value):
 		if value and Engine.is_editor_hint():
 			bake_scene_baseline()
 			bake_baseline_now = false
 
+@export var load_layout_now: bool = false:
+	set(value):
+		if value and Engine.is_editor_hint():
+			_try_import_vr_json()
+			load_layout_now = false
+	get:
+		return false
+
 func _notification(what: int) -> void:
 	if Engine.is_editor_hint():
-		if what == NOTIFICATION_APPLICATION_FOCUS_IN:
+		if what == NOTIFICATION_READY:
+			if scene_baseline_data.is_empty():
+				bake_scene_baseline()
+		elif what == NOTIFICATION_APPLICATION_FOCUS_IN:
 			call_deferred("_try_import_vr_json")
 		elif what == NOTIFICATION_EDITOR_PRE_SAVE:
 			bake_scene_baseline()
@@ -34,22 +46,23 @@ func _notification(what: int) -> void:
 		if what == NOTIFICATION_WM_CLOSE_REQUEST:
 			_save_vr_layout()
 
-## Bakes the current editor scene state into the exportable baseline array
+
 func bake_scene_baseline() -> void:
 	scene_baseline_data.clear()
 	var pickables = find_children("*", "VREditorPickableSerializable", true, false)
-	
+
 	for i in range(pickables.size()):
 		var pickable = pickables[i] as VREditorPickableSerializable
 		if pickable:
-			# Ensure every pre-placed editor node has a static deterministic ID
 			if pickable.instance_id.is_empty():
 				pickable.instance_id = "editor_node_%d" % i
-			
-			scene_baseline_data.append(pickable.serialize_data())
 
-## Spawns new runtime objects and assigns dynamic IDs
-## Spawns new runtime objects and assigns dynamic IDs (preserves native scale)
+			scene_baseline_data.append(pickable.serialize_data())
+	
+	if Engine.is_editor_hint():
+		print("ObjectSpawner (Editor): Baseline automatically baked with %d items." % scene_baseline_data.size())
+
+
 func spawn_element(element: SpawnableElement, spawn_transform: Transform3D) -> VREditorPickableSerializable:
 	var scene: PackedScene = spawnable_scenes.get(element)
 	if not scene:
@@ -59,8 +72,7 @@ func spawn_element(element: SpawnableElement, spawn_transform: Transform3D) -> V
 	var instance = scene.instantiate()
 	if instance is VREditorPickableSerializable:
 		add_child(instance)
-		
-		# Retain native object scale while applying target rotation and origin position
+
 		var target_basis := spawn_transform.basis.orthonormalized().scaled(instance.scale)
 		instance.global_transform = Transform3D(target_basis, spawn_transform.origin)
 
@@ -71,25 +83,26 @@ func spawn_element(element: SpawnableElement, spawn_transform: Transform3D) -> V
 		instance.queue_free()
 		return null
 
-## Compares live scene state against pre-baked baseline and writes diff to JSON
+
 func _save_vr_layout() -> void:
 	if not layout_file:
-		push_warning("ObjectSpawner: No layout_file assigned in Inspector.")
+		push_warning("ObjectSpawner: No layout_file assigned.")
 		return
 
 	var file_path: String = layout_file.resource_path
 	if file_path.is_empty():
-		push_warning("ObjectSpawner: Assigned layout_file does not have a valid path.")
 		return
 
-	# Build lookup map of live objects currently in scene
+	if scene_baseline_data.is_empty():
+		push_warning("ObjectSpawner: Baseline data is empty! Cannot compute deletions.")
+		return
+
 	var current_live_map: Dictionary = {}
 	var pickables = find_children("*", "VREditorPickableSerializable", true, false)
 	for pickable in pickables:
 		if pickable is VREditorPickableSerializable and not pickable.instance_id.is_empty():
 			current_live_map[pickable.instance_id] = pickable
 
-	# Build lookup map of baseline editor objects
 	var baseline_map: Dictionary = {}
 	for base_item in scene_baseline_data:
 		var base_id: String = base_item.get("id", "")
@@ -100,21 +113,17 @@ func _save_vr_layout() -> void:
 	var diff_modified: Array = []
 	var diff_deleted: Array = []
 
-	# 1. Identify Additions & Modifications
 	for id in current_live_map.keys():
 		var live_node: VREditorPickableSerializable = current_live_map[id]
 		var live_data: Dictionary = live_node.serialize_data()
 
 		if not baseline_map.has(id):
-			# Object was created at runtime
 			diff_added.append(live_data)
 		else:
-			# Object existed in baseline: check if modified
 			var base_data: Dictionary = baseline_map[id]
 			if JSON.stringify(live_data) != JSON.stringify(base_data):
 				diff_modified.append(live_data)
 
-	# 2. Identify Deletions
 	for base_id in baseline_map.keys():
 		if not current_live_map.has(base_id):
 			diff_deleted.append(base_id)
@@ -127,13 +136,20 @@ func _save_vr_layout() -> void:
 		}
 	}
 
+	var payload_string = JSON.stringify(diff_payload, "\t")
+
 	var file = FileAccess.open(file_path, FileAccess.WRITE)
 	if file:
-		file.store_string(JSON.stringify(diff_payload, "\t"))
+		file.store_string(payload_string)
+		file.flush()
 		file.close()
-		print("VR layout diff saved to: ", file_path)
+		print("ObjectSpawner (Runtime): Layout saved before exiting. Deletions tracked: %s" % str(diff_deleted))
+
 
 func _try_import_vr_json() -> void:
+	if not Engine.is_editor_hint():
+		return
+
 	if not layout_file:
 		return
 
@@ -152,11 +168,12 @@ func _try_import_vr_json() -> void:
 		return
 
 	var json = JSON.new()
-	if json.parse(json_text) == OK and json.data is Dictionary:
+	var parse_result = json.parse(json_text)
+	if parse_result == OK and json.data is Dictionary:
 		var diff_data = json.data.get("diff", {})
 		_apply_layout_to_editor(diff_data)
 
-## Reconciles editor scene state against the JSON diff payload
+
 func _apply_layout_to_editor(diff_data: Dictionary) -> void:
 	if not Engine.is_editor_hint():
 		return
@@ -165,7 +182,6 @@ func _apply_layout_to_editor(diff_data: Dictionary) -> void:
 	if not scene_root:
 		return
 
-	# Quick check if there are actual diff items to process
 	var deleted_ids: Array = diff_data.get("deleted", [])
 	var modified_items: Array = diff_data.get("modified", [])
 	var added_items: Array = diff_data.get("added", [])
@@ -175,14 +191,13 @@ func _apply_layout_to_editor(diff_data: Dictionary) -> void:
 
 	var existing_nodes: Dictionary = {}
 	var all_pickables = find_children("*", "VREditorPickableSerializable", true, false)
-	
+
 	for node in all_pickables:
 		if node is VREditorPickableSerializable and not node.instance_id.is_empty():
 			existing_nodes[node.instance_id] = node
 
 	var has_changes: bool = false
 
-	# 1. Apply Deletions
 	for del_id in deleted_ids:
 		if existing_nodes.has(del_id):
 			var node_to_free = existing_nodes[del_id]
@@ -190,7 +205,6 @@ func _apply_layout_to_editor(diff_data: Dictionary) -> void:
 			node_to_free.queue_free()
 			has_changes = true
 
-	# 2. Apply Modifications
 	for item in modified_items:
 		var item_id: String = item.get("id", "")
 		if existing_nodes.has(item_id):
@@ -198,36 +212,49 @@ func _apply_layout_to_editor(diff_data: Dictionary) -> void:
 			node.deserialize_data(item)
 			has_changes = true
 
-	# 3. Instantiate Additions
 	var restored_nodes: Dictionary = existing_nodes.duplicate()
 
 	for item in added_items:
 		var item_id: String = item.get("id", "")
-		var node: VREditorPickableSerializable = existing_nodes.get(item_id)
+		var node: Node = existing_nodes.get(item_id)
 
 		if not node:
 			var scene_path: String = item.get("scene_path", "")
-			if FileAccess.file_exists(scene_path):
-				var scene = load(scene_path) as PackedScene
-				if scene:
-					node = scene.instantiate() as VREditorPickableSerializable
-			
+			var packed_scene: PackedScene = null
+
+			if not scene_path.is_empty():
+				if ResourceLoader.exists(scene_path):
+					packed_scene = ResourceLoader.load(scene_path, "PackedScene", ResourceLoader.CACHE_MODE_REUSE) as PackedScene
+
+			if not packed_scene:
+				var element_type: int = item.get("element_type", -1)
+				if element_type != -1 and spawnable_scenes.has(element_type):
+					packed_scene = spawnable_scenes[element_type]
+
+			if packed_scene:
+				node = packed_scene.instantiate()
+
 			if not node:
+				continue
+
+			if not node.has_method("deserialize_data"):
+				node.queue_free()
 				continue
 
 			add_child(node)
 			node.owner = scene_root
 
-		node.instance_id = item_id
-		node.deserialize_data(item)
+		if "instance_id" in node:
+			node.instance_id = item_id
+
+		node.call("deserialize_data", item)
 		restored_nodes[item_id] = node
 		has_changes = true
 
-	# 4. Re-parenting Hierarchy for Added Objects
 	for item in added_items:
 		var item_id: String = item.get("id", "")
 		var parent_id: String = item.get("parent_id", "")
-		var node: VREditorPickableSerializable = restored_nodes.get(item_id)
+		var node: Node = restored_nodes.get(item_id)
 
 		if node:
 			if not parent_id.is_empty() and restored_nodes.has(parent_id):
@@ -240,21 +267,27 @@ func _apply_layout_to_editor(diff_data: Dictionary) -> void:
 				node.owner = scene_root
 
 	if has_changes:
-		# Wipe the JSON file so modifications are not re-applied on subsequent focus events
-		_clear_vr_json()
+		if not keep_json:
+			_clear_vr_json()
+			print("ObjectSpawner (Editor): Successfully applied changes and cleared layout JSON.")
+		else:
+			print("ObjectSpawner (Editor): Successfully applied changes. JSON file kept intact (Debug mode).")
+		_mark_scene_dirty()
 
-		# Trigger Godot scene dirty flag via standard EditorUndoRedoManager context
-		var dummy_plugin := EditorPlugin.new()
-		var undo_redo := dummy_plugin.get_undo_redo()
-		dummy_plugin.free()
 
-		if undo_redo:
-			undo_redo.create_action("Import VR Layout", UndoRedo.MERGE_DISABLE, scene_root)
-			undo_redo.add_do_property(scene_root, "position", scene_root.position)
-			undo_redo.add_undo_property(scene_root, "position", scene_root.position)
-			undo_redo.commit_action()
+func _mark_scene_dirty() -> void:
+	if not Engine.is_editor_hint():
+		return
 
-## Clears the content of the target layout JSON file after successful application
+	var undo_redo = EditorInterface.get_editor_undo_redo()
+	if undo_redo:
+		var scene_root = EditorInterface.get_edited_scene_root()
+		undo_redo.create_action("Import VR Layout")
+		undo_redo.add_do_property(scene_root, "position", scene_root.position)
+		undo_redo.add_undo_property(scene_root, "position", scene_root.position)
+		undo_redo.commit_action()
+
+
 func _clear_vr_json() -> void:
 	if not layout_file:
 		return
@@ -274,4 +307,5 @@ func _clear_vr_json() -> void:
 	var file = FileAccess.open(file_path, FileAccess.WRITE)
 	if file:
 		file.store_string(JSON.stringify(empty_payload, "\t"))
+		file.flush()
 		file.close()

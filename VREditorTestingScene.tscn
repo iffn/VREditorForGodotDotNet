@@ -8,6 +8,7 @@
 [ext_resource type="Script" uid="uid://bjeiev8dmyfdj" path="res://VoxelEditorForGodotDotNet/VoxelEditor/Scripts/EditTools/SphereEditShape.cs" id="6_cb16o"]
 [ext_resource type="PackedScene" uid="uid://clujaf3u776a3" path="res://addons/godot-xr-tools/objects/viewport_2d_in_3d.tscn" id="7_tfhxa"]
 [ext_resource type="PackedScene" uid="uid://drnw7l2nvb6rk" path="res://VoxelEditorForGodotDotNet/VRUI/VRUI.tscn" id="8_c1kk3"]
+[ext_resource type="Script" uid="uid://cu8lxu6berk45" path="res://VoxelEditorForGodotDotNet/PlaceableItems/VREditorPickableSerializable.gd" id="8_uoj7x"]
 [ext_resource type="Script" uid="uid://c5tqoains5ikr" path="res://VoxelEditorForGodotDotNet/Interactions/PlayerScaler.gd" id="9_kqai8"]
 [ext_resource type="Script" uid="uid://c63j7k3woej6n" path="res://VoxelEditorForGodotDotNet/Interactions/PlayerMovementController.gd" id="10_4iv8x"]
 [ext_resource type="Script" uid="uid://5gxxof5umue8" path="res://VoxelEditorForGodotDotNet/VoxelEditor/Scripts/Editor/VoxelEditor.cs" id="11_6khcx"]
@@ -102,7 +103,7 @@ transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545
 shadow_enabled = true
 
 [node name="ObjectSpawner" type="Node3D" parent="." unique_id=320593309]
-transform = Transform3D(-0.70710677, 0, -0.70710677, 0, 1, 0, 0.70710677, 0, -0.70710677, 0, 0, 0)
+transform = Transform3D(0.99999994, 0, 0, 0, 1, 0, 0, 0, 0.99999994, 0, 0, 0)
 script = ExtResource("20_uoj7x")
 layout_file = ExtResource("15_jf42m")
 spawnable_scenes = Dictionary[int, PackedScene]({
@@ -114,18 +115,88 @@ spawnable_scenes = Dictionary[int, PackedScene]({
 scene_baseline_data = Array[Dictionary]([{
 "id": "18464869825121",
 "parent_id": "",
-"scene_path": "res://VoxelEditorForGodotDotNet/PlaceableItems/PlayerSizedCapsule.tscn",
+"scene_path": "res://VoxelEditorForGodotDotNet/PlaceableItems/Items/PlayerSizedCapsule.tscn",
 "transform": {
-"pos": [-1.790487, 1.4305115e-06, -0.9054868],
-"rot": [0.0, 2.3561945, 0.0],
+"pos": [2.9283328, 0.0, -0.55138284],
+"rot": [0.0, 0.0, 0.0],
 "scale": [1.0, 1.0, 1.0]
+}
+}, {
+"id": "runtime_node_237196284981",
+"parent_id": "",
+"scene_path": "res://VoxelEditorForGodotDotNet/PlaceableItems/Items/Cube.tscn",
+"transform": {
+"pos": [2.6839178, 1.4989486, 2.0180266],
+"rot": [-0.02525218, -0.047115672, -0.047276277],
+"scale": [0.10919925, 0.043332506, 0.10919925]
+}
+}, {
+"id": "runtime_node_494307120207",
+"parent_id": "",
+"scene_path": "res://VoxelEditorForGodotDotNet/PlaceableItems/Items/Cylinder.tscn",
+"transform": {
+"pos": [2.6863823, 1.6148003, 2.0138304],
+"rot": [-0.0011568235, 0.43261063, -0.018081293],
+"scale": [0.08119117, 0.10390038, 0.08119117]
+}
+}, {
+"id": "946100769887",
+"parent_id": "",
+"scene_path": "res://VoxelEditorForGodotDotNet/PlaceableItems/Items/Cube.tscn",
+"transform": {
+"pos": [2.687451, 1.7307156, 2.016063],
+"rot": [-0.0125835175, -0.088462934, -0.021527512],
+"scale": [0.10773287, 0.042750623, 0.10773287]
 }
 }])
 
 [node name="Player sized capsule" parent="ObjectSpawner" unique_id=499244775 instance=ExtResource("23_ghkfn")]
-transform = Transform3D(-0.7071067, 0, 0.7071067, 0, 1, 0, -0.7071067, 0, -0.7071067, -1.790487, 1.4305115e-06, -0.9054868)
+transform = Transform3D(0.99999976, 0, 0, 0, 1, 0, 0, 0, 0.99999976, 2.9283328, 0, -0.55138284)
 instance_id = "18464869825121"
+scene_file_path_override = "res://VoxelEditorForGodotDotNet/PlaceableItems/Items/PlayerSizedCapsule.tscn"
 scaleable = true
+
+[node name="Cube" type="RigidBody3D" parent="ObjectSpawner" unique_id=480645879 node_paths=PackedStringArray("axis_handler") instance=ExtResource("17_b6dwn")]
+transform = Transform3D(0.99771804, 0.048394106, -0.04708323, -0.047243603, 0.99856424, 0.025249496, 0.048237555, -0.022967495, 0.9985718, 2.6839178, 1.4989486, 2.0180266)
+collision_layer = 4
+collision_mask = 0
+gravity_scale = 0.0
+freeze_mode = 1
+linear_damp = 100.0
+angular_damp = 100.0
+script = ExtResource("8_uoj7x")
+instance_id = "runtime_node_237196284981"
+scene_file_path_override = "res://VoxelEditorForGodotDotNet/PlaceableItems/Items/Cube.tscn"
+scale_factor = Vector3(0.10919925, 0.043332506, 0.10919925)
+axis_handler = NodePath("XRToolsHighlightVisible/AxisDisplay")
+
+[node name="Cylinder" type="RigidBody3D" parent="ObjectSpawner" unique_id=1072816749 node_paths=PackedStringArray("axis_handler") instance=ExtResource("19_vi1oe")]
+transform = Transform3D(0.90773475, 0.015929738, 0.41924208, -0.018080296, 0.9998359, 0.0011568232, -0.41915485, -0.008630109, 0.90787375, 2.6863823, 1.6148003, 2.0138304)
+collision_layer = 4
+collision_mask = 0
+gravity_scale = 0.0
+freeze_mode = 1
+linear_damp = 100.0
+angular_damp = 100.0
+script = ExtResource("8_uoj7x")
+instance_id = "runtime_node_494307120207"
+scene_file_path_override = "res://VoxelEditorForGodotDotNet/PlaceableItems/Items/Cylinder.tscn"
+scale_factor = Vector3(0.08119117, 0.10390038, 0.08119117)
+axis_handler = NodePath("XRToolsHighlightVisible/AxisDisplay")
+
+[node name="@RigidBody3D@68541" type="RigidBody3D" parent="ObjectSpawner" unique_id=746418954 node_paths=PackedStringArray("axis_handler") instance=ExtResource("17_b6dwn")]
+transform = Transform3D(0.995835, 0.022553114, -0.0883406, -0.021524146, 0.99968916, 0.012583185, 0.08859694, -0.0106293205, 0.99601084, 2.687451, 1.7307156, 2.016063)
+collision_layer = 4
+collision_mask = 0
+gravity_scale = 0.0
+freeze_mode = 1
+linear_damp = 100.0
+angular_damp = 100.0
+script = ExtResource("8_uoj7x")
+instance_id = "946100769887"
+scene_file_path_override = "res://VoxelEditorForGodotDotNet/PlaceableItems/Items/Cube.tscn"
+scale_factor = Vector3(0.10773287, 0.042750623, 0.10773287)
+axis_handler = NodePath("XRToolsHighlightVisible/AxisDisplay")
 
 [node name="VR player" parent="." unique_id=1445165384 instance=ExtResource("2_uoj7x")]
 transform = Transform3D(-0.70710677, 0, -0.70710677, 0, 1, 0, 0.70710677, 0, -0.70710677, 0, 0, 0)

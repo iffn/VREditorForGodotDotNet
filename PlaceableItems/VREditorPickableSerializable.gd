@@ -25,9 +25,11 @@ func update_axis(axis_selection : ObjectEditController.AxisOptions):
 func _ready() -> void:
 	super._ready()
 	
-	# Auto-capture native scene path if override is unassigned
-	if scene_file_path_override.is_empty() and not scene_file_path.is_empty():
-		scene_file_path_override = scene_file_path
+	# Auto-capture or refresh scene path if override is empty or points to a moved/missing file
+	if Engine.is_editor_hint():
+		if scene_file_path_override.is_empty() or not FileAccess.file_exists(scene_file_path_override):
+			if not scene_file_path.is_empty():
+				scene_file_path_override = scene_file_path
 
 	# Auto-generate unique ID in editor if missing
 	if Engine.is_editor_hint() and instance_id.is_empty():
@@ -66,9 +68,13 @@ func _apply_current_scale() -> void:
 
 ## Encapsulates item data into a Dictionary for JSON output
 func serialize_data() -> Dictionary:
+	var valid_path = scene_file_path_override
+	if valid_path.is_empty() or not FileAccess.file_exists(valid_path):
+		valid_path = scene_file_path
+
 	return {
 		"id": instance_id,
-		"scene_path": scene_file_path_override if not scene_file_path_override.is_empty() else scene_file_path,
+		"scene_path": valid_path,
 		"parent_id": _get_parent_instance_id(),
 		"transform": {
 			"pos": [transform.origin.x, transform.origin.y, transform.origin.z],
