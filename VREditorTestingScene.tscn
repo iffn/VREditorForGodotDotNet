@@ -17,10 +17,10 @@
 [ext_resource type="PackedScene" uid="uid://cl0132hwrpdl2" path="res://VoxelEditorForGodotDotNet/PlaceableItems/Items/Cube.tscn" id="17_b6dwn"]
 [ext_resource type="PackedScene" uid="uid://n7po5nma3c6u" path="res://VoxelEditorForGodotDotNet/PlaceableItems/Items/Sphere.tscn" id="18_ent35"]
 [ext_resource type="PackedScene" uid="uid://c6xn8c7vwo0c4" path="res://VoxelEditorForGodotDotNet/PlaceableItems/Items/Cylinder.tscn" id="19_vi1oe"]
-[ext_resource type="PackedScene" uid="uid://75xt687g4r3j" path="res://VoxelEditorForGodotDotNet/VRSetup/Ground.tscn" id="20_6belf"]
 [ext_resource type="Script" uid="uid://dtuc0sjxck2pw" path="res://VoxelEditorForGodotDotNet/PlaceableItems/ObjectSpawner.gd" id="20_uoj7x"]
 [ext_resource type="PackedScene" uid="uid://d0kisqcq43ebm" path="res://VoxelEditorForGodotDotNet/VoxelEditor/VoxelController.tscn" id="21_fl6ki"]
 [ext_resource type="Material" uid="uid://cr2gj02o7km1c" path="res://VoxelEditorForGodotDotNet/MaterialsAndShaders/TriplanarTerrain.tres" id="22_70n0f"]
+[ext_resource type="Shader" uid="uid://dc08puwx45mxv" path="res://VoxelEditorForGodotDotNet/Environment/Water/NoiseWaves.gdshader" id="22_jf42m"]
 [ext_resource type="PackedScene" uid="uid://bbv22y7gt2hc2" path="res://VoxelEditorForGodotDotNet/PlaceableItems/Items/PlayerSizedCapsule.tscn" id="23_ghkfn"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_4myu2"]
@@ -54,6 +54,43 @@ center_offset = Vector3(64, -64, 0)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_erkc8"]
 albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="QuadMesh" id="QuadMesh_bld8a"]
+size = Vector2(1000, 1000)
+orientation = 1
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_f032d"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_erkc8"]
+noise = SubResource("FastNoiseLite_f032d")
+invert = true
+as_normal_map = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_lpj5r"]
+render_priority = 0
+shader = ExtResource("22_jf42m")
+shader_parameter/deep_color = Color(0, 0.2, 0.4, 1)
+shader_parameter/shallow_color = Color(0.1, 0.5, 0.7, 1)
+shader_parameter/wave_noise_normal = SubResource("NoiseTexture2D_erkc8")
+shader_parameter/wave_scale = 0.50000002049012
+shader_parameter/distortion_strength = 0.50000002375
+shader_parameter/noise_depth = 3.0
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_m3qap"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_uoj7x"]
+noise = SubResource("FastNoiseLite_m3qap")
+as_normal_map = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4hfjv"]
+albedo_color = Color(0.73, 0.66576004, 0.48909998, 1)
+normal_enabled = true
+normal_scale = 16.0
+normal_texture = SubResource("NoiseTexture2D_uoj7x")
+uv1_scale = Vector3(1000, 1000, 1000)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_jf42m"]
+data = PackedVector3Array(500, 0, 500, -500, 0, 500, 500, 0, -500, -500, 0, 500, -500, 0, -500, 500, 0, -500)
 
 [node name="VREditorTestingScene" type="Node3D" unique_id=763560496]
 script = ExtResource("1_4hfjv")
@@ -89,6 +126,7 @@ scene_baseline_data = Array[Dictionary]([{
 [node name="Player sized capsule" parent="ObjectSpawner" unique_id=499244775 instance=ExtResource("23_ghkfn")]
 transform = Transform3D(-0.7071067, 0, 0.7071067, 0, 1, 0, -0.7071067, 0, -0.7071067, -1.790487, 1.4305115e-06, -0.9054868)
 instance_id = "18464869825121"
+scaleable = true
 
 [node name="VR player" parent="." unique_id=1445165384 instance=ExtResource("2_uoj7x")]
 transform = Transform3D(-0.70710677, 0, -0.70710677, 0, 1, 0, 0.70710677, 0, -0.70710677, 0, 0, 0)
@@ -135,7 +173,6 @@ transform = Transform3D(0.07071067, 0, -0.07071069, 0, 0.1, 0, 0.07071069, 0, 0.
 scene = ExtResource("8_c1kk3")
 viewport_size = Vector2(1280, 720)
 material = SubResource("StandardMaterial3D_pkb7p")
-transparent = 1
 scene_properties_keys = PackedStringArray("ElementLinker.gd", "player_movement_controller", "voxel_editor", "object_edit_controller")
 player_movement_controller = NodePath("../../../PlayerMovementController")
 voxel_editor = NodePath("../../../VoxelEditor")
@@ -192,8 +229,6 @@ controller = NodePath("../RightHand")
 function_pickup = NodePath("../RightHand/XRToolsFunctionPickup")
 pickup_left = NodePath("../LeftHand/XRToolsFunctionPickup")
 pickup_right = NodePath("../RightHand/XRToolsFunctionPickup")
-
-[node name="Ground" parent="." unique_id=993000832 instance=ExtResource("20_6belf")]
 
 [node name="RandomBox 1" type="CSGBox3D" parent="." unique_id=1963019855]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.664727, 0.5000005, -8.559774)
@@ -271,5 +306,21 @@ surface_material_override/0 = SubResource("StandardMaterial3D_erkc8")
 [node name="Settings" type="Node" parent="ToDo" unique_id=341949518]
 
 [node name="Implement current settings" type="Node" parent="ToDo/Settings" unique_id=530130716]
+
+[node name="Environment" type="Node3D" parent="." unique_id=265808683]
+
+[node name="Ocean" type="MeshInstance3D" parent="Environment" unique_id=966831373]
+mesh = SubResource("QuadMesh_bld8a")
+surface_material_override/0 = SubResource("ShaderMaterial_lpj5r")
+
+[node name="Sand" type="MeshInstance3D" parent="Environment" unique_id=332793310]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+mesh = SubResource("QuadMesh_bld8a")
+surface_material_override/0 = SubResource("StandardMaterial3D_4hfjv")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Environment/Sand" unique_id=1912428102]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Sand/StaticBody3D" unique_id=1640584989]
+shape = SubResource("ConcavePolygonShape3D_jf42m")
 
 [editable path="VR player"]
