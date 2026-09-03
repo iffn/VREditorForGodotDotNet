@@ -20,17 +20,21 @@ extends VREditorPickableSerializable
 @export var speed_curve: Curve
 @export var texture_tiling_x: float = 1.0
 
+
 func _ready() -> void:
 	super._ready()
 	generate_river()
+
 
 func request_rebuild() -> void:
 	if is_inside_tree():
 		call_deferred("generate_river")
 
+
 func _on_waypoint_changed() -> void:
 	if is_inside_tree():
 		call_deferred("generate_river")
+
 
 func _catmull_rom(p0: Vector3, p1: Vector3, p2: Vector3, p3: Vector3, t: float) -> Vector3:
 	return 0.5 * (
@@ -40,11 +44,12 @@ func _catmull_rom(p0: Vector3, p1: Vector3, p2: Vector3, p3: Vector3, t: float) 
 		(-p0 + 3.0 * p1 - 3.0 * p2 + p3) * (t * t * t)
 	)
 
+
 func generate_river() -> void:
 	if not mesh_instance:
 		return
 
-	var waypoints: Array[Node3D] = []
+	var waypoints: Array[RiverWaypoint] = []
 	for child in get_children():
 		if child is RiverWaypoint and child.is_inside_tree():
 			waypoints.append(child)
@@ -60,7 +65,6 @@ func generate_river() -> void:
 	var st = SurfaceTool.new()
 	st.begin(Mesh.PRIMITIVE_TRIANGLES)
 	
-	# Pass exported material to the SurfaceTool
 	if river_material:
 		st.set_material(river_material)
 	
@@ -72,8 +76,9 @@ func generate_river() -> void:
 		var p2 = waypoints[i + 1].global_position
 		var p3 = waypoints[min(waypoints.size() - 1, i + 2)].global_position
 		
-		var w1 = waypoints[i].scale.x
-		var w2 = waypoints[i + 1].scale.x
+		# Directly read scale_factor.x from the VREditorPickableSerializable base class
+		var w1 = waypoints[i].scale_factor.x
+		var w2 = waypoints[i + 1].scale_factor.x
 		
 		for step in range(subdivisions_per_segment):
 			var t = float(step) / float(subdivisions_per_segment)
@@ -88,7 +93,7 @@ func generate_river() -> void:
 	var final_wp = waypoints[waypoints.size() - 1]
 	sampled_points.append({
 		"position": final_wp.global_position,
-		"width": final_wp.scale.x
+		"width": final_wp.scale_factor.x
 	})
 	
 	var distances: PackedFloat32Array = [0.0]
@@ -176,7 +181,6 @@ func generate_river() -> void:
 
 	mesh_instance.mesh = generated_mesh
 
-	# Ensure material is explicitly assigned to target mesh instances
 	if river_material:
 		mesh_instance.material_override = river_material
 
