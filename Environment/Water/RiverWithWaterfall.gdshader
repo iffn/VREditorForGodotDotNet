@@ -1,5 +1,5 @@
 shader_type spatial;
-render_mode depth_draw_always;
+//render_mode depth_draw_always;
 
 uniform vec3 albedo : source_color = vec3(0.05, 0.3, 0.5);
 uniform vec3 foam_color : source_color = vec3(0.8, 0.9, 1.0);

@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://ck57a6mj81jll" path="res://VoxelEditorForGodotDotNet/PlaceableItems/NoteAboutScale.tscn" id="3_ckv7i"]
 [ext_resource type="Script" uid="uid://0b7wkxi4vymb" path="res://addons/godot-xr-tools/objects/highlight/highlight_visible.gd" id="4_15jmu"]
 [ext_resource type="PackedScene" uid="uid://b5kp0y6edft5i" path="res://VoxelEditorForGodotDotNet/PlaceableItems/AxisDisplay.tscn" id="6_62g4n"]
+[ext_resource type="Shader" uid="uid://bleg0kybifn7i" path="res://VoxelEditorForGodotDotNet/PlaceableItems/Highlihgt.gdshader" id="7_15jmu"]
 
 [sub_resource type="Curve" id="Curve_syy8r"]
 _data = [Vector2(0, 1), 0.0, -2.6945624, 0, 0, Vector2(1, 0.111940265), 0.13971795, 0.0, 0, 0]
@@ -17,7 +18,7 @@ point_count = 2
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_symtv"]
 transparency = 1
-albedo_color = Color(0.44, 0.6173334, 1, 0.0627451)
+albedo_color = Color(0.50980395, 0.69803923, 1, 0.44313726)
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_symtv"]
 _surfaces = [{
@@ -53,6 +54,12 @@ shader_parameter/depth_falloff_power = 0.4
 shader_parameter/waterfall_steepness = 0.5
 shader_parameter/waterfall_foam_amount = 1.0
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_symtv"]
+render_priority = 0
+shader = ExtResource("7_15jmu")
+shader_parameter/outline_distance = 0.02
+shader_parameter/albedo = Color(1, 1, 0, 1)
+
 [node name="River" unique_id=480645879 node_paths=PackedStringArray("mesh_instance", "highlight_mesh_instance", "axis_handler") instance=ExtResource("1_syy8r")]
 collision_mask = 0
 gravity_scale = 0.0
@@ -60,7 +67,7 @@ linear_damp = 100.0
 angular_damp = 100.0
 script = ExtResource("1_xp5tq")
 mesh_instance = NodePath("Mesh")
-highlight_mesh_instance = NodePath("XRToolsHighlightVisible/Highlihgt")
+highlight_mesh_instance = NodePath("XRToolsHighlightVisible/RiverHighlight NotYetWorking")
 update_mesh = false
 subdivisions_per_segment = 10
 subdivisions_width = 4
@@ -92,5 +99,11 @@ metadata/_custom_type_script = "uid://0b7wkxi4vymb"
 
 [node name="Highlihgt" type="MeshInstance3D" parent="XRToolsHighlightVisible" index="0" unique_id=1208041471]
 visible = false
+mesh = SubResource("BoxMesh_syy8r")
+surface_material_override/0 = SubResource("ShaderMaterial_symtv")
 
-[node name="AxisDisplay" parent="XRToolsHighlightVisible" index="1" unique_id=1048828621 instance=ExtResource("6_62g4n")]
+[node name="RiverHighlight NotYetWorking" type="MeshInstance3D" parent="XRToolsHighlightVisible" index="1" unique_id=982898377]
+visible = false
+
+[node name="AxisDisplay" parent="XRToolsHighlightVisible" index="2" unique_id=1048828621 instance=ExtResource("6_62g4n")]
+visible = false
