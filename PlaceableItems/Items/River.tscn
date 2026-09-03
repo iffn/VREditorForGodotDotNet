@@ -98,7 +98,6 @@ script = ExtResource("4_15jmu")
 metadata/_custom_type_script = "uid://0b7wkxi4vymb"
 
 [node name="Highlihgt" type="MeshInstance3D" parent="XRToolsHighlightVisible" index="0" unique_id=1208041471]
-visible = false
 mesh = SubResource("BoxMesh_syy8r")
 surface_material_override/0 = SubResource("ShaderMaterial_symtv")
 
