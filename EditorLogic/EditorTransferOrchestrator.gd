@@ -2,6 +2,7 @@
 extends Node
 
 @export var object_spawner: ObjectSpawner
+@export var voxel_editor: VoxelEditor
 
 @export_group("Manual Triggers")
 @export var bake_baseline_now: bool = false:
@@ -46,9 +47,11 @@ func save_layout() -> void:
 	print("saving layout")
 	if object_spawner:
 		object_spawner.save_ingame_layout()
+	voxel_editor.SaveWorld()
 
 
 func apply_layout() -> void:
 	print("applying layout")
 	if object_spawner:
 		object_spawner.apply_pending_layout()
+	voxel_editor.LoadWorld()

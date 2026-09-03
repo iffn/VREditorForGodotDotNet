@@ -117,7 +117,7 @@ scene_baseline_data = Array[Dictionary]([{
 "parent_id": "",
 "scene_path": "res://VoxelEditorForGodotDotNet/PlaceableItems/Items/PlayerSizedCapsule.tscn",
 "transform": {
-"pos": [2.9283295, 0.0, -0.551382],
+"pos": [2.9283285, 0.0, -0.55138177],
 "rot": [0.0, 0.0, 0.0],
 "scale": [1.0, 1.0, 1.0]
 }
@@ -126,8 +126,8 @@ scene_baseline_data = Array[Dictionary]([{
 "parent_id": "",
 "scene_path": "res://VoxelEditorForGodotDotNet/PlaceableItems/Items/PlayerSizedCapsule.tscn",
 "transform": {
-"pos": [25.282848, 3.845488, 15.860869],
-"rot": [-0.051997975, 0.3246857, -0.02060825],
+"pos": [25.28284, 3.845488, 15.860866],
+"rot": [-0.05199798, 0.324686, -0.020608269],
 "scale": [1.0, 1.0, 1.0]
 }
 }, {
@@ -135,8 +135,8 @@ scene_baseline_data = Array[Dictionary]([{
 "parent_id": "",
 "scene_path": "res://VoxelEditorForGodotDotNet/PlaceableItems/Items/Cylinder.tscn",
 "transform": {
-"pos": [19.877596, 2.9465256, 19.602211],
-"rot": [0.017947018, -0.2005041, -0.024033524],
+"pos": [19.877588, 2.9465256, 19.602203],
+"rot": [0.017947005, -0.20050415, -0.024033539],
 "scale": [0.40911633, 0.8135927, 0.40911633]
 }
 }, {
@@ -144,8 +144,8 @@ scene_baseline_data = Array[Dictionary]([{
 "parent_id": "",
 "scene_path": "res://VoxelEditorForGodotDotNet/PlaceableItems/Items/Cylinder.tscn",
 "transform": {
-"pos": [20.85379, 2.9902875, 19.90406],
-"rot": [-0.018108087, -0.044925004, -0.0004434797],
+"pos": [20.853783, 2.9902875, 19.904053],
+"rot": [-0.018108072, -0.04492501, -0.0004434794],
 "scale": [0.40911633, 0.8135927, 0.40911633]
 }
 }, {
@@ -153,8 +153,8 @@ scene_baseline_data = Array[Dictionary]([{
 "parent_id": "",
 "scene_path": "res://VoxelEditorForGodotDotNet/PlaceableItems/Items/Cube.tscn",
 "transform": {
-"pos": [19.831543, 2.3894534, 19.570288],
-"rot": [-0.021393415, 1.1885281, -0.04262669],
+"pos": [19.831535, 2.3894534, 19.57028],
+"rot": [-0.021393407, 1.1885281, -0.04262669],
 "scale": [0.4751808, 0.20610593, 0.4751808]
 }
 }, {
@@ -162,8 +162,8 @@ scene_baseline_data = Array[Dictionary]([{
 "parent_id": "",
 "scene_path": "res://VoxelEditorForGodotDotNet/PlaceableItems/Items/Cube.tscn",
 "transform": {
-"pos": [20.812635, 2.5579257, 19.911125],
-"rot": [-0.08390151, 1.184844, -0.05534962],
+"pos": [20.812628, 2.5579257, 19.911118],
+"rot": [-0.083901465, 1.184844, -0.05534966],
 "scale": [0.4751808, 0.20610593, 0.4751808]
 }
 }, {
@@ -171,8 +171,8 @@ scene_baseline_data = Array[Dictionary]([{
 "parent_id": "",
 "scene_path": "res://VoxelEditorForGodotDotNet/PlaceableItems/Items/Cube.tscn",
 "transform": {
-"pos": [20.379915, 3.8047645, 19.752298],
-"rot": [-0.002723237, 1.2545594, 0.020236006],
+"pos": [20.379908, 3.8047645, 19.75229],
+"rot": [-0.0027232408, 1.2545594, 0.02023602],
 "scale": [0.4751808, 0.20610593, 1.5596373]
 }
 }, {
@@ -180,8 +180,8 @@ scene_baseline_data = Array[Dictionary]([{
 "parent_id": "",
 "scene_path": "res://VoxelEditorForGodotDotNet/PlaceableItems/Items/Cube.tscn",
 "transform": {
-"pos": [24.200974, 7.190284, 18.51028],
-"rot": [0.03494751, 1.1895965, 0.023899324],
+"pos": [24.200966, 7.190284, 18.510273],
+"rot": [0.034947507, 1.1895965, 0.023899335],
 "scale": [0.4751808, 0.20610593, 1.5596373]
 }
 }, {
@@ -189,8 +189,8 @@ scene_baseline_data = Array[Dictionary]([{
 "parent_id": "",
 "scene_path": "res://VoxelEditorForGodotDotNet/PlaceableItems/Items/Cube.tscn",
 "transform": {
-"pos": [24.728308, 6.236358, 18.749687],
-"rot": [1.5262184, -2.994298, 2.0381656],
+"pos": [24.7283, 6.236358, 18.74968],
+"rot": [1.5262225, -2.994299, 2.0381687],
 "scale": [0.4751808, 0.35720152, 1.7090424]
 }
 }, {
@@ -198,8 +198,8 @@ scene_baseline_data = Array[Dictionary]([{
 "parent_id": "",
 "scene_path": "res://VoxelEditorForGodotDotNet/PlaceableItems/Items/Cube.tscn",
 "transform": {
-"pos": [24.156702, 5.7472053, 18.942146],
-"rot": [0.021382889, -2.0124352, -3.0054116],
+"pos": [24.156694, 5.7472053, 18.942139],
+"rot": [0.021382893, -2.0124352, -3.0054116],
 "scale": [0.4751808, 0.20610593, 1.5596373]
 }
 }, {
@@ -207,8 +207,8 @@ scene_baseline_data = Array[Dictionary]([{
 "parent_id": "",
 "scene_path": "res://VoxelEditorForGodotDotNet/PlaceableItems/Items/Cube.tscn",
 "transform": {
-"pos": [23.71923, 6.4087915, 18.338661],
-"rot": [1.5092361, 1.6115229, 0.41931894],
+"pos": [23.719223, 6.4087915, 18.338654],
+"rot": [1.5092322, 1.6115223, 0.41931802],
 "scale": [0.4751808, 0.37707767, 1.4934522]
 }
 }, {
@@ -216,7 +216,7 @@ scene_baseline_data = Array[Dictionary]([{
 "parent_id": "",
 "scene_path": "res://VoxelEditorForGodotDotNet/PlaceableItems/Items/Cube.tscn",
 "transform": {
-"pos": [24.013428, 5.690405, 19.268341],
+"pos": [24.01342, 5.690405, 19.268333],
 "rot": [0.017431743, -1.9596777, -3.1268992],
 "scale": [0.4751808, 0.20610593, 1.5596373]
 }
@@ -225,8 +225,8 @@ scene_baseline_data = Array[Dictionary]([{
 "parent_id": "",
 "scene_path": "res://VoxelEditorForGodotDotNet/PlaceableItems/Items/Cube.tscn",
 "transform": {
-"pos": [24.359318, 5.796737, 18.516867],
-"rot": [0.011994646, -2.022396, -3.0382648],
+"pos": [24.35931, 5.796737, 18.51686],
+"rot": [0.011994653, -2.022396, -3.0382648],
 "scale": [0.4751808, 0.20610593, 1.5596373]
 }
 }, {
@@ -234,7 +234,7 @@ scene_baseline_data = Array[Dictionary]([{
 "parent_id": "",
 "scene_path": "res://VoxelEditorForGodotDotNet/PlaceableItems/Items/Cube.tscn",
 "transform": {
-"pos": [23.83685, 5.6185393, 19.686705],
+"pos": [23.836842, 5.6185393, 19.686697],
 "rot": [0.06140322, -1.8958726, 3.0965555],
 "scale": [0.4751808, 0.20610593, 1.5596373]
 }
@@ -243,7 +243,7 @@ scene_baseline_data = Array[Dictionary]([{
 "parent_id": "",
 "scene_path": "res://VoxelEditorForGodotDotNet/PlaceableItems/Items/Cube.tscn",
 "transform": {
-"pos": [23.680193, 5.5058722, 20.067917],
+"pos": [23.680185, 5.5058722, 20.06791],
 "rot": [0.107054844, -1.8902997, 3.098633],
 "scale": [0.4751808, 0.20610593, 1.5596373]
 }
@@ -252,8 +252,8 @@ scene_baseline_data = Array[Dictionary]([{
 "parent_id": "",
 "scene_path": "res://VoxelEditorForGodotDotNet/PlaceableItems/Items/Cube.tscn",
 "transform": {
-"pos": [24.502056, 6.634397, 19.10773],
-"rot": [1.5063616, 0.8421783, -0.34214064],
+"pos": [24.502048, 6.634397, 19.107723],
+"rot": [1.5063616, 0.8421781, -0.3421407],
 "scale": [0.4751808, 0.20610593, 1.7090424]
 }
 }, {
@@ -261,8 +261,8 @@ scene_baseline_data = Array[Dictionary]([{
 "parent_id": "",
 "scene_path": "res://VoxelEditorForGodotDotNet/PlaceableItems/Items/Cube.tscn",
 "transform": {
-"pos": [24.309196, 6.4933043, 19.440863],
-"rot": [1.4572654, 0.74902445, -0.531373],
+"pos": [24.309189, 6.4933043, 19.440855],
+"rot": [1.4572632, 0.74902457, -0.5313722],
 "scale": [0.4751808, 0.20610593, 1.7090424]
 }
 }, {
@@ -270,8 +270,8 @@ scene_baseline_data = Array[Dictionary]([{
 "parent_id": "",
 "scene_path": "res://VoxelEditorForGodotDotNet/PlaceableItems/Items/Cube.tscn",
 "transform": {
-"pos": [24.176205, 6.4506288, 19.935389],
-"rot": [1.4654213, 1.0418838, -0.25769132],
+"pos": [24.176197, 6.4506288, 19.93538],
+"rot": [1.4654225, 1.0418833, -0.25769234],
 "scale": [0.4751808, 0.20610593, 1.7090424]
 }
 }, {
@@ -279,8 +279,8 @@ scene_baseline_data = Array[Dictionary]([{
 "parent_id": "",
 "scene_path": "res://VoxelEditorForGodotDotNet/PlaceableItems/Items/Cube.tscn",
 "transform": {
-"pos": [23.667414, 6.543467, 18.82795],
-"rot": [1.520317, 1.4947814, 0.2105138],
+"pos": [23.667406, 6.543467, 18.827942],
+"rot": [1.5203147, 1.4947813, 0.21051279],
 "scale": [0.4751808, 0.20610593, 1.350946]
 }
 }, {
@@ -288,8 +288,8 @@ scene_baseline_data = Array[Dictionary]([{
 "parent_id": "",
 "scene_path": "res://VoxelEditorForGodotDotNet/PlaceableItems/Items/Cube.tscn",
 "transform": {
-"pos": [23.480093, 6.467771, 19.269655],
-"rot": [1.4917608, 1.2042208, -0.048363257],
+"pos": [23.480085, 6.467771, 19.269648],
+"rot": [1.4917594, 1.2042232, -0.04836174],
 "scale": [0.4751808, 0.20610593, 1.4289688]
 }
 }, {
@@ -297,8 +297,8 @@ scene_baseline_data = Array[Dictionary]([{
 "parent_id": "",
 "scene_path": "res://VoxelEditorForGodotDotNet/PlaceableItems/Items/Cube.tscn",
 "transform": {
-"pos": [23.286469, 6.444075, 19.642448],
-"rot": [1.5412412, 0.78307253, -0.14868969],
+"pos": [23.28646, 6.444075, 19.64244],
+"rot": [1.5412391, 0.78308076, -0.14868645],
 "scale": [0.4751808, 0.20610593, 1.4289688]
 }
 }, {
@@ -306,117 +306,117 @@ scene_baseline_data = Array[Dictionary]([{
 "parent_id": "",
 "scene_path": "res://VoxelEditorForGodotDotNet/PlaceableItems/Items/Cube.tscn",
 "transform": {
-"pos": [24.33767, 5.9363465, 18.131586],
-"rot": [0.043746047, -1.9196948, -3.1149616],
+"pos": [24.337662, 5.9363465, 18.131578],
+"rot": [0.043746017, -1.9196948, -3.1149616],
 "scale": [0.4751808, 0.20610593, 1.5596373]
 }
 }])
 
 [node name="Player sized capsule" parent="ObjectSpawner" unique_id=499244775 instance=ExtResource("23_ghkfn")]
-transform = Transform3D(0.99999976, 0, 0, 0, 1, 0, 0, 0, 0.99999976, 2.9283295, 0, -0.551382)
+transform = Transform3D(0.99999976, 0, 0, 0, 1, 0, 0, 0, 0.99999976, 2.9283285, 0, -0.55138177)
 instance_id = "18464869825121"
 
 [node name="@RigidBody3D@108850" parent="ObjectSpawner" unique_id=206623066 instance=ExtResource("23_ghkfn")]
-transform = Transform3D(0.94789135, 0.002953179, 0.31857976, -0.020578938, 0.9984363, 0.051974546, -0.3179281, -0.055822257, 0.9464701, 25.282848, 3.845488, 15.860869)
+transform = Transform3D(0.947891, 0.0029531745, 0.31858, -0.02057895, 0.99843603, 0.05197455, -0.3179283, -0.05582226, 0.9464699, 25.28284, 3.845488, 15.860866)
 instance_id = "runtime_node_341768671696"
 
 [node name="@RigidBody3D@111747" parent="ObjectSpawner" unique_id=1485295017 instance=ExtResource("19_vi1oe")]
-transform = Transform3D(0.9797692, 0.019976612, -0.19913125, -0.02402734, 0.9995502, -0.017946055, 0.1986832, 0.02236759, 0.9798084, 19.877596, 2.9465256, 19.602211)
+transform = Transform3D(0.9797692, 0.019976627, -0.19913127, -0.024027355, 0.9995502, -0.017946042, 0.19868326, 0.022367584, 0.97980815, 19.877588, 2.9465256, 19.602203)
 instance_id = "runtime_node_299959849447"
 scale_factor = Vector3(0.40911633, 0.8135927, 0.40911633)
 
 [node name="@RigidBody3D@111748" parent="ObjectSpawner" unique_id=42630558 instance=ExtResource("19_vi1oe")]
-transform = Transform3D(0.9989905, 0.0012562199, -0.044902526, -0.00044340693, 0.99983585, 0.018107098, 0.044917908, -0.018068908, 0.99882716, 20.85379, 2.9902875, 19.90406)
+transform = Transform3D(0.99899024, 0.001256219, -0.044902522, -0.00044340652, 0.9998356, 0.018107083, 0.044917904, -0.018068893, 0.9988269, 20.853783, 2.9902875, 19.904053)
 instance_id = "554168226299"
 scale_factor = Vector3(0.40911633, 0.8135927, 0.40911633)
 
 [node name="@RigidBody3D@111749" parent="ObjectSpawner" unique_id=1930031185 instance=ExtResource("17_b6dwn")]
-transform = Transform3D(0.37353292, -0.0039336663, 0.9276086, -0.04260403, 0.998863, 0.021391783, -0.92663807, -0.0475104, 0.37294063, 19.831543, 2.3894534, 19.570288)
+transform = Transform3D(0.37353292, -0.0039336607, 0.9276086, -0.04260403, 0.998863, 0.021391775, -0.92663807, -0.0475104, 0.37294063, 19.831535, 2.3894534, 19.57028)
 instance_id = "986835849769"
 scale_factor = Vector3(0.4751808, 0.20610593, 0.4751808)
 
 [node name="@RigidBody3D@111750" parent="ObjectSpawner" unique_id=1423512754 instance=ExtResource("17_b6dwn")]
-transform = Transform3D(0.38016012, -0.056694422, 0.9231814, -0.055126753, 0.9949562, 0.08380311, -0.9232763, -0.082750596, 0.37511736, 20.812635, 2.5579257, 19.911125)
+transform = Transform3D(0.38016003, -0.05669437, 0.9231812, -0.05512678, 0.99495596, 0.083803065, -0.92327607, -0.0827506, 0.37511727, 20.812628, 2.5579257, 19.911118)
 instance_id = "1157208478229"
 scale_factor = Vector3(0.4751808, 0.20610593, 0.4751808)
 
 [node name="@RigidBody3D@111751" parent="ObjectSpawner" unique_id=2121881350 instance=ExtResource("17_b6dwn")]
-transform = Transform3D(0.31087625, -0.008880477, 0.95040894, 0.02023455, 0.99979156, 0.0027232338, -0.950235, 0.018384509, 0.31099114, 20.379915, 3.8047645, 19.752298)
+transform = Transform3D(0.31087625, -0.008880486, 0.95040894, 0.020234564, 0.99979156, 0.0027232375, -0.950235, 0.01838452, 0.31099114, 20.379908, 3.8047645, 19.75229)
 instance_id = "1236145279551"
 scale_factor = Vector3(0.4751808, 0.20610593, 1.5596373)
 
 [node name="@RigidBody3D@111752" parent="ObjectSpawner" unique_id=888847712 instance=ExtResource("17_b6dwn")]
-transform = Transform3D(0.3727032, 0.023532555, 0.9276522, 0.023882458, 0.999104, -0.0349404, -0.92764324, 0.035177015, 0.37180725, 24.200974, 7.190284, 18.51028)
+transform = Transform3D(0.3727032, 0.023532547, 0.9276522, 0.02388247, 0.999104, -0.034940396, -0.92764324, 0.035177022, 0.37180725, 24.200966, 7.190284, 18.510273)
 instance_id = "2095876936105"
 scale_factor = Vector3(0.4751808, 0.20610593, 1.5596373)
 
 [node name="@RigidBody3D@111753" parent="ObjectSpawner" unique_id=507314812 instance=ExtResource("17_b6dwn")]
-transform = Transform3D(0.3147675, 0.9491462, -0.0065402053, 0.039784044, -0.020077445, -0.99900657, -0.94833463, 0.3141946, -0.044080608, 24.728308, 6.236358, 18.749687)
+transform = Transform3D(0.31477123, 0.9491449, -0.0065395697, 0.03978036, -0.020075744, -0.99900675, -0.94833326, 0.31419846, -0.04407661, 24.7283, 6.236358, 18.74968)
 instance_id = "2201657283182"
 scale_factor = Vector3(0.4751808, 0.35720152, 1.7090424)
 
 [node name="@RigidBody3D@111754" parent="ObjectSpawner" unique_id=452008416 instance=ExtResource("17_b6dwn")]
-transform = Transform3D(0.42608863, -0.03887616, -0.9038457, -0.13572945, -0.99051523, -0.021381259, -0.8944416, 0.1317888, -0.42732397, 24.156702, 5.7472053, 18.942146)
+transform = Transform3D(0.42608854, -0.038876157, -0.9038457, -0.13572942, -0.99051523, -0.021381263, -0.8944414, 0.1317888, -0.42732397, 24.156694, 5.7472053, 18.942139)
 instance_id = "2287053312644"
 scale_factor = Vector3(0.4751808, 0.20610593, 1.5596373)
 
 [node name="@RigidBody3D@111755" parent="ObjectSpawner" unique_id=1939335719 instance=ExtResource("17_b6dwn")]
-transform = Transform3D(0.36884224, 0.92745703, 0.06147034, 0.02504771, 0.056191538, -0.99810576, -0.9291544, 0.36968327, -0.0025048621, 23.71923, 6.4087915, 18.338661)
+transform = Transform3D(0.36884198, 0.9274572, 0.06147033, 0.025047658, 0.05619156, -0.9981055, -0.9291545, 0.36968303, -0.002504825, 23.719223, 6.4087915, 18.338654)
 instance_id = "2415063470746"
 scale_factor = Vector3(0.4751808, 0.37707767, 1.4934522)
 
 [node name="@RigidBody3D@111756" parent="ObjectSpawner" unique_id=1278372127 instance=ExtResource("17_b6dwn")]
-transform = Transform3D(0.37934962, 0.010556765, -0.9251932, -0.01469065, -0.9997401, -0.01743086, -0.9251368, 0.02020408, -0.37909594, 24.013428, 5.690405, 19.268341)
+transform = Transform3D(0.37934962, 0.010556765, -0.9251932, -0.01469065, -0.9997401, -0.01743086, -0.9251368, 0.02020408, -0.37909594, 24.01342, 5.690405, 19.268333)
 instance_id = "2498614006450"
 scale_factor = Vector3(0.4751808, 0.20610593, 1.5596373)
 
 [node name="@RigidBody3D@111757" parent="ObjectSpawner" unique_id=93589457 instance=ExtResource("17_b6dwn")]
-transform = Transform3D(0.43519098, -0.034278296, -0.8996854, -0.10313671, -0.99459475, -0.011994358, -0.8944113, 0.09801043, -0.4363741, 24.359318, 5.796737, 18.516867)
+transform = Transform3D(0.43519098, -0.03427828, -0.8996854, -0.10313671, -0.9945945, -0.011994366, -0.8944113, 0.098010406, -0.4363741, 24.35931, 5.796737, 18.51686)
 instance_id = "2529232425673"
 scale_factor = Vector3(0.4751808, 0.20610593, 1.5596373)
 
 [node name="@RigidBody3D@111758" parent="ObjectSpawner" unique_id=936072586 instance=ExtResource("17_b6dwn")]
-transform = Transform3D(0.31643912, 0.07247095, -0.9458405, 0.04493711, -0.99710333, -0.06136464, -0.94754785, -0.023085164, -0.31877917, 23.83685, 5.6185393, 19.686705)
+transform = Transform3D(0.31643912, 0.07247095, -0.9458405, 0.04493711, -0.99710333, -0.06136464, -0.94754785, -0.023085164, -0.31877917, 23.836842, 5.6185393, 19.686697)
 instance_id = "2827950756575"
 scale_factor = Vector3(0.4751808, 0.20610593, 1.5596373)
 
 [node name="@RigidBody3D@111759" parent="ObjectSpawner" unique_id=796936925 instance=ExtResource("17_b6dwn")]
-transform = Transform3D(0.30944866, 0.1148386, -0.9439564, 0.042700525, -0.9933578, -0.106850475, -0.94995695, -0.007242698, -0.31229693, 23.680193, 5.5058722, 20.067917)
+transform = Transform3D(0.30944866, 0.1148386, -0.9439564, 0.042700525, -0.9933578, -0.106850475, -0.94995695, -0.007242698, -0.31229693, 23.680185, 5.5058722, 20.06791)
 instance_id = "2902106051319"
 scale_factor = Vector3(0.4751808, 0.20610593, 1.5596373)
 
 [node name="@RigidBody3D@111760" parent="ObjectSpawner" unique_id=909539215 instance=ExtResource("17_b6dwn")]
-transform = Transform3D(0.37744746, 0.92478406, 0.048041184, -0.021603178, 0.060658004, -0.9979248, -0.92577904, 0.37562636, 0.042873483, 24.502056, 6.634397, 19.10773)
+transform = Transform3D(0.3774474, 0.9247839, 0.048041176, -0.021603178, 0.060657993, -0.9979248, -0.92577875, 0.37562633, 0.04287349, 24.502048, 6.634397, 19.107723)
 instance_id = "3252917637389"
 scale_factor = Vector3(0.4751808, 0.20610593, 1.7090424)
 
 [node name="@RigidBody3D@111761" parent="ObjectSpawner" unique_id=1869224057 instance=ExtResource("17_b6dwn")]
-transform = Transform3D(0.28855562, 0.95435053, 0.07713973, -0.057404373, 0.09766587, -0.9935623, -0.9557408, 0.2822698, 0.08296593, 24.309196, 6.4933043, 19.440863)
+transform = Transform3D(0.2885564, 0.95435023, 0.077140376, -0.05740477, 0.09766674, -0.99356204, -0.95574045, 0.2822705, 0.08296661, 24.309189, 6.4933043, 19.440855)
 instance_id = "3419599278373"
 scale_factor = Vector3(0.4751808, 0.20610593, 1.7090424)
 
 [node name="@RigidBody3D@111762" parent="ObjectSpawner" unique_id=2094434822 instance=ExtResource("17_b6dwn")]
-transform = Transform3D(0.2691286, 0.9588137, 0.090807915, -0.026805025, 0.10170716, -0.9944532, -0.9627312, 0.26520166, 0.053073328, 24.176205, 6.4506288, 19.935389)
+transform = Transform3D(0.26912808, 0.95881397, 0.09080686, -0.026804822, 0.101705976, -0.9944533, -0.9627313, 0.2652012, 0.053072773, 24.176197, 6.4506288, 19.93538)
 instance_id = "3458606305596"
 scale_factor = Vector3(0.4751808, 0.20610593, 1.7090424)
 
 [node name="@RigidBody3D@111763" parent="ObjectSpawner" unique_id=115970512 instance=ExtResource("17_b6dwn")]
-transform = Transform3D(0.28235883, 0.9579888, 0.050312225, 0.010543811, 0.049344014, -0.9987262, -0.959251, 0.28252968, 0.0038318643, 23.667414, 6.543467, 18.82795)
+transform = Transform3D(0.28235802, 0.9579892, 0.050311033, 0.010543514, 0.049342867, -0.99872607, -0.9592512, 0.28252888, 0.0038317794, 23.667406, 6.543467, 18.827942)
 instance_id = "3567607877970"
 scale_factor = Vector3(0.4751808, 0.20610593, 1.350946)
 
 [node name="@RigidBody3D@111764" parent="ObjectSpawner" unique_id=542528328 instance=ExtResource("17_b6dwn")]
-transform = Transform3D(0.31300995, 0.94688547, 0.0737068, -0.0038169064, 0.078860074, -0.9968783, -0.949742, 0.31175157, 0.02829816, 23.480093, 6.467771, 19.269655)
+transform = Transform3D(0.31300905, 0.94688576, 0.07370686, -0.0038167867, 0.078860074, -0.9968782, -0.94974214, 0.3117507, 0.028297981, 23.480085, 6.467771, 19.269648)
 instance_id = "3692849795433"
 scale_factor = Vector3(0.4751808, 0.20610593, 1.4289688)
 
 [node name="@RigidBody3D@111765" parent="ObjectSpawner" unique_id=857544636 instance=ExtResource("17_b6dwn")]
-transform = Transform3D(0.59646606, 0.8023676, 0.020845529, -0.0043774345, 0.029222788, -0.9995633, -0.8026264, 0.5961144, 0.020942712, 23.286469, 6.444075, 19.642448)
+transform = Transform3D(0.59646195, 0.8023705, 0.020841492, -0.0043764566, 0.029216904, -0.9995632, -0.8026292, 0.59611034, 0.020938313, 23.28646, 6.444075, 19.64244)
 instance_id = "3785879458176"
 scale_factor = Vector3(0.4751808, 0.20610593, 1.4289688)
 
 [node name="@RigidBody3D@111766" parent="ObjectSpawner" unique_id=926673827 instance=ExtResource("17_b6dwn")]
-transform = Transform3D(0.34283593, 0.03197958, -0.9388507, -0.026602404, -0.99868906, -0.043732096, -0.9390184, 0.039968625, -0.34153575, 24.33767, 5.9363465, 18.131586)
+transform = Transform3D(0.34283587, 0.031979557, -0.93885046, -0.026602399, -0.99868906, -0.043732066, -0.9390182, 0.039968617, -0.3415357, 24.337662, 5.9363465, 18.131578)
 instance_id = "4033309839767"
 scale_factor = Vector3(0.4751808, 0.20610593, 1.5596373)
 
@@ -511,6 +511,7 @@ sphereShape = NodePath("../RightHand/RightHand/InteractionPoint/EditShapes/Spher
 RightController = NodePath("../RightHand")
 gridSize = Vector3i(128, 128, 128)
 voxelWorldFile = ExtResource("12_q2pmc")
+enableAutoSave = false
 
 [node name="ObjectEditController" type="Node3D" parent="VR player" unique_id=1116789243 node_paths=PackedStringArray("spawner", "interaction_point", "interaction_visualizer", "controller", "function_pickup", "pickup_left", "pickup_right")]
 script = ExtResource("13_omrdi")
@@ -522,9 +523,10 @@ function_pickup = NodePath("../RightHand/XRToolsFunctionPickup")
 pickup_left = NodePath("../LeftHand/XRToolsFunctionPickup")
 pickup_right = NodePath("../RightHand/XRToolsFunctionPickup")
 
-[node name="EditorTransferOrchestrator" type="Node3D" parent="VR player" unique_id=235515944 node_paths=PackedStringArray("object_spawner")]
+[node name="EditorTransferOrchestrator" type="Node3D" parent="VR player" unique_id=235515944 node_paths=PackedStringArray("object_spawner", "voxel_editor")]
 script = ExtResource("20_m3qap")
 object_spawner = NodePath("../../ObjectSpawner")
+voxel_editor = NodePath("../VoxelEditor")
 
 [node name="VoxelController" parent="." unique_id=264195901 node_paths=PackedStringArray("gridOutlineScaler") instance=ExtResource("21_fl6ki")]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, -8.666661, 0)
