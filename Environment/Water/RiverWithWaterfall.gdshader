@@ -20,7 +20,7 @@ uniform float depth_fade_distance : hint_range(0.1, 5.0) = 1.0;
 uniform float depth_falloff_power : hint_range(0.1, 3.0) = 0.4;
 
 // Waterfall Foam Controls
-uniform float waterfall_steepness : hint_range(0.0, 1.0) = 0.5; // Threshold for when slopes turn into waterfalls
+uniform float waterfall_steepness : hint_range(0.0, 1.0) = 0.35; // Threshold for when slopes turn into waterfalls
 uniform float waterfall_foam_amount : hint_range(0.0, 2.0) = 1.0;
 
 float linear_depth(float depth_raw, vec3 vertex, vec2 screen_uv, mat4 inv_projection_matrix) {

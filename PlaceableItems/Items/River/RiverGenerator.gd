@@ -5,6 +5,12 @@ extends VREditorPickableSerializable
 @export var mesh_instance: MeshInstance3D
 @export var highlight_mesh_instance: MeshInstance3D
 
+## The material assigned to dynamically generated river geometry.
+@export var river_material: Material:
+	set(val):
+		river_material = val
+		generate_river()
+
 @export var update_mesh: bool = false:
 	set(val):
 		generate_river()
@@ -53,6 +59,10 @@ func generate_river() -> void:
 		
 	var st = SurfaceTool.new()
 	st.begin(Mesh.PRIMITIVE_TRIANGLES)
+	
+	# Pass exported material to the SurfaceTool
+	if river_material:
+		st.set_material(river_material)
 	
 	var sampled_points: Array[Dictionary] = []
 	
@@ -165,6 +175,10 @@ func generate_river() -> void:
 	var generated_mesh = st.commit()
 
 	mesh_instance.mesh = generated_mesh
+
+	# Ensure material is explicitly assigned to target mesh instances
+	if river_material:
+		mesh_instance.material_override = river_material
 
 	if highlight_mesh_instance:
 		highlight_mesh_instance.mesh = generated_mesh
