@@ -22,3 +22,7 @@ func spawn_sphere():
 
 func spawn_cylinder():
 	object_edit_controller.spawn_element(ObjectSpawner.SpawnableElement.CYLINDER)
+
+func spawn_river():
+	print("spawn river clicked")
+	object_edit_controller.spawn_element(ObjectSpawner.SpawnableElement.RIVER)

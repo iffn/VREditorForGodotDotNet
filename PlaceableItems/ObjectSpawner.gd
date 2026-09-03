@@ -6,7 +6,9 @@ enum SpawnableElement {
 	PLAYER_SIZED_CAPSULE,
 	CUBE,
 	SPHERE,
-	CYLINDER
+	CYLINDER,
+	RIVER,
+	RIVER_WAYPOINT
 }
 
 @export var layout_file: JSON
@@ -226,9 +228,11 @@ func _apply_layout_to_editor(diff_data: Dictionary) -> void:
 		restored_nodes[item_id] = node
 		has_changes = true
 
+	# Restore parent relationships and exact child tree indices
 	for item in added_items:
 		var item_id: String = item.get("id", "")
 		var parent_id: String = item.get("parent_id", "")
+		var node_index: int = item.get("node_index", -1)
 		var node: Node = restored_nodes.get(item_id)
 
 		if node:
@@ -240,6 +244,18 @@ func _apply_layout_to_editor(diff_data: Dictionary) -> void:
 			elif node.get_parent() != self:
 				node.reparent(self)
 				node.owner = scene_root
+
+			if node_index != -1 and node_index < node.get_parent().get_child_count():
+				node.get_parent().move_child(node, node_index)
+
+	# Ensure modified nodes also respect updated hierarchy indices
+	for item in modified_items:
+		var item_id: String = item.get("id", "")
+		var node_index: int = item.get("node_index", -1)
+		var node: Node = existing_nodes.get(item_id)
+
+		if node and node_index != -1 and node_index < node.get_parent().get_child_count():
+			node.get_parent().move_child(node, node_index)
 
 	if has_changes:
 		if not keep_layout_file:

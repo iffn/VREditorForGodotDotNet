@@ -2,6 +2,9 @@
 class_name VREditorPickableSerializable
 extends XRToolsPickable
 
+@export var axis_handler : AxisHandler
+@export var scaleable := true
+
 @export_group("VR Editor Persistence (Auto-Managed)")
 
 ## Automatically generated unique identifier for editor sync.
@@ -12,10 +15,6 @@ extends XRToolsPickable
 
 ## Uniform or non-uniform scale factor applied to all direct Node3D children.
 @export var scale_factor: Vector3 = Vector3.ONE
-
-@export var axis_handler : AxisHandler
-
-@export var scaleable := true
 
 func update_axis(axis_selection : ObjectEditController.AxisOptions):
 	if !scaleable:
@@ -43,19 +42,14 @@ func apply_scale_delta(factor: float) -> void:
 		return
 	match ObjectEditController.axis_selection:
 		ObjectEditController.AxisOptions.NONE:
-			print("a")
 			scale_factor *= factor
 		ObjectEditController.AxisOptions.X:
-			print("x")
 			scale_factor.x *= factor
 		ObjectEditController.AxisOptions.Y:
-			print("y")
 			scale_factor.y *= factor
 		ObjectEditController.AxisOptions.Z:
-			print("z")
 			scale_factor.z *= factor
 		_:
-			print("d")
 			scale_factor *= factor
 	
 	_apply_current_scale()
@@ -76,6 +70,7 @@ func serialize_data() -> Dictionary:
 		"id": instance_id,
 		"scene_path": valid_path,
 		"parent_id": _get_parent_instance_id(),
+		"node_index": get_index(),
 		"transform": {
 			"pos": [transform.origin.x, transform.origin.y, transform.origin.z],
 			"rot": [transform.basis.get_euler().x, transform.basis.get_euler().y, transform.basis.get_euler().z],

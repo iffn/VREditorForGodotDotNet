@@ -27,7 +27,6 @@ var active: bool = true:
 		active = value
 		
 		if pickup_left:
-			#pickup_left.enabled = value
 			if not value and is_instance_valid(pickup_left.picked_up_object):
 				pickup_left.drop_object()
 				
@@ -69,7 +68,7 @@ func _process(delta: float) -> void:
 	if not target_controller or not function_pickup:
 		return
 
-	# Scale direction
+	# Scale direction toggle
 	var trigger_is_active := controller.is_button_pressed("trigger_click")
 	if !trigger_was_active && trigger_is_active:
 		axis_selection = ((axis_selection + 1) % AxisOptions.size()) as AxisOptions
@@ -78,7 +77,7 @@ func _process(delta: float) -> void:
 	if pickup_right.closest_object && pickup_right.closest_object is VREditorPickableSerializable:
 		pickup_right.closest_object.update_axis(axis_selection)
 
-	# Scaling
+	# Scaling input
 	var input_y: float = target_controller.get_vector2("primary").y
 	var highlighted_object = function_pickup.closest_object
 	if is_instance_valid(highlighted_object):
@@ -97,7 +96,6 @@ func _on_button_pressed(p_name: String) -> void:
 			delete_highlighted_element()
 		"ax_button":
 			duplicate_highlighted_element()
-		
 
 func delete_highlighted_element() -> void:
 	if not function_pickup:
@@ -126,8 +124,12 @@ func duplicate_highlighted_element() -> void:
 	if is_instance_valid(target) and target is Node3D:
 		var duplicate_instance = target.duplicate(DUPLICATE_USE_INSTANTIATION | DUPLICATE_SIGNALS | DUPLICATE_GROUPS) as Node3D
 		
-		var parent_node = spawner if spawner else get_tree().current_scene
+		# Place the duplicate under the exact same parent node as the target
+		var parent_node = target.get_parent() if target.get_parent() else (spawner if spawner else get_tree().current_scene)
 		parent_node.add_child(duplicate_instance)
+
+		# Move duplicate immediately after target in the child index hierarchy
+		parent_node.move_child(duplicate_instance, target.get_index() + 1)
 
 		duplicate_instance.global_transform = target.global_transform
 		duplicate_instance.global_position = interaction_point.global_position
@@ -156,4 +158,5 @@ func spawn_element(element: int) -> void:
 		push_warning("Spawn point is not assigned.")
 		return
 
+	print("Forwarding river spawn")
 	spawner.spawn_element(element as ObjectSpawner.SpawnableElement, interaction_point.global_transform)

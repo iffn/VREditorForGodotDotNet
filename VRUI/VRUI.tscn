@@ -146,6 +146,7 @@ text = "RPG mode:
 - A Button: Jump"
 
 [node name="Voxel editor" type="HBoxContainer" parent="Vertical arrangement" unique_id=1457802167 node_paths=PackedStringArray("sphere_tool", "box_tool", "cylinder_tool", "debug_dext", "default_tool")]
+visible = false
 layout_mode = 2
 script = ExtResource("5_f1uaf")
 sphere_tool = NodePath("Actions/Sphere tool")
@@ -229,7 +230,6 @@ text = "FPS:
 Painting time: "
 
 [node name="Edit objects" type="HBoxContainer" parent="Vertical arrangement" unique_id=1774076046]
-visible = false
 layout_mode = 2
 script = ExtResource("7_rwoe2")
 
@@ -391,3 +391,4 @@ layout_mode = 2
 [connection signal="button_down" from="Vertical arrangement/Edit objects/Actions/Spawn cube" to="Vertical arrangement/Edit objects" method="spawn_cube"]
 [connection signal="button_down" from="Vertical arrangement/Edit objects/Actions/Spawn sphere" to="Vertical arrangement/Edit objects" method="spawn_sphere"]
 [connection signal="button_down" from="Vertical arrangement/Edit objects/Actions/Spawn cylinder" to="Vertical arrangement/Edit objects" method="spawn_cylinder"]
+[connection signal="button_down" from="Vertical arrangement/Edit objects/Actions/Spawn river" to="Vertical arrangement/Edit objects" method="spawn_river"]

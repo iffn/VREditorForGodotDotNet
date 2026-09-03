@@ -1,0 +1,58 @@
+[gd_scene format=3 uid="uid://cqjg80aumj1m7"]
+
+[ext_resource type="PackedScene" uid="uid://c8l60rnugru40" path="res://addons/godot-xr-tools/objects/pickable.tscn" id="1_66vxv"]
+[ext_resource type="Script" uid="uid://bompgovih2d1" path="res://VoxelEditorForGodotDotNet/PlaceableItems/Items/River/RiverWaypoint.gd" id="2_66vxv"]
+[ext_resource type="PackedScene" uid="uid://ck57a6mj81jll" path="res://VoxelEditorForGodotDotNet/PlaceableItems/NoteAboutScale.tscn" id="3_qesus"]
+[ext_resource type="Script" uid="uid://0b7wkxi4vymb" path="res://addons/godot-xr-tools/objects/highlight/highlight_visible.gd" id="4_oytf8"]
+[ext_resource type="Shader" uid="uid://bleg0kybifn7i" path="res://VoxelEditorForGodotDotNet/PlaceableItems/Highlihgt.gdshader" id="5_bmfvh"]
+[ext_resource type="PackedScene" uid="uid://b5kp0y6edft5i" path="res://VoxelEditorForGodotDotNet/PlaceableItems/AxisDisplay.tscn" id="6_qd7vg"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_7nxrx"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_a6lsy"]
+radius = 0.25
+height = 0.5
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_f032d"]
+transparency = 1
+depth_draw_mode = 1
+albedo_color = Color(0.50980395, 0.69803923, 1, 0.44313726)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_w24xb"]
+render_priority = 0
+shader = ExtResource("5_bmfvh")
+shader_parameter/outline_distance = 0.02
+shader_parameter/albedo = Color(1, 1, 0, 1)
+
+[node name="RiverWaypoint" unique_id=480645879 node_paths=PackedStringArray("axis_handler") instance=ExtResource("1_66vxv")]
+collision_mask = 0
+gravity_scale = 0.0
+linear_damp = 100.0
+angular_damp = 100.0
+script = ExtResource("2_66vxv")
+axis_handler = NodePath("XRToolsHighlightVisible/AxisDisplay")
+scaleable = true
+instance_id = "3894478484063"
+scene_file_path_override = "uid://cqjg80aumj1m7"
+scale_factor = Vector3(1, 1, 1)
+
+[node name="Important - Positions must be at origin and scale must be 1" parent="." index="0" unique_id=1903908545 instance=ExtResource("3_qesus")]
+
+[node name="CollisionShape3D" parent="." index="1"]
+shape = SubResource("SphereShape3D_7nxrx")
+
+[node name="Mesh" type="MeshInstance3D" parent="." index="2" unique_id=775529829]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.006559491, 0, -0.014594078)
+mesh = SubResource("SphereMesh_a6lsy")
+surface_material_override/0 = SubResource("StandardMaterial3D_f032d")
+
+[node name="XRToolsHighlightVisible" type="Node3D" parent="." index="3" unique_id=426397079]
+visible = false
+script = ExtResource("4_oytf8")
+metadata/_custom_type_script = "uid://0b7wkxi4vymb"
+
+[node name="Highlihgt" type="MeshInstance3D" parent="XRToolsHighlightVisible" index="0" unique_id=1208041471]
+mesh = SubResource("SphereMesh_a6lsy")
+surface_material_override/0 = SubResource("ShaderMaterial_w24xb")
+
+[node name="AxisDisplay" parent="XRToolsHighlightVisible" index="1" unique_id=1048828621 instance=ExtResource("6_qd7vg")]
