@@ -62,6 +62,20 @@ namespace VoxelEditorForGodotDotNet.Core
 		private bool wasPaintingLastFrame = false;
 		private float autoSaveTimer = 0f;
 
+		
+		public double debugFps;
+		public double debugPaintingTime;
+		public Vector3 DebugPaintScale
+		{
+			get
+			{
+				// Get shapeHolder's transform expressed in controller's local space
+				Transform3D relativeTransform = controller.GlobalTransform.AffineInverse() * shapeHolder.GlobalTransform;
+
+				return relativeTransform.Basis.Scale;
+			}
+		}
+
 		public override void _Ready()
 		{
 			if (controller == null)
@@ -127,16 +141,23 @@ namespace VoxelEditorForGodotDotNet.Core
 			}
 		}
 
+
 		public override void _Process(double delta)
 		{
 			// Disable runtime input loops inside the Godot Editor viewport
 			if (Engine.IsEditorHint()) return;
 
+			System.Diagnostics.Stopwatch sw = new();
+			sw.Start();
 			if (paintingActive)
 				HandlePainting((float)delta);
+			sw.Stop();
+			debugPaintingTime = sw.Elapsed.TotalSeconds;
 
 			if (autosaveEnabled)
 				HandleAutoSaveTimer((float)delta);
+			
+			debugFps = 1.0 / delta;
 		}
 
 		private void HandlePainting(float delta)

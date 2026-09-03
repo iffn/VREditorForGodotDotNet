@@ -145,13 +145,13 @@ layout_mode = 2
 text = "RPG mode:
 - A Button: Jump"
 
-[node name="Voxel editor" type="HBoxContainer" parent="Vertical arrangement" unique_id=1457802167 node_paths=PackedStringArray("sphere_tool", "box_tool", "cylinder_tool", "default_tool")]
-visible = false
+[node name="Voxel editor" type="HBoxContainer" parent="Vertical arrangement" unique_id=1457802167 node_paths=PackedStringArray("sphere_tool", "box_tool", "cylinder_tool", "debug_dext", "default_tool")]
 layout_mode = 2
 script = ExtResource("5_f1uaf")
 sphere_tool = NodePath("Actions/Sphere tool")
 box_tool = NodePath("Actions/Box tool")
 cylinder_tool = NodePath("Actions/Clyinder tool")
+debug_dext = NodePath("Debug/Debug text")
 default_tool = NodePath("Actions/Sphere tool")
 
 [node name="Actions" type="VBoxContainer" parent="Vertical arrangement/Voxel editor" unique_id=623552259]
@@ -211,7 +211,25 @@ text = "Terrain editing controls:
 - Hold Right Grab and Trigger together: Remove
 - Right Stick Up Down: Scale tool"
 
+[node name="VSeparator2" type="VSeparator" parent="Vertical arrangement/Voxel editor" unique_id=650591012]
+custom_minimum_size = Vector2(10, 0)
+layout_mode = 2
+
+[node name="Debug" type="VBoxContainer" parent="Vertical arrangement/Voxel editor" unique_id=1443602167]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="Vertical arrangement/Voxel editor/Debug" unique_id=279567636]
+layout_mode = 2
+text = "Debug:"
+label_settings = SubResource("LabelSettings_kyb4g")
+
+[node name="Debug text" parent="Vertical arrangement/Voxel editor/Debug" unique_id=1672430480 instance=ExtResource("1_isimi")]
+layout_mode = 2
+text = "FPS: 
+Painting time: "
+
 [node name="Edit objects" type="HBoxContainer" parent="Vertical arrangement" unique_id=1774076046]
+visible = false
 layout_mode = 2
 script = ExtResource("7_rwoe2")
 
