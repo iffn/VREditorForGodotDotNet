@@ -10,41 +10,16 @@ enum SpawnableElement {
 }
 
 @export var layout_file: JSON
-
 @export var spawnable_scenes: Dictionary[SpawnableElement, PackedScene] = {}
-
 @export var scene_baseline_data: Array[Dictionary] = []
 
 @export_group("Debug")
-## If true, keeps the JSON file contents intact after successfully applying changes for inspection.
-@export var keep_json: bool = false
+## If true, keeps the layout contents intact after successfully applying changes for inspection.
+@export var keep_layout_file: bool = false
 
-@export var bake_baseline_now: bool = false:
-	set(value):
-		if value and Engine.is_editor_hint():
-			bake_scene_baseline()
-			bake_baseline_now = false
 
-@export var load_layout_now: bool = false:
-	set(value):
-		if value and Engine.is_editor_hint():
-			_try_import_vr_json()
-			load_layout_now = false
-	get:
-		return false
-
-func _notification(what: int) -> void:
-	if Engine.is_editor_hint():
-		if what == NOTIFICATION_READY:
-			if scene_baseline_data.is_empty():
-				bake_scene_baseline()
-		elif what == NOTIFICATION_APPLICATION_FOCUS_IN:
-			call_deferred("_try_import_vr_json")
-		elif what == NOTIFICATION_EDITOR_PRE_SAVE:
-			bake_scene_baseline()
-	else:
-		if what == NOTIFICATION_WM_CLOSE_REQUEST:
-			_save_vr_layout()
+func is_baseline_empty() -> bool:
+	return scene_baseline_data.is_empty()
 
 
 func bake_scene_baseline() -> void:
@@ -84,7 +59,7 @@ func spawn_element(element: SpawnableElement, spawn_transform: Transform3D) -> V
 		return null
 
 
-func _save_vr_layout() -> void:
+func save_ingame_layout() -> void:
 	if not layout_file:
 		push_warning("ObjectSpawner: No layout_file assigned.")
 		return
@@ -146,7 +121,7 @@ func _save_vr_layout() -> void:
 		print("ObjectSpawner (Runtime): Layout saved before exiting. Deletions tracked: %s" % str(diff_deleted))
 
 
-func _try_import_vr_json() -> void:
+func apply_pending_layout() -> void:
 	if not Engine.is_editor_hint():
 		return
 
@@ -267,11 +242,11 @@ func _apply_layout_to_editor(diff_data: Dictionary) -> void:
 				node.owner = scene_root
 
 	if has_changes:
-		if not keep_json:
+		if not keep_layout_file:
 			_clear_vr_json()
-			print("ObjectSpawner (Editor): Successfully applied changes and cleared layout JSON.")
+			print("ObjectSpawner (Editor): Successfully applied changes and cleared layout data.")
 		else:
-			print("ObjectSpawner (Editor): Successfully applied changes. JSON file kept intact (Debug mode).")
+			print("ObjectSpawner (Editor): Successfully applied changes. Layout kept intact (Debug mode).")
 		_mark_scene_dirty()
 
 
