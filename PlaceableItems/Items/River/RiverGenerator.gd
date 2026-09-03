@@ -4,7 +4,6 @@ extends VREditorPickableSerializable
 
 @export var mesh_instance: MeshInstance3D
 @export var highlight_mesh_instance: MeshInstance3D
-@export var waypoint_scene: PackedScene
 
 @export var update_mesh: bool = false:
 	set(val):
@@ -17,39 +16,7 @@ extends VREditorPickableSerializable
 
 func _ready() -> void:
 	super._ready()
-	_ensure_default_waypoints()
 	generate_river()
-
-## Generates default initial waypoints if none exist, ensuring instant visual length
-func _ensure_default_waypoints() -> void:
-	for child in get_children():
-		if child is RiverWaypoint:
-			return
-
-	if not waypoint_scene:
-		push_warning("RiverMeshGenerator: No waypoint_scene assigned to spawn defaults.")
-		return
-
-	var default_offsets: Array[Vector3] = [
-		Vector3(0, 0, 0),
-		Vector3(0, -0.5, -2.0)
-	]
-
-	var scene_root = EditorInterface.get_edited_scene_root() if Engine.is_editor_hint() else null
-
-	for i in range(default_offsets.size()):
-		var wp_instance = waypoint_scene.instantiate() as RiverWaypoint
-		if wp_instance:
-			wp_instance.name = "RiverWaypoint_%d" % i
-			add_child(wp_instance)
-			wp_instance.position = default_offsets[i]
-
-			# Ensure unique instance IDs are assigned immediately for persistence tracking
-			if wp_instance.get("instance_id") != null and wp_instance.instance_id.is_empty():
-				wp_instance.instance_id = "wp_%d_%d_%d" % [get_instance_id(), Time.get_ticks_msec(), i]
-
-			if Engine.is_editor_hint() and scene_root:
-				wp_instance.owner = scene_root
 
 func request_rebuild() -> void:
 	if is_inside_tree():

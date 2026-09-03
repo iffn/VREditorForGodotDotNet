@@ -54,11 +54,42 @@ func spawn_element(element: SpawnableElement, spawn_transform: Transform3D) -> V
 		instance.global_transform = Transform3D(target_basis, spawn_transform.origin)
 
 		instance.instance_id = "runtime_node_%s" % str(instance.get_instance_id())
+
+		# Factory Pattern Rule: When spawning a fresh River from user UI, construct default waypoints
+		if element == SpawnableElement.RIVER and instance is RiverMeshGenerator:
+			_create_default_river_structure(instance as RiverMeshGenerator)
+
 		return instance
 	else:
 		push_warning("Instantiated scene is not a VREditorPickableSerializable")
 		instance.queue_free()
 		return null
+
+
+## Factory helper to construct initial waypoints for newly spawned rivers
+func _create_default_river_structure(river: RiverMeshGenerator) -> void:
+	var waypoint_scene: PackedScene = spawnable_scenes.get(SpawnableElement.RIVER_WAYPOINT)
+	if not waypoint_scene:
+		push_warning("ObjectSpawner: Cannot create default river waypoints - RIVER_WAYPOINT missing from spawnable_scenes.")
+		return
+
+	var default_offsets: Array[Vector3] = [
+		Vector3(0, 0, 0),
+		Vector3(0, -0.5, -2.0)
+	]
+
+	for i in range(default_offsets.size()):
+		var wp_instance = waypoint_scene.instantiate() as VREditorPickableSerializable
+		if wp_instance:
+			wp_instance.name = "RiverWaypoint_%d" % i
+			river.add_child(wp_instance)
+			wp_instance.position = default_offsets[i]
+
+			# Ensure unique instance tracking ID for the save system
+			wp_instance.instance_id = "runtime_node_%s" % str(wp_instance.get_instance_id())
+
+	# Request initial mesh build now that children exist
+	river.generate_river()
 
 
 func save_ingame_layout() -> void:
@@ -175,6 +206,7 @@ func _apply_layout_to_editor(diff_data: Dictionary) -> void:
 
 	var has_changes: bool = false
 
+	# 1. Handle Deletions
 	for del_id in deleted_ids:
 		if existing_nodes.has(del_id):
 			var node_to_free = existing_nodes[del_id]
@@ -182,15 +214,9 @@ func _apply_layout_to_editor(diff_data: Dictionary) -> void:
 			node_to_free.queue_free()
 			has_changes = true
 
-	for item in modified_items:
-		var item_id: String = item.get("id", "")
-		if existing_nodes.has(item_id):
-			var node: VREditorPickableSerializable = existing_nodes[item_id]
-			node.deserialize_data(item)
-			has_changes = true
-
 	var restored_nodes: Dictionary = existing_nodes.duplicate()
 
+	# 2. Instantiate Newly Added Nodes (Do NOT deserialize transforms yet)
 	for item in added_items:
 		var item_id: String = item.get("id", "")
 		var node: Node = existing_nodes.get(item_id)
@@ -224,11 +250,9 @@ func _apply_layout_to_editor(diff_data: Dictionary) -> void:
 		if "instance_id" in node:
 			node.instance_id = item_id
 
-		node.call("deserialize_data", item)
 		restored_nodes[item_id] = node
-		has_changes = true
 
-	# Restore parent relationships and exact child tree indices
+	# 3. Establish Correct Parent Hierarchy FIRST
 	for item in added_items:
 		var item_id: String = item.get("id", "")
 		var parent_id: String = item.get("parent_id", "")
@@ -239,23 +263,34 @@ func _apply_layout_to_editor(diff_data: Dictionary) -> void:
 			if not parent_id.is_empty() and restored_nodes.has(parent_id):
 				var parent_node = restored_nodes[parent_id]
 				if node.get_parent() != parent_node:
-					node.reparent(parent_node)
+					node.reparent(parent_node, false) # keep_global_transform = false
 					node.owner = scene_root
 			elif node.get_parent() != self:
-				node.reparent(self)
+				node.reparent(self, false)
 				node.owner = scene_root
 
 			if node_index != -1 and node_index < node.get_parent().get_child_count():
 				node.get_parent().move_child(node, node_index)
 
-	# Ensure modified nodes also respect updated hierarchy indices
+	# 4. Deserialize Data AFTER Nodes are attached to their final parent
+	for item in added_items:
+		var item_id: String = item.get("id", "")
+		var node: Node = restored_nodes.get(item_id)
+		if node and node.has_method("deserialize_data"):
+			node.call("deserialize_data", item)
+			has_changes = true
+
+	# 5. Deserialize Modified Items
 	for item in modified_items:
 		var item_id: String = item.get("id", "")
-		var node_index: int = item.get("node_index", -1)
-		var node: Node = existing_nodes.get(item_id)
-
-		if node and node_index != -1 and node_index < node.get_parent().get_child_count():
-			node.get_parent().move_child(node, node_index)
+		if existing_nodes.has(item_id):
+			var node: VREditorPickableSerializable = existing_nodes[item_id]
+			node.deserialize_data(item)
+			
+			var node_index: int = item.get("node_index", -1)
+			if node_index != -1 and node_index < node.get_parent().get_child_count():
+				node.get_parent().move_child(node, node_index)
+			has_changes = true
 
 	if has_changes:
 		if not keep_layout_file:
